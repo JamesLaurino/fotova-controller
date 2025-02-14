@@ -1,0 +1,14 @@
+### REGISTER USER
+
+POST http://localhost:8080/api/v1/auth/register
+Content-Type: application/json
+
+{"username": "james", "email": "thomas@hotmail.com", "password": "1234"}
+
+
+### LOGIN USER
+
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{"email": "thomas@hotmail.com","password": "1234"}

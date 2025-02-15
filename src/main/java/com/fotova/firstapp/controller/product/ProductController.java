@@ -1,6 +1,6 @@
 package com.fotova.firstapp.controller.product;
 
-import com.fotova.entity.ProductEntity;
+import com.fotova.dto.product.ProductDtoBack;
 import com.fotova.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,16 +15,14 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("auth/products")
-    public List<ProductEntity> getProduct() {
+    public List<ProductDtoBack> getProduct() {
         return productService.getAllProducts();
     }
 
     @GetMapping("auth/product/{id}")
-    public ProductEntity getProductById(@PathVariable int id) {
+    public ProductDtoBack getProductById(@PathVariable int id) {
         return productService.getProductById(id);
     }
-
-
 
     @GetMapping("auth/drl/products")
     public String getAllProducts()

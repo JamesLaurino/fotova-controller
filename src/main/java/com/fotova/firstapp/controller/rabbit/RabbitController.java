@@ -1,6 +1,6 @@
 package com.fotova.firstapp.controller.rabbit;
 
-import com.drools.dto.product.ProductDto;
+import com.drools.dto.product.ProductDtoDrl;
 import com.fotova.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ public class RabbitController {
 
 
     @PostMapping("auth/amq/products")
-    public String testAMQProduct(@RequestBody ProductDto productDto) {
+    public String testAMQProduct(@RequestBody ProductDtoDrl productDto) {
         productService.testAMQPService(productDto);
         return "AMQP Service";
     }

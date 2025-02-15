@@ -33,7 +33,7 @@ import java.util.Set;
 public class AuthService {
 
     @Autowired
-    private ClientRepositoryImpl userRepository;
+    private ClientRepositoryImpl clientRepository;
 
     @Autowired
     private RoleRepositoryImpl roleRepository;
@@ -51,11 +51,11 @@ public class AuthService {
     @Transactional
     public Response<Object> register(RegisterRequest request) {
 
-        if (userRepository.existsByUsername(request.getUsername())) {
+        if (clientRepository.existsByUsername(request.getUsername())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already registered");
         }
 
-        if (userRepository.existsByEmail(request.getEmail())) {
+        if (clientRepository.existsByEmail(request.getEmail())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already registered");
         }
 
@@ -79,7 +79,7 @@ public class AuthService {
         user.setRoles(roles);
 
         // save user
-        userRepository.save(user);
+        clientRepository.save(user);
 
         // return response DTO
         RegisterUserResponse registerUserResponse = RegisterUserResponse.builder()
@@ -99,7 +99,7 @@ public class AuthService {
     public Response<Object> login(LoginRequest request) {
 
         // Check if User by Email exist. if not throw error
-        userRepository.findFirstByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("User not found. Please register first"));
+        clientRepository.findFirstByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("User not found. Please register first"));
 
 
         Authentication authentication = authenticationManager
@@ -138,7 +138,7 @@ public class AuthService {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         Integer userId = userDetails.getId();
 
-        ClientEntity user = userRepository.findById(userId);
+        ClientEntity user = clientRepository.findById(userId);
 
         if(user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Email not found !");

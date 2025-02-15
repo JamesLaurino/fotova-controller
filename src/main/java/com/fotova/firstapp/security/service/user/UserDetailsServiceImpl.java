@@ -15,14 +15,14 @@ import org.springframework.stereotype.Component;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private ClientRepositoryImpl userRepository;
+    private ClientRepositoryImpl clientRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        ClientEntity user = userRepository.findFirstByEmail(email)
+        ClientEntity user = clientRepository.findFirstByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User Email Not Found : " + email));
 
 

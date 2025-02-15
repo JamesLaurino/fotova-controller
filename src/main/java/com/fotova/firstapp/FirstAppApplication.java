@@ -17,12 +17,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = {
         "com.fotova.service",
         "com.fotova.config",
+        "com.fotova.repository",
         "com.fotova.firstapp.controller",
         "com.fotova.firstapp.security.config.jwt",
         "com.fotova.firstapp.security",
         "com.fotova.firstapp.security.service.user",
         "com.fotova.firstapp.security.service"})
-public class FirstAppApplication implements CommandLineRunner {
+public class FirstAppApplication {
 
     @Autowired
     private ProductService productService;
@@ -33,11 +34,4 @@ public class FirstAppApplication implements CommandLineRunner {
         SpringApplication.run(FirstAppApplication.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-
-        /* INSERT PRODUCT */
-        //productService.getAllProducts().forEach(product -> System.out.println(product.getName()));
-
-    }
 }

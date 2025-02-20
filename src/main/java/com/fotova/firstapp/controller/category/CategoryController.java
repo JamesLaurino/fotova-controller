@@ -18,9 +18,14 @@ public class CategoryController {
     CategoryMapper categoryMapper;
 
     @GetMapping("auth/category/{categoryId}")
-    public ResponseEntity<Object> getProductById(@PathVariable int categoryId) {
+    public ResponseEntity<Object> getCategoryById(@PathVariable int categoryId) {
 
         CategoryEntity categoryEntity = categoryService.getCategoryById(categoryId);
         return ResponseEntity.ok(categoryMapper.toCategoryDto(categoryEntity));
+    }
+
+    @GetMapping("auth/category")
+    public ResponseEntity<Object> getAllCategory() {
+        return ResponseEntity.ok(categoryService.getAllCategories());
     }
 }

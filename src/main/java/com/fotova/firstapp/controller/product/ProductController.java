@@ -30,6 +30,13 @@ public class ProductController {
         return ResponseEntity.ok(productService.saveProduct(productDto,categoryId));
     }
 
+    @DeleteMapping("auth/product/{id}/delete")
+    public ResponseEntity<String>  deleteProductById(@PathVariable int id) {
+        productService.deleteProductById(id);
+        return ResponseEntity.ok("Product deleted successfully");
+    }
+
+
     @GetMapping("auth/drl/products")
     public String getAllProducts() {
         productService.testDroolsService();

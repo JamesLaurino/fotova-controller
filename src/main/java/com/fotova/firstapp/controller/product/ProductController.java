@@ -3,6 +3,7 @@ package com.fotova.firstapp.controller.product;
 import com.fotova.dto.product.ProductDtoBack;
 import com.fotova.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,9 +25,13 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
+    @PostMapping("auth/product/{categoryId}/add")
+    public ResponseEntity<Object> addProduct(@PathVariable int categoryId, @RequestBody ProductDtoBack productDto) {
+        return ResponseEntity.ok(productService.saveProduct(productDto,categoryId));
+    }
+
     @GetMapping("auth/drl/products")
-    public String getAllProducts()
-    {
+    public String getAllProducts() {
         productService.testDroolsService();
         return "Drools Service";
     }

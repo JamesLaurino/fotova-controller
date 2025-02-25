@@ -1,8 +1,8 @@
-### GET category by id
-GET http://localhost:8080/api/v1/auth/category/2
-
 ### GET All category
 GET http://localhost:8080/api/v1/auth/category
+
+### GET category by id
+GET http://localhost:8080/api/v1/auth/category/2
 
 ### POST category
 POST http://localhost:8080/api/v1/auth/category/add

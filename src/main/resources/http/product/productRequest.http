@@ -15,5 +15,21 @@ Content-Type: application/json
   "url": "photoAppleTV2.png"
 }
 
-### DELETE PRODUCT
+### DELETE PRODUCT BY ID
 DELETE http://localhost:8080/api/v1/auth/product/5/delete
+
+### UPDATED PRODUCT
+PUT http://localhost:8080/api/v1/auth/product/update
+Content-Type: application/json
+
+{
+  "id":1,
+  "name": "Dell i9 updated",
+  "price": 25.5,
+  "url": "photo Dell i9",
+  "quantity": 3,
+  "categoryInnerProductDto": {
+    "id": 1,
+    "name": "Laptop"
+  }
+}

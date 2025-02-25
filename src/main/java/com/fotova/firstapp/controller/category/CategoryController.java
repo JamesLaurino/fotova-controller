@@ -1,5 +1,6 @@
 package com.fotova.firstapp.controller.category;
 
+import com.fotova.dto.category.CategoryDto;
 import com.fotova.entity.CategoryEntity;
 import com.fotova.service.category.CategoryMapper;
 import com.fotova.service.category.CategoryService;
@@ -27,5 +28,10 @@ public class CategoryController {
     @GetMapping("auth/category")
     public ResponseEntity<Object> getAllCategory() {
         return ResponseEntity.ok(categoryService.getAllCategories());
+    }
+
+    @PostMapping("auth/category/add")
+    public ResponseEntity<Object> addCategory(@RequestBody CategoryDto categoryDto) {
+        return ResponseEntity.ok(categoryService.addCategory(categoryDto));
     }
 }

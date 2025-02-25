@@ -4,7 +4,7 @@ GET http://localhost:8080/api/v1/auth/category/2
 ### GET All category
 GET http://localhost:8080/api/v1/auth/category
 
-### POST ADD category
+### POST category
 POST http://localhost:8080/api/v1/auth/category/add
 Content-Type: application/json
 
@@ -20,3 +20,6 @@ Content-Type: application/json
   "id": 1,
   "name": "Laptop Updated"
 }
+
+### DELETE category
+DELETE http://localhost:8080/api/v1/auth/category/1/delete

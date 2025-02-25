@@ -34,4 +34,9 @@ public class CategoryController {
     public ResponseEntity<Object> addCategory(@RequestBody CategoryDto categoryDto) {
         return ResponseEntity.ok(categoryService.addCategory(categoryDto));
     }
+
+    @PutMapping("auth/category/update")
+    public ResponseEntity<Object> updateCategory(@RequestBody CategoryDto categoryDto) {
+        return ResponseEntity.ok(categoryService.updateCategory(categoryDto));
+    }
 }

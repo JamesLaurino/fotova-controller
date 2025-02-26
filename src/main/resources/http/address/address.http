@@ -9,8 +9,20 @@ POST http://localhost:8080/api/v1/auth/address/add
 Content-Type: application/json
 
 {
-  "street": "Rue malherbe",
-  "city": "Ville de france",
+  "street": "Rue malherbe created",
+  "city": "Ville de france created",
   "number": "B15",
-  "country": "HelioPolis"
+  "country": "HelioPolis created"
+}
+
+### PUT update address
+PUT http://localhost:8080/api/v1/auth/address/update
+Content-Type: application/json
+
+{
+  "id": 6,
+  "street": "Rue malherbe Updated",
+  "city": "Ville de france Updated",
+  "number": "B15 Updated",
+  "country": "HelioPolis Updated"
 }

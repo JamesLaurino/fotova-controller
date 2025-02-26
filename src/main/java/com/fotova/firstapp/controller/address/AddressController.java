@@ -27,4 +27,9 @@ public class AddressController {
     public ResponseEntity<Object> addAddress(@RequestBody AddressDto addressDto) {
         return ResponseEntity.ok(addressService.addAddress(addressDto));
     }
+
+    @PutMapping("auth/address/update")
+    public ResponseEntity<Object> updateAddress(@RequestBody AddressDto addressDto) {
+        return ResponseEntity.ok(addressService.updateAddress(addressDto));
+    }
 }

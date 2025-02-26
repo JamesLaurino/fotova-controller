@@ -1,2 +1,5 @@
 ### GET All Addresses
 GET http://localhost:8080/api/v1/auth/address
+
+### GET address by ID
+GET http://localhost:8080/api/v1/auth/address/1

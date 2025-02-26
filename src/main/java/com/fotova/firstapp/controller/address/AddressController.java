@@ -23,6 +23,12 @@ public class AddressController {
         return ResponseEntity.ok(addressService.getAddressById(addressId));
     }
 
+    @DeleteMapping("auth/address/{addressId}/delete")
+    public ResponseEntity<String> deleteAddress(@PathVariable Integer addressId) {
+        addressService.deleteAddressById(addressId);
+        return ResponseEntity.ok("address deleted successfully");
+    }
+
     @PostMapping("auth/address/add")
     public ResponseEntity<Object> addAddress(@RequestBody AddressDto addressDto) {
         return ResponseEntity.ok(addressService.addAddress(addressDto));

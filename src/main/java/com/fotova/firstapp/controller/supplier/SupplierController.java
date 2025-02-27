@@ -29,4 +29,9 @@ public class SupplierController {
         return ResponseEntity.ok(supplierService.save(supplierDto));
     }
 
+    @PutMapping("auth/supplier/update")
+    public ResponseEntity<Object> updateSupplier(@RequestBody SupplierDto supplierDto){
+        return ResponseEntity.ok(supplierService.update(supplierDto));
+    }
+
 }

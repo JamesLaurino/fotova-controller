@@ -11,7 +11,22 @@ Content-Type: application/json
 {
   "registrationNumber": "6543211",
   "supplierAddressDto": {
-    "id": 2
+    "id": 1
+  },
+  "supplierProductDto": {
+    "id": 1
+  }
+}
+
+### PUT update a supplier
+PUT http://localhost:8080/api/v1/auth/supplier/update
+Content-Type: application/json
+
+{
+  "id": 5,
+  "registrationNumber": "6543211 update",
+  "supplierAddressDto": {
+    "id": 1
   },
   "supplierProductDto": {
     "id": 2

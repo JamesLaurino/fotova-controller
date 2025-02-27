@@ -17,19 +17,16 @@ public class AuthController {
     private AuthService authService;
 
 
-    // REGISTER
     @PostMapping(path = "auth/register")
     public ResponseEntity<Object> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
     }
 
-    // LOGIN
     @PostMapping("auth/login")
     public ResponseEntity<Object> login(@RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
 
-    // GET USER THAT CURRENTLY LOGIN WITH CERTAIN ROLE
     @GetMapping("/user")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> getUser() {

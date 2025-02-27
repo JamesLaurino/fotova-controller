@@ -29,4 +29,9 @@ public class CommentController {
         return ResponseEntity.ok(commentService.updateComment(commentDto));
     }
 
+    @PostMapping("auth/comment/add")
+    public ResponseEntity<Object> addComment(@RequestBody CommentDto commentDto) {
+        return ResponseEntity.ok(commentService.saveComment(commentDto));
+    }
+
 }

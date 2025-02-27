@@ -15,3 +15,14 @@ Content-Type: application/json
   "createAt": "2025-02-27T11:18:39Z",
   "updateAt": "2025-02-27T11:18:39Z"
 }
+
+### POST add comment
+POST http://localhost:8080/api/v1/auth/comment/add
+Content-Type: application/json
+
+{
+  "header": "Header created",
+  "body": "Body created",
+  "createAt": "2025-02-27T11:18:39Z",
+  "updateAt": "2025-02-27T11:18:39Z"
+}

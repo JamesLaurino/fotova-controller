@@ -1,2 +1,5 @@
 ### GET retreive all suppliers
 GET http://localhost:8080/api/v1/auth/suppliers
+
+### GET retreive supplier by id
+GET http://localhost:8080/api/v1/auth/supplier/2

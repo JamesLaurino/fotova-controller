@@ -3,3 +3,17 @@ GET http://localhost:8080/api/v1/auth/suppliers
 
 ### GET retreive supplier by id
 GET http://localhost:8080/api/v1/auth/supplier/2
+
+### POST add supplier
+POST http://localhost:8080/api/v1/auth/supplier/add
+Content-Type: application/json
+
+{
+  "registrationNumber": "6543211",
+  "supplierAddressDto": {
+    "id": 2
+  },
+  "supplierProductDto": {
+    "id": 2
+  }
+}

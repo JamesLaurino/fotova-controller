@@ -1,12 +1,10 @@
 package com.fotova.firstapp.controller.supplier;
 
+import com.fotova.dto.supplier.SupplierDto;
 import com.fotova.service.supplier.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -25,4 +23,10 @@ public class SupplierController {
     public ResponseEntity<Object> getSupplierById(@PathVariable("supplierId") Integer supplierId){
         return ResponseEntity.ok(supplierService.findById(supplierId));
     }
+
+    @PostMapping("auth/supplier/add")
+    public ResponseEntity<Object> addSupplier(@RequestBody SupplierDto supplierDto){
+        return ResponseEntity.ok(supplierService.save(supplierDto));
+    }
+
 }

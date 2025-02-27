@@ -1,12 +1,10 @@
 package com.fotova.firstapp.controller.comment;
 
+import com.fotova.dto.comment.CommentDto;
 import com.fotova.service.comment.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -24,6 +22,11 @@ public class CommentController {
     @GetMapping("auth/comment/{commentId}")
     public ResponseEntity<Object> getCommentById(@PathVariable("commentId") Integer commentId) {
         return ResponseEntity.ok(commentService.getCommentById(commentId));
+    }
+
+    @PutMapping("auth/comment/update")
+    public ResponseEntity<Object> updateComment(@RequestBody CommentDto commentDto) {
+        return ResponseEntity.ok(commentService.updateComment(commentDto));
     }
 
 }

@@ -3,3 +3,15 @@ GET http://localhost:8080/api/v1/auth/comments
 
 ### GET comment by id
 GET http://localhost:8080/api/v1/auth/comment/3
+
+### PUT update a comment
+PUT http://localhost:8080/api/v1/auth/comment/update
+Content-Type: application/json
+
+{
+  "id": 1,
+  "header": "Header update",
+  "body": "Body update",
+  "createAt": "2025-02-27T11:18:39Z",
+  "updateAt": "2025-02-27T11:18:39Z"
+}

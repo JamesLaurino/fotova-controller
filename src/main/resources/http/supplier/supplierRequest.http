@@ -32,3 +32,6 @@ Content-Type: application/json
     "id": 2
   }
 }
+
+### DELETE a supplier
+DELETE http://localhost:8080/api/v1/auth/supplier/5/delete

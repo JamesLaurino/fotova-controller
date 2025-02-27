@@ -34,4 +34,10 @@ public class SupplierController {
         return ResponseEntity.ok(supplierService.update(supplierDto));
     }
 
+    @DeleteMapping("auth/supplier/{supplierId}/delete")
+    public ResponseEntity<String> deleteSupplier(@PathVariable("supplierId") Integer supplierId){
+        supplierService.delete(supplierId);
+        return ResponseEntity.ok("Supplier has been deleted successfully");
+    }
+
 }

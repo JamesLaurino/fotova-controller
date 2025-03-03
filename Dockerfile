@@ -1,7 +1,7 @@
 FROM maven:3.8.5-openjdk-17
 
 # Copiez le fichier JAR dans le conteneur
-COPY ../back-fotova/target /app
+COPY ../controller-fotova/target /app
 
 # Définissez le répertoire de travail
 WORKDIR /app

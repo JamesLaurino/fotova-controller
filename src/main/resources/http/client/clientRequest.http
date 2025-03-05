@@ -45,3 +45,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iL
   "createAt": "2025-03-05T12:19:39Z",
   "updateAt": "2025-03-05T12:19:39Z"
 }
+
+### DELETE delete by id
+DELETE http://localhost:8080/api/v1/auth/client/1/delete

@@ -47,4 +47,9 @@ public class ClientController {
         ClientDto clientDto = authService.getPrincipal();
         return ResponseEntity.ok(clientService.addCommentClient(clientDto.getId(),commentDto));
     }
+
+    @DeleteMapping("auth/client/{clientId}/delete")
+    public ResponseEntity<String> deleteClientById(@PathVariable Integer clientId) {
+        return ResponseEntity.ok(clientService.deleteClientById(clientId));
+    }
 }

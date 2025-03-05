@@ -34,4 +34,10 @@ public class ClientController {
         ClientDto clientDto = authService.getPrincipal();
         return ResponseEntity.ok(clientService.updateAddressClient(clientDto.getId(),addressDto));
     }
+
+    @PostMapping("/client/address")
+    public ResponseEntity<Object> postAddressClient(@RequestBody AddressDto addressDto) {
+        ClientDto clientDto = authService.getPrincipal();
+        return ResponseEntity.ok(clientService.addAddressClient(clientDto.getId(),addressDto));
+    }
 }

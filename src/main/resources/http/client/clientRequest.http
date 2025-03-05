@@ -3,3 +3,22 @@ GET http://localhost:8080/api/v1/auth/clients
 
 ### GET client by id
 GET http://localhost:8080/api/v1/auth/client/1
+
+
+### LOGIN USER
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{"email": "thomas@hotmail.com","password": "1234"}
+
+### PUT update a client
+PUT http://localhost:8080/api/v1/client/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iLCJpYXQiOjE3NDExNjM1NDgsImV4cCI6MTc0MTE2NDQ0OH0.A013jL6ZD6Itz-VhtvtoXKu9sNmeztnXuDNiMvuxbAs
+
+{
+  "street": "Rue malherbe Updated",
+  "city": "Ville de france Updated",
+  "number": "B15 Updated",
+  "country": "HelioPolis Updated"
+}

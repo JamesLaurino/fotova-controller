@@ -1,5 +1,6 @@
 package com.fotova.firstapp.security.service;
 
+import com.fotova.dto.client.ClientDto;
 import com.fotova.entity.ClientEntity;
 import com.fotova.entity.ERole;
 import com.fotova.entity.RoleEntity;
@@ -13,6 +14,7 @@ import com.fotova.firstapp.security.service.user.UserDetailsImpl;
 import com.fotova.firstapp.security.utils.Response;
 import com.fotova.repository.client.ClientRepositoryImpl;
 import com.fotova.repository.role.RoleRepositoryImpl;
+import com.fotova.service.client.ClientMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,6 +48,9 @@ public class AuthService {
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    private ClientMapper clientMapper;
 
 
     @Transactional
@@ -158,5 +163,22 @@ public class AuthService {
                 .responseMessage("SUCCESS")
                 .data(userResponse)
                 .build();
+    }
+
+    @Transactional
+    public ClientDto getPrincipal() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        Integer userId = userDetails.getId();
+
+        ClientEntity user = clientRepository.findById(userId);
+
+        if(user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found !");
+        }
+
+        return clientMapper.mapClientToClientDto(user);
     }
 }

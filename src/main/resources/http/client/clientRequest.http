@@ -22,7 +22,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iL
   "country": "HelioPolis Updated"
 }
 
-### POST address to a client
+### POST add address to a client
 POST http://localhost:8080/api/v1/client/address
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iLCJpYXQiOjE3NDExNjUxOTMsImV4cCI6MTc0MTE2NjA5M30.Kr_j06bK0IAkBCUNMZyyfNg6K9ZnJxF-UhU3I7Us2VI
@@ -32,4 +32,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iL
   "city": "Ville de france created",
   "number": "B15 created",
   "country": "HelioPolis created"
+}
+
+### POST add comment to a client
+POST http://localhost:8080/api/v1/client/comment
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iLCJpYXQiOjE3NDExNjc4ODMsImV4cCI6MTc0MTE2ODc4M30.2MFruAx2QTn8SPdmKlFJcFhpxY9jTtYF2t8FjPDLhlg
+
+{
+  "header": "Header created 1",
+  "body": "Body created 1",
+  "createAt": "2025-03-05T12:19:39Z",
+  "updateAt": "2025-03-05T12:19:39Z"
 }

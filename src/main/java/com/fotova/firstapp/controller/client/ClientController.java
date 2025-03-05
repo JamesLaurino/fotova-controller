@@ -1,5 +1,6 @@
 package com.fotova.firstapp.controller.client;
 
+import com.fotova.dto.comment.CommentDto;
 import com.fotova.dto.address.AddressDto;
 import com.fotova.dto.client.ClientDto;
 import com.fotova.firstapp.security.service.AuthService;
@@ -39,5 +40,11 @@ public class ClientController {
     public ResponseEntity<Object> postAddressClient(@RequestBody AddressDto addressDto) {
         ClientDto clientDto = authService.getPrincipal();
         return ResponseEntity.ok(clientService.addAddressClient(clientDto.getId(),addressDto));
+    }
+
+    @PostMapping("client/comment")
+    public ResponseEntity<String> postCommentClient(@RequestBody CommentDto commentDto) {
+        ClientDto clientDto = authService.getPrincipal();
+        return ResponseEntity.ok(clientService.addCommentClient(clientDto.getId(),commentDto));
     }
 }

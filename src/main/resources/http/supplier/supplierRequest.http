@@ -2,7 +2,7 @@
 GET http://localhost:8080/api/v1/auth/suppliers
 
 ### GET retreive supplier by id
-GET http://localhost:8080/api/v1/auth/supplier/2
+GET http://localhost:8080/api/v1/auth/supplier/1
 
 ### POST add supplier
 POST http://localhost:8080/api/v1/auth/supplier/add
@@ -35,3 +35,14 @@ Content-Type: application/json
 
 ### DELETE a supplier
 DELETE http://localhost:8080/api/v1/auth/supplier/5/delete
+
+### PUT add address to supplier
+PUT http://localhost:8080/api/v1/auth/supplier/1/address
+Content-Type: application/json
+
+{
+  "street": "Rue malherbe created",
+  "city": "Ville de france created",
+  "number": "B15 created",
+  "country": "HelioPolis created"
+}

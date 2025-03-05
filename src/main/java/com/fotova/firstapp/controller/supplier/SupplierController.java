@@ -1,5 +1,6 @@
 package com.fotova.firstapp.controller.supplier;
 
+import com.fotova.dto.address.AddressDto;
 import com.fotova.dto.supplier.SupplierDto;
 import com.fotova.service.supplier.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,13 @@ public class SupplierController {
     public ResponseEntity<String> deleteSupplier(@PathVariable("supplierId") Integer supplierId){
         supplierService.delete(supplierId);
         return ResponseEntity.ok("Supplier has been deleted successfully");
+    }
+
+    @PutMapping("auth/supplier/{supplierId}/address")
+    public ResponseEntity<Object> addSupplierAddress(
+            @PathVariable("supplierId") Integer supplierId, @RequestBody AddressDto addressDto)
+    {
+        return ResponseEntity.ok(supplierService.addSupplierAddress(supplierId, addressDto));
     }
 
 }

@@ -46,3 +46,14 @@ Content-Type: application/json
   "number": "B15 created",
   "country": "HelioPolis created"
 }
+
+### PUT add product to supplier
+PUT http://localhost:8080/api/v1/auth/supplier/1/product
+Content-Type: application/json
+
+{
+  "name": "Apple TV created",
+  "quantity": 3,
+  "price": 12,
+  "url": "photoAppleTV2.png"
+}

@@ -1,6 +1,7 @@
 package com.fotova.firstapp.controller.supplier;
 
 import com.fotova.dto.address.AddressDto;
+import com.fotova.dto.product.ProductDtoBack;
 import com.fotova.dto.supplier.SupplierDto;
 import com.fotova.service.supplier.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,4 +49,10 @@ public class SupplierController {
         return ResponseEntity.ok(supplierService.addSupplierAddress(supplierId, addressDto));
     }
 
+    @PutMapping("auth/supplier/{supplierId}/product")
+    public ResponseEntity<Object> addSupplierProduct(
+            @PathVariable("supplierId") Integer supplierId, @RequestBody ProductDtoBack productDto)
+    {
+        return ResponseEntity.ok(supplierService.addSupplierProduct(supplierId, productDto));
+    }
 }

@@ -47,6 +47,7 @@ public class StripeController {
             System.out.println("product numéro : " + orderUUID);
             System.out.println("Product Id : "+ temp.getProductId());
             System.out.println("Product quantity : "+ temp.getQuantity());
+            System.out.println("Client email : "+ temp.getEmail());
         }
 
         ValidationOrderService.cleanOrderBasketDtoList();

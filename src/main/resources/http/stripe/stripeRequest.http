@@ -7,6 +7,7 @@ Content-Type: application/json
   "quantity": 1,
   "currency": "USD",
   "name": "specialUUID",
+  "email": "thomas@hotmail.com",
   "productBasket": [
     {
       "productId": 1,

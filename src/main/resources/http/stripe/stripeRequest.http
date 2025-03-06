@@ -3,8 +3,14 @@ POST http://localhost:8080/api/v1/auth/checkout
 Content-Type: application/json
 
 {
-  "amount": 1000,
+  "amount": 1100,
   "quantity": 1,
   "currency": "USD",
-  "name": "books"
+  "name": "specialUUID",
+  "productBasket": [
+    {
+      "productId": 1,
+      "quantity": 2
+    }
+  ]
 }

@@ -14,3 +14,6 @@ Content-Type: application/json
     "email": "thomas@hotmail.com"
   }
 }
+
+### GET retrieve order product by email
+GET http://localhost:8080/api/v1/auth/order-products?email=thomas@hotmail.com

@@ -27,4 +27,9 @@ public class OrderController {
     public ResponseEntity<Object> addOrder(@RequestBody OrderDto orderDto) {
         return ResponseEntity.ok(orderService.addOrder(orderDto));
     }
+
+    @GetMapping("auth/order-products")
+    public ResponseEntity<Object> getOrderProductByEmail(@RequestParam String email) {
+        return ResponseEntity.ok(orderService.getOrderProductByEmail(email));
+    }
 }

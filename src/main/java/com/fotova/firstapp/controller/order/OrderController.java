@@ -32,4 +32,9 @@ public class OrderController {
     public ResponseEntity<Object> getOrderProductByEmail(@RequestParam String email) {
         return ResponseEntity.ok(orderService.getOrderProductByEmail(email));
     }
+
+    @GetMapping("auth/order-products/billing")
+    public ResponseEntity<Object> getOrderProductBillingByEmail(@RequestParam String email) {
+        return ResponseEntity.ok(orderService.getOrderProductBillingByEmail(email));
+    }
 }

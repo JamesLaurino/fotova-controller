@@ -26,8 +26,13 @@ public class FileController {
         return ResponseEntity.ok(fileService.uploadFile(file));
     }
 
-    @GetMapping("auth/{filename}")
-    public ResponseEntity<Resource> getImage(@PathVariable String filename) throws IOException {
+    @GetMapping("auth/files")
+    public ResponseEntity<Object> getAllFiles() throws IOException {
+        return ResponseEntity.ok(fileService.getAllFiles());
+    }
+
+    @GetMapping("auth/file/{filename}")
+    public ResponseEntity<Object> getFileByName(@PathVariable String filename) throws IOException {
         return ResponseEntity.ok(fileService.getFileByName(filename).getBody());
     }
 }

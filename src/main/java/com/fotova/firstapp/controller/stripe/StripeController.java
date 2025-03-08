@@ -40,16 +40,10 @@ public class StripeController {
     @GetMapping("auth/{orderUUID}/success")
     public String success(@PathVariable String orderUUID){
 
-        //TODO creation of order
-        System.out.println("orderUUID : "+ orderUUID);
-        for(var temp : ValidationOrderService.orderBasketDtoList) {
+        //TODO adapt with redis
+        orderService.createOrderAfterShipment(orderUUID);
 
-            System.out.println("product numéro : " + orderUUID);
-            System.out.println("Product Id : "+ temp.getProductId());
-            System.out.println("Product quantity : "+ temp.getQuantity());
-            System.out.println("Client email : "+ temp.getEmail());
-        }
-
+        //TODO adapt with redis
         ValidationOrderService.cleanOrderBasketDtoList();
         return "payment ok";
     }

@@ -1,5 +1,7 @@
 package com.fotova.firstapp.controller.authentication;
 
+import com.fotova.dto.authentification.AuthentificationDto;
+import com.fotova.dto.authentification.ResponseDto;
 import com.fotova.dto.request.LoginRequest;
 import com.fotova.dto.request.RegisterRequest;
 import com.fotova.firstapp.security.service.AuthService;
@@ -16,6 +18,20 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @PostMapping("auth/login/demo")
+    public ResponseDto auth(@RequestBody AuthentificationDto authentication) {
+
+        ResponseDto responseDto = new ResponseDto();
+
+        if(authentication.getUsername().equals("admin") && authentication.getPassword().equals("admin")){
+            responseDto.setAuthenticate(true);
+            return responseDto;
+        }
+        else {
+            responseDto.setAuthenticate(false);
+            return responseDto;
+        }
+    }
 
     @PostMapping(path = "auth/register")
     public ResponseEntity<Object> register(@RequestBody RegisterRequest request) {

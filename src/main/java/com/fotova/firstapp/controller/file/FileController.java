@@ -24,7 +24,7 @@ public class FileController {
     private String pathFile;
 
     @PostMapping("auth/file/upload")
-    public ResponseEntity<String> addProduct(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         return ResponseEntity.ok(fileService.uploadFile(file));
     }
 }

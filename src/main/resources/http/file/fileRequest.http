@@ -1,0 +1,10 @@
+### POST upload a file in server
+POST http://localhost:8080/api/v1/auth/file/upload
+Content-Type: multipart/form-data; boundary=----boundary
+
+------boundary
+Content-Disposition: form-data; name="file"; filename="fichierUpload.txt"
+Content-Type: text/plain
+
+< C:/Users/thoma/Downloads/fichierUpload.txt
+------boundary--

@@ -17,6 +17,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         "com.fotova.config",
         "com.fotova.repository",
         "com.fotova.firstapp.controller",
+        "com.fotova.firstapp.config",
         "com.fotova.firstapp.security.config.jwt",
         "com.fotova.firstapp.security",
         "com.fotova.firstapp.security.service.user",

@@ -4,7 +4,6 @@ package com.fotova.firstapp.controller.file;
 import com.fotova.service.file.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,5 +33,10 @@ public class FileController {
     @GetMapping("auth/file/{filename}")
     public ResponseEntity<Object> getFileByName(@PathVariable String filename) throws IOException {
         return ResponseEntity.ok(fileService.getFileByName(filename).getBody());
+    }
+
+    @GetMapping("auth/files/content")
+    public ResponseEntity<Object> getAllFilesContent() {
+        return ResponseEntity.ok(fileService.getAllFilesContent());
     }
 }

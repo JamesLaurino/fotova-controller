@@ -4,7 +4,6 @@ import com.fotova.dto.stripe.StripeProductRequest;
 import com.fotova.dto.StripeResponse;
 import com.fotova.service.StripeService;
 import com.fotova.service.order.OrderService;
-import com.fotova.service.order.ValidationOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,25 +26,31 @@ public class StripeController {
         // SET NAME TO SPECIAL UUID
         productRequest = orderService.setStripeProductRequestName(productRequest);
 
-        // FILL THE STATIC LIST
-        ValidationOrderService.setOrderBasketMapList(productRequest);
+        // FILL REDIS WITH STRIPE REQUEST
+        orderService.fillOrderBasketWithStripeRequest(productRequest);
 
         // PROCESS THE ORDER
         StripeResponse stripeResponse = stripeService.checkoutProducts(productRequest);
         return ResponseEntity
-                .status(HttpStatus.OK)
+                .status(HttpStatus.BAD_REQUEST)
                 .body(stripeResponse);
     }
 
     @GetMapping("auth/{orderUUID}/success")
-    public String success(@PathVariable String orderUUID){
+    public ResponseEntity<Object> success(@PathVariable String orderUUID){
 
-        //TODO adapt with redis
-        orderService.createOrderAfterShipment(orderUUID);
+        String res = orderService.createOrderAfterShipment(orderUUID);
 
-        //TODO adapt with redis
-        ValidationOrderService.cleanOrderBasketDtoList();
-        return "payment ok";
+        if(!res.equals("Order not created")) {
+            orderService.cleanOrderBasketByUUID(orderUUID);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(res);
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(res);
     }
 
     @GetMapping("auth/cancel")

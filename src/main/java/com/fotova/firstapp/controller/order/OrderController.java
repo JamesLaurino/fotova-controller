@@ -29,12 +29,12 @@ public class OrderController {
     }
 
     @GetMapping("auth/order-products")
-    public ResponseEntity<Object> getOrderProductByEmail(@RequestParam String email) {
-        return ResponseEntity.ok(orderService.getOrderProductByEmail(email));
+    public ResponseEntity<Object> getOrderProductByEmail(@RequestParam String email,@RequestParam Integer orderId) {
+        return ResponseEntity.ok(orderService.getOrderProductByEmail(email,orderId));
     }
 
     @GetMapping("auth/order-products/billing")
-    public ResponseEntity<Object> getOrderProductBillingByEmail(@RequestParam String email) {
-        return ResponseEntity.ok(orderService.getOrderProductBillingByEmail(email));
+    public ResponseEntity<Object> getOrderProductBillingByEmail(@RequestParam String email,@RequestParam Integer orderId) {
+        return ResponseEntity.ok(orderService.getOrderProductBillingByEmail(email,orderId));
     }
 }

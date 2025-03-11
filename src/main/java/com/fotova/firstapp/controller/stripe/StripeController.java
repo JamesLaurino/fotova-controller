@@ -27,6 +27,8 @@ public class StripeController {
 
         orderService.fillOrderBasketWithStripeRequest(productRequest);
 
+        orderService.checkOrderQuantity(productRequest.getName());
+
         StripeResponse stripeResponse = stripeService.checkoutProducts(productRequest);
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)

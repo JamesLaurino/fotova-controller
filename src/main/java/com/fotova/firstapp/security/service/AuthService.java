@@ -1,5 +1,6 @@
 package com.fotova.firstapp.security.service;
 
+import com.fotova.dto.authentification.redis.RegisterRequestDto;
 import com.fotova.dto.client.ClientDto;
 import com.fotova.entity.ClientEntity;
 import com.fotova.entity.ERole;
@@ -15,6 +16,8 @@ import com.fotova.firstapp.security.utils.Response;
 import com.fotova.repository.client.ClientRepositoryImpl;
 import com.fotova.repository.role.RoleRepositoryImpl;
 import com.fotova.service.client.ClientMapper;
+import com.fotova.service.email.EmailService;
+import com.fotova.service.client.redis.RegisterRequestService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,6 +55,11 @@ public class AuthService {
     @Autowired
     private ClientMapper clientMapper;
 
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private RegisterRequestService registerRequestService;
 
     @Transactional
     public Response<Object> register(RegisterRequest request) {
@@ -64,39 +72,70 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already registered");
         }
 
-        // generate bcrypt password
-        String hashedPassword = encoder.encode(request.getPassword());
+        RegisterRequestDto registerRequestDto = registerRequestService.save(request);
 
-        // Define User instance, then set new value
-        ClientEntity user = new ClientEntity();
-        user.setUsername(request.getUsername());
-        user.setEmail(request.getEmail());
-        user.setPassword(hashedPassword);
-        user.setIsActive(true);
+        try
+        {
+            emailService.sendRegisterEmail(registerRequestDto.getRegisterId());
+            return Response.builder()
+                    .responseCode(200)
+                    .responseMessage("SUCCESS")
+                    .data("Registration is pending for email validation")
+                    .build();
+        }
+        catch (Exception e)
+        {
+            return Response.builder()
+                    .responseCode(500)
+                    .responseMessage("ERROR")
+                    .data("An error occured during the registration")
+                    .build();
+        }
+    }
 
-        // Set default role to ROLE_ADMIN
-        RoleEntity adminRole = new RoleEntity(ERole.ROLE_ADMIN); // Create the Role instance
-        roleRepository.save(adminRole); // Save it to the database
+    @Transactional
+    public Response<Object> registerAfterEmailConfirm(String uuid) {
 
-        Set<RoleEntity> roles = new HashSet<>();
-        roles.add(adminRole); // Add the persisted Role
+        List<RegisterRequestDto> registerRequestDtoList = registerRequestService.findAll();
+        for (RegisterRequestDto request : registerRequestDtoList) {
+            if (request.getRegisterId().equals(uuid)) {
 
-        user.setRoles(roles);
+                // generate bcrypt password
+                String hashedPassword = encoder.encode(request.getPassword());
 
-        // save user
-        clientRepository.save(user);
+                // Define User instance, then set new value
+                ClientEntity user = new ClientEntity();
+                user.setUsername(request.getUsername());
+                user.setEmail(request.getEmail());
+                user.setPassword(hashedPassword);
+                user.setIsActive(true);
 
-        // return response DTO
-        RegisterUserResponse registerUserResponse = RegisterUserResponse.builder()
-                .name(user.getUsername())
-                .email(user.getEmail())
-                .build();
+                // Set default role to ROLE_ADMIN
+                RoleEntity adminRole = new RoleEntity(ERole.ROLE_ADMIN); // Create the Role instance
+                roleRepository.save(adminRole); // Save it to the database
 
-        return Response.builder()
-                .responseCode(200)
-                .responseMessage("SUCCESS")
-                .data(registerUserResponse)
-                .build();
+                Set<RoleEntity> roles = new HashSet<>();
+                roles.add(adminRole); // Add the persisted Role
+
+                user.setRoles(roles);
+
+                // save user
+                clientRepository.save(user);
+
+                // return response DTO
+                RegisterUserResponse registerUserResponse = RegisterUserResponse.builder()
+                        .name(user.getUsername())
+                        .email(user.getEmail())
+                        .build();
+
+                return Response.builder()
+                        .responseCode(200)
+                        .responseMessage("SUCCESS")
+                        .data(registerUserResponse)
+                        .build();
+            }
+        }
+        throw new RuntimeException("A error occured with the verification code");
     }
 
     // Login Function

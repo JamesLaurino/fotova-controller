@@ -38,6 +38,11 @@ public class AuthController {
         return ResponseEntity.ok(authService.register(request));
     }
 
+    @GetMapping("auth/register/check")
+    public ResponseEntity<Object> checkRegisterEmail(@RequestParam String uuid) {
+        return ResponseEntity.ok(authService.registerAfterEmailConfirm(uuid));
+    }
+
     @PostMapping("auth/login")
     public ResponseEntity<Object> login(@RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));

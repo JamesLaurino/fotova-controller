@@ -2,6 +2,7 @@ package com.fotova.firstapp.security.service;
 
 import com.fotova.dto.authentification.redis.RegisterRequestDto;
 import com.fotova.dto.client.ClientDto;
+import com.fotova.dto.request.ResetPasswordRequest;
 import com.fotova.entity.ClientEntity;
 import com.fotova.entity.ERole;
 import com.fotova.entity.RoleEntity;
@@ -32,6 +33,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -136,6 +138,29 @@ public class AuthService {
             }
         }
         throw new RuntimeException("A error occured with the verification code");
+    }
+
+    @Transactional
+    public Response<Object> resetPassword(ResetPasswordRequest resetPasswordRequest) {
+
+        String hashedPassword = encoder.encode(resetPasswordRequest.getNewPassword());
+        Optional<ClientEntity> clientEntity = clientRepository.findFirstByEmail(resetPasswordRequest.getEmail());
+
+        if (clientEntity.isPresent()) {
+            clientEntity.get().setPassword(hashedPassword);
+            clientRepository.save(clientEntity.get());
+            return Response.builder()
+                    .responseCode(200)
+                    .responseMessage("SUCCESS")
+                    .data("Password reset successfully")
+                    .build();
+        }
+
+        return Response.builder()
+                .responseCode(200)
+                .responseMessage("SUCCESS")
+                .data("Password cannot be reset a error occured")
+                .build();
     }
 
     // Login Function

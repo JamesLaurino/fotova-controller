@@ -17,3 +17,13 @@ Content-Type: application/json
 ### GET USER INFORMATION
 GET http://localhost:8080/api/v1/user
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iLCJpYXQiOjE3NDEwOTk4NzgsImV4cCI6MTc0MTEwMDc3OH0.i6rN4WgkfqKKDs3IUm5nWAWaRSW1cnC3O6cLTZeRoTc
+
+
+### POST RESET PASSWORD
+POST  http://localhost:8080/api/v1/auth/password-reset
+Content-Type: application/json
+
+{
+  "email": "thomas@hotmail.com",
+  "newPassword": "5678"
+}

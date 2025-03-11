@@ -4,6 +4,7 @@ import com.fotova.dto.authentification.AuthentificationDto;
 import com.fotova.dto.authentification.ResponseDto;
 import com.fotova.dto.request.LoginRequest;
 import com.fotova.dto.request.RegisterRequest;
+import com.fotova.dto.request.ResetPasswordRequest;
 import com.fotova.firstapp.security.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,11 @@ public class AuthController {
     @PostMapping(path = "auth/register")
     public ResponseEntity<Object> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
+    }
+
+    @PostMapping("auth/password-reset")
+    public ResponseEntity<Object> resetPassword(@RequestBody ResetPasswordRequest request) {
+        return ResponseEntity.ok(authService.resetPassword(request));
     }
 
     @GetMapping("auth/register/check")

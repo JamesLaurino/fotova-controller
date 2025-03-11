@@ -23,13 +23,10 @@ public class StripeController {
     @PostMapping("auth/checkout")
     public ResponseEntity<Object> checkoutProducts(@RequestBody StripeProductRequest productRequest) {
 
-        // SET NAME TO SPECIAL UUID
         productRequest = orderService.setStripeProductRequestName(productRequest);
 
-        // FILL REDIS WITH STRIPE REQUEST
         orderService.fillOrderBasketWithStripeRequest(productRequest);
 
-        // PROCESS THE ORDER
         StripeResponse stripeResponse = stripeService.checkoutProducts(productRequest);
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
@@ -39,18 +36,19 @@ public class StripeController {
     @GetMapping("auth/{orderUUID}/success")
     public ResponseEntity<Object> success(@PathVariable String orderUUID){
 
-        String res = orderService.createOrderAfterShipment(orderUUID);
+        String orderRes = orderService.createOrderAfterShipment(orderUUID);
 
-        if(!res.equals("Order not created")) {
+        if(!orderRes.equals("Order not created")) {
+            orderService.sendRabbitMQOrder(orderRes);
             orderService.cleanOrderBasketByUUID(orderUUID);
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(res);
+                    .body(orderRes);
         }
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(res);
+                .body(orderRes);
     }
 
     @GetMapping("auth/cancel")

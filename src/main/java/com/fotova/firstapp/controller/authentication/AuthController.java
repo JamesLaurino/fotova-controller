@@ -20,7 +20,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("auth/login/demo")
-    public ResponseDto auth(@RequestBody AuthentificationDto authentication) {
+    public ResponseDto authDemoReact(@RequestBody AuthentificationDto authentication) {
 
         ResponseDto responseDto = new ResponseDto();
 

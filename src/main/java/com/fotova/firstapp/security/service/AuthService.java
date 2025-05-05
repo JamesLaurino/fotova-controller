@@ -146,6 +146,7 @@ public class AuthService {
         String hashedPassword = encoder.encode(resetPasswordRequest.getNewPassword());
         Optional<ClientEntity> clientEntity = clientRepository.findFirstByEmail(resetPasswordRequest.getEmail());
 
+        //TODO MAKE A EMAIL CHECK
         if (clientEntity.isPresent()) {
             clientEntity.get().setPassword(hashedPassword);
             clientRepository.save(clientEntity.get());

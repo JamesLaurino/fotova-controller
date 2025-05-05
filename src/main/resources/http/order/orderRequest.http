@@ -20,3 +20,5 @@ GET http://localhost:8080/api/v1/auth/order-products?email=thomas@hotmail.com&or
 
 ### GET creating billing by email
 GET http://localhost:8080/api/v1/auth/order-products/billing?email=thomas@hotmail.com&orderId=1
+
+//todo add récupèrer les orders pour une période données.

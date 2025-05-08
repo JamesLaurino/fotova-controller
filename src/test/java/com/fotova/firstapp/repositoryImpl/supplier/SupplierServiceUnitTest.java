@@ -114,4 +114,38 @@ public class SupplierServiceUnitTest {
         assertThat(result.getRegistrationNumber()).isEqualTo("Updated");
         verify(supplierRepositoryJpa, times(1)).save(supplierEntityOne);
     }
+
+    @Test
+    @DisplayName("update Supplier Address Id")
+    @Order(5)
+    public void given_whenSupplierAddress_thenAddressIsNull() {
+
+        // WHEN
+        BDDMockito.willDoNothing().given(supplierRepositoryJpa)
+                .updateSupplierAddressId(supplierEntityTwo.getId());
+
+        supplierRepositoryImpl.updateSupplierAddressId(supplierEntityTwo.getId());
+
+
+        // THEN
+        verify(supplierRepositoryJpa, times(1))
+                .updateSupplierAddressId(supplierEntityTwo.getId());
+    }
+
+    @Test
+    @DisplayName("update Supplier Product Id")
+    @Order(6)
+    public void given_whenUpdateSupplierProduct_thenProductIsNull() {
+
+        // WHEN
+        BDDMockito.willDoNothing().given(supplierRepositoryJpa)
+                .updateSupplierProductId(supplierEntityTwo.getId());
+
+        supplierRepositoryImpl.updateSupplierProductId(supplierEntityTwo.getId());
+
+
+        // THEN
+        verify(supplierRepositoryJpa, times(1))
+                .updateSupplierProductId(supplierEntityTwo.getId());
+    }
 }

@@ -111,4 +111,21 @@ public class CategoryServiceUnitTest {
         assertThat(result.getName()).isEqualTo("Updated");
         verify(categoryRepositoryJpa, times(1)).save(categoryEntityOne);
     }
+
+    @Test
+    @DisplayName("update product category id")
+    @Order(5)
+    public void given_whenProductId_thenCategoryIsNull() {
+
+        // WHEN
+        BDDMockito.willDoNothing().given(categoryRepositoryJpa)
+                .updateProductCategoryId(categoryEntityOne.getId());
+
+        categoryRepositoryImpl.updateProductCategoryId(categoryEntityOne.getId());
+
+
+        // THEN
+        verify(categoryRepositoryJpa, times(1))
+                .updateProductCategoryId(categoryEntityOne.getId());
+    }
 }

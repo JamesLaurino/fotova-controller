@@ -181,4 +181,21 @@ public class ClientServiceUnitTest {
         verify(clientRepositoryJpa, times(1)).findById(2);
     }
 
+    @Test
+    @DisplayName("update product category id")
+    @Order(8)
+    public void given_whenProductId_thenCategoryIsNull() {
+
+        // WHEN
+        BDDMockito.willDoNothing().given(clientRepositoryJpa)
+                .updateClientAddress(clientEntityOne.getId());
+
+        clientRepositoryImpl.updateClientAddress(clientEntityOne.getId());
+
+
+        // THEN
+        verify(clientRepositoryJpa, times(1))
+                .updateClientAddress(clientEntityOne.getId());
+    }
+
 }

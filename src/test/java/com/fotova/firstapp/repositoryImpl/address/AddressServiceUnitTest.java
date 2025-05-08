@@ -1,6 +1,7 @@
 package com.fotova.firstapp.repositoryImpl.address;
 
 import com.fotova.entity.AddressEntity;
+import com.fotova.entity.ClientEntity;
 import com.fotova.repository.address.AddressRepositoryImpl;
 import com.fotova.repository.address.AddressRepositoryJpa;
 import org.junit.jupiter.api.BeforeEach;
@@ -124,5 +125,30 @@ public class AddressServiceUnitTest {
         assertThat(result.getCity()).isEqualTo("Updated");
         assertThat(result.getCountry()).isEqualTo("Updated");
         verify(addressRepositoryJpa, times(1)).save(addressEntityOne);
+    }
+
+    @Test
+    @DisplayName("update address client id")
+    @Order(5)
+    public void given_whenAddressId_thenClientIsNull() {
+
+        // GIVEN
+        ClientEntity clientEntity = new ClientEntity();
+        clientEntity.setId(1);
+        clientEntity.setUsername("Thomas");
+        clientEntity.setPassword("<PASSWORD>");
+        clientEntity.setEmail("<EMAIL>");
+        clientEntity.setAddress(addressEntityOne);
+
+        // WHEN
+        BDDMockito.willDoNothing().given(addressRepositoryJpa)
+                .updateClientAddressId(clientEntity.getAddress().getId());
+
+        addressRepositoryImpl.updateClientAddressId(addressEntityOne.getId());
+
+
+        // THEN
+        verify(addressRepositoryJpa, times(1))
+                .updateClientAddressId(addressEntityOne.getId());
     }
 }

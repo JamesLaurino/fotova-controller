@@ -84,6 +84,7 @@ public class CategoryServiceUnitTest {
     @Order(3)
     public void givenDeleteAllCategory_whenDeleteById_thenSuccess() {
         // WHEN
+        BDDMockito.willDoNothing().given(categoryRepositoryJpa).deleteById(2);
         categoryRepositoryImpl.deleteById(2);
 
         // THEN : vérifier que la méthode est utilisée avec le bon paramètre

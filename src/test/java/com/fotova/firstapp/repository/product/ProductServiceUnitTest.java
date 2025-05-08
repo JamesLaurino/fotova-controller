@@ -96,6 +96,7 @@ public class ProductServiceUnitTest {
     public void givenDeleteAllProduct_whenDeleteById_thenSuccess() {
 
         // WHEN
+        BDDMockito.willDoNothing().given(productRepositoryJpa).deleteById(1);
         productRepositoryImpl.deleteById(1);
 
         // THEN : vérifier que la méthode est utilisée avec le bon paramètre

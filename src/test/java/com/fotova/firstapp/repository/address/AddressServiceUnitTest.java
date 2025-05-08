@@ -92,6 +92,7 @@ public class AddressServiceUnitTest {
     @Order(3)
     public void givenDeleteAllAddress_whenDeleteById_thenSuccess() {
         // WHEN
+        BDDMockito.willDoNothing().given(addressRepositoryJpa).deleteById(2);
         addressRepositoryImpl.deleteById(2);
 
         // THEN

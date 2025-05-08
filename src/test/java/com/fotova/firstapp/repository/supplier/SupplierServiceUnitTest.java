@@ -1,6 +1,5 @@
 package com.fotova.firstapp.repository.supplier;
 
-import com.fotova.entity.CommentEntity;
 import com.fotova.entity.SupplierEntity;
 import com.fotova.repository.supplier.SupplierRepositoryImpl;
 import com.fotova.repository.supplier.SupplierRepositoryJpa;
@@ -16,7 +15,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,6 +87,7 @@ public class SupplierServiceUnitTest {
     @Order(3)
     public void givenDeleteComment_whenDeleteById_thenSuccess() {
         // WHEN
+        BDDMockito.willDoNothing().given(supplierRepositoryJpa).deleteById(1);
         supplierRepositoryImpl.deleteById(1);
 
         // THEN : vérifier que la méthode est utilisée avec le bon paramètre

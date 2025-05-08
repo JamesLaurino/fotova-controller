@@ -1,4 +1,4 @@
-package com.fotova.firstapp.repository.address;
+package com.fotova.firstapp.repositoryImpl.address;
 
 import com.fotova.entity.AddressEntity;
 import com.fotova.repository.address.AddressRepositoryImpl;

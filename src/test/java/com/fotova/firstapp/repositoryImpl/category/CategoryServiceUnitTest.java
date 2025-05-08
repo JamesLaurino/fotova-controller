@@ -1,4 +1,4 @@
-package com.fotova.firstapp.repository.category;
+package com.fotova.firstapp.repositoryImpl.category;
 
 import com.fotova.entity.CategoryEntity;
 import com.fotova.repository.category.CategoryRepositoryImpl;

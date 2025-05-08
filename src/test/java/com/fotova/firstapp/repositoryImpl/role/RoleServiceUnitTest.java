@@ -1,4 +1,4 @@
-package com.fotova.firstapp.repository.role;
+package com.fotova.firstapp.repositoryImpl.role;
 
 import com.fotova.entity.ERole;
 import com.fotova.entity.RoleEntity;

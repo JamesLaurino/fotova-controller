@@ -1,4 +1,4 @@
-package com.fotova.firstapp.repository.client;
+package com.fotova.firstapp.repositoryImpl.client;
 
 import com.fotova.entity.ClientEntity;
 import com.fotova.repository.client.ClientRepositoryImpl;

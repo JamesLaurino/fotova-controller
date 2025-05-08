@@ -1,4 +1,4 @@
-package com.fotova.firstapp.repository.product;
+package com.fotova.firstapp.repositoryImpl.product;
 
 import com.fotova.entity.ProductEntity;
 import com.fotova.repository.product.ProductRepositoryImpl;

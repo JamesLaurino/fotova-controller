@@ -1,4 +1,4 @@
-package com.fotova.firstapp.repository.category;
+package com.fotova.firstapp.repositoryImpl.category;
 
 public class CategoryServiceIntegrationTest {
     // updateProductCategoryId

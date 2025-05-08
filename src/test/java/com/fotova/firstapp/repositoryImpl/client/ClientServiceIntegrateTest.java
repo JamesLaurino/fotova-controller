@@ -1,4 +1,4 @@
-package com.fotova.firstapp.repository.client;
+package com.fotova.firstapp.repositoryImpl.client;
 
 public class ClientServiceIntegrateTest {
     // updateClientAddress

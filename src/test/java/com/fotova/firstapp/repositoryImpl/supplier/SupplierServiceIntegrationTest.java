@@ -1,4 +1,4 @@
-package com.fotova.firstapp.repository.supplier;
+package com.fotova.firstapp.repositoryImpl.supplier;
 
 public class SupplierServiceIntegrationTest {
 

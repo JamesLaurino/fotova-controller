@@ -1,4 +1,4 @@
-package com.fotova.firstapp.repository.comment;
+package com.fotova.firstapp.repositoryImpl.comment;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;

@@ -1,4 +1,4 @@
-package com.fotova.firstapp.repository.comment;
+package com.fotova.firstapp.repositoryImpl.comment;
 
 import com.fotova.entity.ClientEntity;
 import com.fotova.entity.CommentEntity;

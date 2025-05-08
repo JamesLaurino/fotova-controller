@@ -1,6 +1,9 @@
 package com.fotova.firstapp.repository.comment;
 
+import com.fotova.entity.ClientEntity;
 import com.fotova.entity.CommentEntity;
+import com.fotova.entity.ERole;
+import com.fotova.entity.RoleEntity;
 import com.fotova.repository.comment.CommentRepositoryImpl;
 import com.fotova.repository.comment.CommentRepositoryJpa;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +25,7 @@ import static org.mockito.Mockito.verify;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -95,7 +99,9 @@ public class CommentServiceUnitTest {
     @DisplayName("Delete comment by id")
     @Order(3)
     public void givenDeleteAllComment_whenDeleteById_thenSuccess() {
+
         // WHEN
+        BDDMockito.willDoNothing().given(commentRepositoryJpa).deleteById(1);
         commentRepositoryImpl.deleteById(1);
 
         // THEN : vérifier que la méthode est utilisée avec le bon paramètre
@@ -124,5 +130,47 @@ public class CommentServiceUnitTest {
         assertThat(result).isNotNull();
         assertThat(result.getBody()).isEqualTo("Updated");
         verify(commentRepositoryJpa, times(1)).save(commentEntityOne);
+    }
+
+    @Test
+    @DisplayName("set comment client Id")
+    @Order(5)
+    public void givenCommentAndClient_whenSetCommentIdClientId_thenCommentClientIdIsSetForComment() {
+
+        // GIVEN
+        ClientEntity clientEntity = new ClientEntity();
+        clientEntity.setId(1);
+        clientEntity.setUsername("Thomas");
+        clientEntity.setPassword("<PASSWORD>");
+        clientEntity.setEmail("<EMAIL>");
+        clientEntity.setRoles(Set.of(new RoleEntity(ERole.ROLE_ADMIN)));
+
+        // WHEN
+        BDDMockito.willDoNothing().given(commentRepositoryJpa)
+                .setCommentClientId(clientEntity.getId(),commentEntityOne.getId());
+
+        commentRepositoryImpl.setCommentClientId(clientEntity.getId(),commentEntityOne.getId());
+
+
+        // THEN
+        verify(commentRepositoryJpa, times(1))
+                .setCommentClientId(clientEntity.getId(),commentEntityOne.getId());
+    }
+
+    @Test
+    @DisplayName("update comment client id")
+    @Order(6)
+    public void given_whenCommentId_thenClientIsNull() {
+
+        // WHEN
+        BDDMockito.willDoNothing().given(commentRepositoryJpa)
+                .updateCommentFromClient(commentEntityOne.getId());
+
+        commentRepositoryImpl.updateCommentClientId(commentEntityOne.getId());
+
+
+        // THEN
+        verify(commentRepositoryJpa, times(1))
+                .updateCommentFromClient(commentEntityOne.getId());
     }
 }

@@ -7,8 +7,4 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class CommentServiceIntegrateTest {
-
-    // updateClientCommentId
-    // updateCommentClientId
-    // setCommentClientId
 }

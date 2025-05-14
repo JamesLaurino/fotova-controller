@@ -1,7 +1,5 @@
 package com.fotova.firstapp.service.client;
 
-import com.fotova.dto.client.ClientAddressDto;
-import com.fotova.dto.client.ClientCommentDto;
 import com.fotova.dto.client.ClientDto;
 import com.fotova.entity.AddressEntity;
 import com.fotova.entity.ClientEntity;

@@ -61,8 +61,14 @@ public class CategoryControllerTest {
         verify(categoryService, times(1)).getAllCategories();
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.size()",
-                        CoreMatchers.is(categoryDtoList.size())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.size()",
+                        CoreMatchers.is(categoryDtoList.size())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success",
+                        CoreMatchers.is(true)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
+                        CoreMatchers.is(200)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
+                        CoreMatchers.is("Categories retrieved successfully")));
 
     }
 
@@ -82,11 +88,16 @@ public class CategoryControllerTest {
         verify(categoryService, times(1)).getCategoryDtoById(categoryDto.getId());
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id",
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.id",
                         CoreMatchers.is(categoryDto.getId())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name",
-                        CoreMatchers.is(categoryDto.getName())));
-
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.name",
+                        CoreMatchers.is(categoryDto.getName())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success",
+                        CoreMatchers.is(true)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
+                        CoreMatchers.is(200)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
+                    CoreMatchers.is("Category retrieved successfully")));
     }
 
     @Test
@@ -108,10 +119,16 @@ public class CategoryControllerTest {
         // THEN
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id",
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.id",
                         CoreMatchers.is(categoryDto.getId())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name",
-                        CoreMatchers.is(categoryDto.getName())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.name",
+                        CoreMatchers.is(categoryDto.getName())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success",
+                        CoreMatchers.is(true)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
+                        CoreMatchers.is(200)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
+                        CoreMatchers.is("Category added successfully")));
     }
 
     @Test
@@ -133,10 +150,16 @@ public class CategoryControllerTest {
         // THEN
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id",
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.id",
                         CoreMatchers.is(categoryDto.getId())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name",
-                        CoreMatchers.is(categoryDto.getName())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.name",
+                        CoreMatchers.is(categoryDto.getName())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success",
+                        CoreMatchers.is(true)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
+                        CoreMatchers.is(200)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
+                        CoreMatchers.is("Category updated successfully")));
     }
 
     @Test
@@ -154,7 +177,11 @@ public class CategoryControllerTest {
         verify(categoryService, times(1)).deleteCategoryById(categoryId);
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message",
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success",
+                        CoreMatchers.is(true)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
+                        CoreMatchers.is(200)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
                         CoreMatchers.is("Category deleted successfully")));
     }
 }

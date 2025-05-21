@@ -15,6 +15,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Response<T> {
 
+    private Boolean success;
     private int responseCode;
     private String responseMessage;
     private T data;
@@ -23,5 +24,4 @@ public class Response<T> {
     private Integer pageSize;
     private Integer totalPage;
     private Long totalData;
-
 }

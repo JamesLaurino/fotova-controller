@@ -70,8 +70,14 @@ public class AddressControllerTest {
         verify(addressService, times(1)).getAllAddresses();
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.size()",
-                        CoreMatchers.is(addressDtoList.size())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.size()",
+                        CoreMatchers.is(addressDtoList.size())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success",
+                        CoreMatchers.is(true)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
+                        CoreMatchers.is(200)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
+                        CoreMatchers.is("Addresses retrieved successfully")));
 
     }
 
@@ -94,16 +100,22 @@ public class AddressControllerTest {
         verify(addressService, times(1)).getAddressById(addressDto.getId());
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id",
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.id",
                         CoreMatchers.is(addressDto.getId())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.city",
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.city",
                     CoreMatchers.is(addressDto.getCity())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.country",
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.country",
                     CoreMatchers.is(addressDto.getCountry())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.number",
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.number",
                         CoreMatchers.is(addressDto.getNumber())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.street",
-                        CoreMatchers.is(addressDto.getStreet())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.street",
+                        CoreMatchers.is(addressDto.getStreet())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success",
+                        CoreMatchers.is(true)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
+                        CoreMatchers.is(200)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
+                        CoreMatchers.is("Address retrieved successfully")));
 
     }
 
@@ -122,8 +134,12 @@ public class AddressControllerTest {
         verify(addressService, times(1)).deleteAddressById(addressId);
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message",
-                        CoreMatchers.is("address deleted successfully")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success",
+                        CoreMatchers.is(true)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
+                        CoreMatchers.is(200)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
+                        CoreMatchers.is("Address deleted successfully")));
     }
 
     @Test
@@ -148,14 +164,20 @@ public class AddressControllerTest {
         // THEN
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.city",
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.city",
                         CoreMatchers.is(addressDto.getCity())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.country",
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.country",
                         CoreMatchers.is(addressDto.getCountry())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.number",
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.number",
                         CoreMatchers.is(addressDto.getNumber())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.street",
-                        CoreMatchers.is(addressDto.getStreet())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.street",
+                        CoreMatchers.is(addressDto.getStreet())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success",
+                        CoreMatchers.is(true)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
+                        CoreMatchers.is(200)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
+                        CoreMatchers.is("Address added successfully")));
     }
 
     @Test
@@ -180,13 +202,19 @@ public class AddressControllerTest {
         // THEN
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.city",
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.city",
                         CoreMatchers.is(addressDto.getCity())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.country",
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.country",
                         CoreMatchers.is(addressDto.getCountry())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.number",
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.number",
                         CoreMatchers.is(addressDto.getNumber())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.street",
-                        CoreMatchers.is(addressDto.getStreet())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.street",
+                        CoreMatchers.is(addressDto.getStreet())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success",
+                        CoreMatchers.is(true)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
+                        CoreMatchers.is(200)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
+                        CoreMatchers.is("Address updated successfully")));
     }
 }

@@ -70,6 +70,7 @@ public class ErrorHandler {
 
     private Response<Object> mappingError(int responseCode, String responseMessage, List<String> errorList) {
         return Response.builder()
+                .success(false)
                 .responseCode(responseCode)
                 .responseMessage(responseMessage)
                 .errorList(errorList)

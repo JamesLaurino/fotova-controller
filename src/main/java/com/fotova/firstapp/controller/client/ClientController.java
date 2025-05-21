@@ -1,13 +1,18 @@
 package com.fotova.firstapp.controller.client;
 
+import com.fotova.dto.category.CategoryDto;
 import com.fotova.dto.comment.CommentDto;
 import com.fotova.dto.address.AddressDto;
 import com.fotova.dto.client.ClientDto;
 import com.fotova.firstapp.security.service.AuthService;
+import com.fotova.firstapp.security.utils.Response;
 import com.fotova.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -22,34 +27,70 @@ public class ClientController {
 
     @GetMapping("auth/clients")
     public ResponseEntity<Object> getAllClient() {
-        return ResponseEntity.ok(clientService.getAllClients());
+        Response<List<ClientDto>> response = Response.<List<ClientDto>>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Clients retrieved successfully")
+                .data(clientService.getAllClients())
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("auth/client/{clientId}")
     public ResponseEntity<Object> getClientById(@PathVariable Integer clientId) {
-        return ResponseEntity.ok(clientService.getClientById(clientId));
+        Response<ClientDto> response = Response.<ClientDto>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Client retrieved successfully")
+                .data(clientService.getClientById(clientId))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("client/update")
     public ResponseEntity<Object> updateAddressClient(@RequestBody AddressDto addressDto) {
         ClientDto clientDto = authService.getPrincipal();
-        return ResponseEntity.ok(clientService.updateAddressClient(clientDto.getId(),addressDto));
+        Response<ClientDto> response = Response.<ClientDto>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Client updated successfully")
+                .data(clientService.updateAddressClient(clientDto.getId(),addressDto))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/client/address")
     public ResponseEntity<Object> postAddressClient(@RequestBody AddressDto addressDto) {
         ClientDto clientDto = authService.getPrincipal();
-        return ResponseEntity.ok(clientService.addAddressClient(clientDto.getId(),addressDto));
+        Response<ClientDto> response = Response.<ClientDto>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Clients address added successfully")
+                .data(clientService.addAddressClient(clientDto.getId(),addressDto))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("client/comment")
-    public ResponseEntity<String> postCommentClient(@RequestBody CommentDto commentDto) {
+    public ResponseEntity<Object> postCommentClient(@RequestBody CommentDto commentDto) {
         ClientDto clientDto = authService.getPrincipal();
-        return ResponseEntity.ok(clientService.addCommentClient(clientDto.getId(),commentDto));
+        Response<String> response = Response.<String>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Client comment retrieved successfully")
+                .data(clientService.addCommentClient(clientDto.getId(),commentDto))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("auth/client/{clientId}/delete")
-    public ResponseEntity<String> deleteClientById(@PathVariable Integer clientId) {
-        return ResponseEntity.ok(clientService.deleteClientById(clientId));
+    public ResponseEntity<Object> deleteClientById(@PathVariable Integer clientId) {
+        Response<String> response = Response.<String>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Client deleted successfully")
+                .data(clientService.deleteClientById(clientId))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
     }
 }

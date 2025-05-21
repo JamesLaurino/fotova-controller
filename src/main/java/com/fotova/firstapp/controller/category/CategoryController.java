@@ -1,6 +1,7 @@
 package com.fotova.firstapp.controller.category;
 
 import com.fotova.dto.category.CategoryDto;
+import com.fotova.firstapp.dto.ReponseDeleteDto;
 import com.fotova.service.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
 
     @GetMapping("auth/category/{categoryId}")
@@ -36,8 +37,11 @@ public class CategoryController {
     }
 
     @DeleteMapping("auth/category/{id}/delete")
-    public ResponseEntity<String> deleteCategoryById(@PathVariable int id) {
+    public ResponseEntity<ReponseDeleteDto> deleteCategoryById(@PathVariable int id) {
         categoryService.deleteCategoryById(id);
-        return ResponseEntity.ok("Category deleted successfully");
+        ReponseDeleteDto responseDeleteDto = ReponseDeleteDto.builder()
+                .message( "Category deleted successfully")
+                .build();
+        return ResponseEntity.ok(responseDeleteDto);
     }
 }

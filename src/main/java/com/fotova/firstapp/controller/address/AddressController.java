@@ -1,6 +1,7 @@
 package com.fotova.firstapp.controller.address;
 
 import com.fotova.dto.address.AddressDto;
+import com.fotova.firstapp.dto.address.ReponseDeleteDto;
 import com.fotova.service.address.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +25,12 @@ public class AddressController {
     }
 
     @DeleteMapping("auth/address/{addressId}/delete")
-    public ResponseEntity<String> deleteAddress(@PathVariable Integer addressId) {
+    public ResponseEntity<ReponseDeleteDto> deleteAddress(@PathVariable Integer addressId) {
         addressService.deleteAddressById(addressId);
-        return ResponseEntity.ok("address deleted successfully");
+        ReponseDeleteDto responseDto = ReponseDeleteDto.builder()
+                .message("address deleted successfully")
+                .build();
+        return ResponseEntity.ok(responseDto);
     }
 
     @PostMapping("auth/address/add")

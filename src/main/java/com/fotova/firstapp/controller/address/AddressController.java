@@ -1,7 +1,7 @@
 package com.fotova.firstapp.controller.address;
 
 import com.fotova.dto.address.AddressDto;
-import com.fotova.firstapp.dto.address.ReponseDeleteDto;
+import com.fotova.firstapp.dto.ReponseDeleteDto;
 import com.fotova.service.address.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

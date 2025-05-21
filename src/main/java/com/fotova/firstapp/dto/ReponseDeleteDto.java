@@ -1,4 +1,4 @@
-package com.fotova.firstapp.dto.address;
+package com.fotova.firstapp.dto;
 
 import lombok.*;
 

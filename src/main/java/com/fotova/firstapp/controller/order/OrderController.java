@@ -1,10 +1,15 @@
 package com.fotova.firstapp.controller.order;
 
+import com.fotova.dto.comment.CommentDto;
 import com.fotova.dto.order.OrderDto;
+import com.fotova.firstapp.security.utils.Response;
 import com.fotova.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1")
@@ -14,8 +19,14 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("auth/orders")
-    public ResponseEntity<Object> getAllComments() {
-        return ResponseEntity.ok(orderService.getAllOrders());
+    public ResponseEntity<Object> getAllOrders() {
+        Response<List<OrderDto>> response = Response.<List<OrderDto>>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Orders retrieved successfully")
+                .data(orderService.getAllOrders())
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("auth/order/{orderId}")

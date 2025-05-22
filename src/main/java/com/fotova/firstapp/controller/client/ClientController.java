@@ -47,36 +47,36 @@ public class ClientController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("client/update")
+    @PutMapping("auth/client/update")
     public ResponseEntity<Object> updateAddressClient(@RequestBody AddressDto addressDto) {
         ClientDto clientDto = authService.getPrincipal();
         Response<ClientDto> response = Response.<ClientDto>builder()
                 .responseCode(HttpStatus.OK.value())
-                .responseMessage("Client updated successfully")
+                .responseMessage("Client address updated successfully")
                 .data(clientService.updateAddressClient(clientDto.getId(),addressDto))
                 .success(true)
                 .build();
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/client/address")
+    @PostMapping("auth/client/address")
     public ResponseEntity<Object> postAddressClient(@RequestBody AddressDto addressDto) {
         ClientDto clientDto = authService.getPrincipal();
         Response<ClientDto> response = Response.<ClientDto>builder()
                 .responseCode(HttpStatus.OK.value())
-                .responseMessage("Clients address added successfully")
+                .responseMessage("Client address added successfully")
                 .data(clientService.addAddressClient(clientDto.getId(),addressDto))
                 .success(true)
                 .build();
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("client/comment")
+    @PostMapping("auth/client/comment")
     public ResponseEntity<Object> postCommentClient(@RequestBody CommentDto commentDto) {
         ClientDto clientDto = authService.getPrincipal();
         Response<String> response = Response.<String>builder()
                 .responseCode(HttpStatus.OK.value())
-                .responseMessage("Client comment retrieved successfully")
+                .responseMessage("Client comment added successfully")
                 .data(clientService.addCommentClient(clientDto.getId(),commentDto))
                 .success(true)
                 .build();

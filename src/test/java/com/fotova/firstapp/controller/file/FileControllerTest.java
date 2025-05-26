@@ -1,10 +1,8 @@
 package com.fotova.firstapp.controller.file;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fotova.dto.comment.CommentDto;
 import com.fotova.dto.file.FileDto;
 import com.fotova.dto.file.FileResponseDto;
-import com.fotova.service.comment.CommentService;
 import com.fotova.service.file.FileService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.DisplayName;
@@ -18,13 +16,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.Instant;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest

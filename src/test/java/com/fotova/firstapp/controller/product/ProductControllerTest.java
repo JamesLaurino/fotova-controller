@@ -1,13 +1,8 @@
 package com.fotova.firstapp.controller.product;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fotova.dto.order.OrderClientDto;
-import com.fotova.dto.order.OrderDto;
-import com.fotova.dto.orderProduct.OrderProductBillingDto;
-import com.fotova.dto.orderProduct.OrderProductDto;
 import com.fotova.dto.product.CategoryInnerProductDto;
 import com.fotova.dto.product.ProductDtoBack;
-import com.fotova.service.order.OrderService;
 import com.fotova.service.product.ProductService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.Instant;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;

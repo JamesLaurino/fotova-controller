@@ -138,6 +138,6 @@ public class ImageRepositoryImplTest {
         imageRepositoryImpl.deleteAll();
 
         // THEN
-        verify(imageRepositoryJpa, times(1)).deleteAll();
+        verify(imageRepositoryJpa, times(2)).deleteAll();
     }
 }

@@ -166,7 +166,7 @@ public class CommentControllerTest {
         Integer commentId = 1;
 
         // WHEN
-        BDDMockito.willDoNothing().given(commentService).deleteCommentById(commentId);
+        BDDMockito.given(commentService.deleteCommentById(commentId)).willReturn("Comment has been deleted successfully for id : " + commentId);
         ResultActions resultActions = mockMvc.perform(delete("/api/v1/auth/comment/{commentId}/delete",
                 commentId));
 
@@ -178,6 +178,8 @@ public class CommentControllerTest {
                         CoreMatchers.is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
                         CoreMatchers.is(200)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data",
+                        CoreMatchers.is("Comment has been deleted successfully for id : " + commentId)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
                         CoreMatchers.is("Comment deleted successfully")));
 

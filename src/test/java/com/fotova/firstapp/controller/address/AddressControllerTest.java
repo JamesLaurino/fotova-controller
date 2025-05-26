@@ -126,7 +126,8 @@ public class AddressControllerTest {
         Integer addressId = 1;
 
         // WHEN
-        BDDMockito.willDoNothing().given(addressService).deleteAddressById(addressId);
+        BDDMockito.given(addressService.deleteAddressById(addressId))
+                .willReturn("Address has been deleted successfully for id : " + addressId);
         ResultActions resultActions = mockMvc.perform(delete("/api/v1/auth/address/{addressId}/delete",
                 addressId));
 

@@ -64,10 +64,10 @@ public class CategoryController {
 
     @DeleteMapping("auth/category/{id}/delete")
     public ResponseEntity<Object> deleteCategoryById(@PathVariable int id) {
-        categoryService.deleteCategoryById(id);
-        Response<CategoryDto> response = Response.<CategoryDto>builder()
+        Response<String> response = Response.<String>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Category deleted successfully")
+                .data(categoryService.deleteCategoryById(id))
                 .success(true)
                 .build();
         return ResponseEntity.ok(response);

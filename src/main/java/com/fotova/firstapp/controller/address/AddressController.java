@@ -41,10 +41,10 @@ public class AddressController {
 
     @DeleteMapping("auth/address/{addressId}/delete")
     public ResponseEntity<Object> deleteAddress(@PathVariable Integer addressId) {
-        addressService.deleteAddressById(addressId);
         Response<String> response = Response.<String>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Address deleted successfully")
+                .data(addressService.deleteAddressById(addressId))
                 .success(true)
                 .build();
         return ResponseEntity.ok(response);

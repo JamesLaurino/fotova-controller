@@ -65,10 +65,10 @@ public class CommentController {
 
     @DeleteMapping("auth/comment/{commentId}/delete")
     public ResponseEntity<Object> deleteComment(@PathVariable("commentId") Integer commentId) {
-        commentService.deleteCommentById(commentId);
         Response<String> response = Response.<String>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Comment deleted successfully")
+                .data(commentService.deleteCommentById(commentId))
                 .success(true)
                 .build();
         return ResponseEntity.ok(response);

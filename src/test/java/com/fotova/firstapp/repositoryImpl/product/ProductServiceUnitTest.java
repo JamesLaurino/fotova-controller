@@ -3,6 +3,8 @@ package com.fotova.firstapp.repositoryImpl.product;
 import com.fotova.entity.ProductEntity;
 import com.fotova.repository.product.ProductRepositoryImpl;
 import com.fotova.repository.product.ProductRepositoryJpa;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -30,6 +32,9 @@ public class ProductServiceUnitTest {
 
     @InjectMocks
     private ProductRepositoryImpl productRepositoryImpl;
+
+    @Mock
+    private EntityManager entityManager;
 
     private ProductEntity productEntityOne = new ProductEntity();
     private ProductEntity productEntityTwo = new ProductEntity();

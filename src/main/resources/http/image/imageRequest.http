@@ -1,4 +1,4 @@
-### GET All images
+### GET all images
 GET http://localhost:8080/api/v1/auth/images
 
 ### GET image by id
@@ -7,7 +7,7 @@ GET http://localhost:8080/api/v1/auth/image/1
 ### DELETE image
 DELETE http://localhost:8080/api/v1/auth/image/1/delete
 
-### POST add image
+### POST add image to product id
 POST http://localhost:8080/api/v1/auth/image/add/1
 Content-Type: application/json
 
@@ -15,7 +15,7 @@ Content-Type: application/json
   "path": "testPost"
 }
 
-### PUT update a comment
+### PUT update a image
 PUT http://localhost:8080/api/v1/auth/image/update
 Content-Type: application/json
 

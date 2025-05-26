@@ -2,6 +2,8 @@ package com.fotova.firstapp.controller.order;
 
 import com.fotova.dto.comment.CommentDto;
 import com.fotova.dto.order.OrderDto;
+import com.fotova.dto.orderProduct.OrderProductBillingDto;
+import com.fotova.dto.orderProduct.OrderProductDto;
 import com.fotova.firstapp.security.utils.Response;
 import com.fotova.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,21 +33,45 @@ public class OrderController {
 
     @GetMapping("auth/order/{orderId}")
     public ResponseEntity<Object> getOrderById(@PathVariable Integer orderId) {
-        return ResponseEntity.ok(orderService.getOrderById(orderId));
+        Response<OrderDto> response = Response.<OrderDto>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Order retrieved successfully")
+                .data(orderService.getOrderById(orderId))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("auth/order/add")
     public ResponseEntity<Object> addOrder(@RequestBody OrderDto orderDto) {
-        return ResponseEntity.ok(orderService.addOrder(orderDto));
+        Response<OrderDto> response = Response.<OrderDto>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Order added successfully")
+                .data(orderService.addOrder(orderDto))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("auth/order-products")
     public ResponseEntity<Object> getOrderProductByEmail(@RequestParam String email,@RequestParam Integer orderId) {
-        return ResponseEntity.ok(orderService.getOrderProductByEmail(email,orderId));
+        Response<List<OrderProductDto>> response = Response.<List<OrderProductDto>>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Order product retrieve successfully")
+                .data(orderService.getOrderProductByEmail(email,orderId))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("auth/order-products/billing")
     public ResponseEntity<Object> getOrderProductBillingByEmail(@RequestParam String email,@RequestParam Integer orderId) {
-        return ResponseEntity.ok(orderService.getOrderProductBillingByEmail(email,orderId));
+        Response<OrderProductBillingDto> response = Response.<OrderProductBillingDto>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Order product retrieve successfully")
+                .data(orderService.getOrderProductBillingByEmail(email,orderId))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
     }
 }

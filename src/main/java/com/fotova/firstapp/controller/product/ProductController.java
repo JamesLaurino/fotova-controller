@@ -2,11 +2,9 @@ package com.fotova.firstapp.controller.product;
 
 import com.fotova.dto.product.ProductDtoBack;
 import com.fotova.dto.product.ProductPageDto;
-import com.fotova.entity.ProductEntity;
 import com.fotova.firstapp.security.utils.Response;
 import com.fotova.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

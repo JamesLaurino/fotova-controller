@@ -21,7 +21,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("auth/products/page/{pageId}")
+    @GetMapping("auth/products/page")
     public ResponseEntity<Object> getProductWithPagination(
             @RequestParam(defaultValue = "0") int pageNo,
             @RequestParam(defaultValue = "2") int pageSize) {

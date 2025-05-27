@@ -5,6 +5,7 @@ import com.fotova.dto.product.ProductPageDto;
 import com.fotova.firstapp.security.utils.Response;
 import com.fotova.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,14 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private Environment environment;
+
+    @GetMapping( "env")
+    public String getEnvironmentProperty() {
+        return environment.getProperty("spring.application.name");
+    }
 
     @GetMapping("auth/products/page")
     public ResponseEntity<Object> getProductWithPagination(

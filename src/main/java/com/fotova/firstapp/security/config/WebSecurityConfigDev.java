@@ -23,8 +23,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@Profile("prod")
-public class WebSecurityConfig {
+@Profile("dev")
+public class WebSecurityConfigDev {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
@@ -62,8 +62,7 @@ public class WebSecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/v1/auth/**", "/images/**").permitAll()
-                                .anyRequest().authenticated()
+                        auth.anyRequest().permitAll()
                 );
 
         http.authenticationProvider(authenticationProvider());

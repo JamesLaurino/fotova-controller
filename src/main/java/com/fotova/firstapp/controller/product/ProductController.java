@@ -1,9 +1,12 @@
 package com.fotova.firstapp.controller.product;
 
 import com.fotova.dto.product.ProductDtoBack;
+import com.fotova.dto.product.ProductPageDto;
+import com.fotova.entity.ProductEntity;
 import com.fotova.firstapp.security.utils.Response;
 import com.fotova.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,25 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @GetMapping("auth/products/page/{pageId}")
+    public ResponseEntity<Object> getProductWithPagination(
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "2") int pageSize) {
+
+        ProductPageDto productPageDto = productService.getAllProductsPaginate(pageNo,pageSize);
+        Response<List<ProductDtoBack>> response = Response.<List<ProductDtoBack>>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Products paginate retrieved successfully")
+                .data(productPageDto.getContent())
+                .success(true)
+                .totalData(productPageDto.getTotalData())
+                .pageNumber(productPageDto.getPageNumber())
+                .pageSize(productPageDto.getPageSize())
+                .totalPage(productPageDto.getTotalPage())
+                .build();
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping("auth/products")
     public ResponseEntity<Object> getProduct() {

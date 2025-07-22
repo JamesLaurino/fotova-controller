@@ -213,18 +213,18 @@ public class AuthService {
         Integer userId = userDetails.getId();
 
         ClientEntity user = clientRepository.findById(userId);
-        ClientDto userAddress = clientService.getClientById(userId);
+        ClientDto userDto = clientService.getClientById(userId);
         if(user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Email not found !");
         }
-
 
         UserResponse userResponse = UserResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .isActive(user.getIsActive())
-                .address(userAddress.getAddress())
+                .address(userDto.getAddress())
+                .comments(userDto.getCommentEntities())
                 .roles(user.getRoles().stream().map(RoleEntity::getName).toList())
                 .build();
 

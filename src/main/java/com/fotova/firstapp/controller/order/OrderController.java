@@ -64,6 +64,17 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("auth/order-products/{email}")
+    public ResponseEntity<Object> getOrdersByEmail(@PathVariable String email) {
+        Response<List<OrderProductDto>> response = Response.<List<OrderProductDto>>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Orders retrieve successfully")
+                .data(orderService.getOrderProductsByEmail(email))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("auth/order-products/billing")
     public ResponseEntity<Object> getOrderProductBillingByEmail(@RequestParam String email,@RequestParam Integer orderId) {
         Response<OrderProductBillingDto> response = Response.<OrderProductBillingDto>builder()

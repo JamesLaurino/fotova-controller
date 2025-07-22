@@ -15,8 +15,7 @@ Content-Type: application/json
 
 ### GET USER INFORMATION
 GET http://localhost:8080/api/v1/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iLCJpYXQiOjE3NTMxODA3NTEsImV4cCI6MTc1MzE4MTY1MX0.dkv_bx7l6dlJ1TtWklnNd-C_MePrxPCOTcHDx-pfOCE
-
+Authorization: Bearer 123
 
 ### POST RESET PASSWORD
 POST  http://localhost:8080/api/v1/auth/password-reset

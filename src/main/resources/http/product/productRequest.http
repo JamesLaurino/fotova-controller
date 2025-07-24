@@ -4,6 +4,9 @@ GET http://localhost:8080/api/v1/auth/env
 ### GET ALL PRODUCTS
 GET http://localhost:8080/api/v1/auth/products
 
+### GET PRODUCT BY CATEGORY_ID
+GET http://localhost:8080/api/v1/auth/products/category/1
+
 ### GET PRODUCTS WITH PAGE
 GET http://localhost:8080/api/v1/auth/products?pageNo=1&pageSize=2
 

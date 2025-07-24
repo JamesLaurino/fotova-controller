@@ -58,6 +58,17 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("auth/products/category/{categoryId}")
+    public ResponseEntity<Object> getProductByCategory(@PathVariable int categoryId) {
+        Response<List<ProductDtoBack>> response = Response.<List<ProductDtoBack>>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Products retrieved successfully")
+                .data(productService.getAllProductByCategoryId(categoryId))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("auth/product/{id}")
     public ResponseEntity<Object> getProductById(@PathVariable int id) {
         Response<ProductDtoBack> response = Response.<ProductDtoBack>builder()

@@ -23,7 +23,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iL
 }
 
 ### POST add address to a client
-POST http://localhost:8080/api/v1/client/address
+POST http://localhost:8080/api/v1/client/auth/address
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iLCJpYXQiOjE3NDExNjUxOTMsImV4cCI6MTc0MTE2NjA5M30.Kr_j06bK0IAkBCUNMZyyfNg6K9ZnJxF-UhU3I7Us2VI
 

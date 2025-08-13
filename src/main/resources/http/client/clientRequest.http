@@ -35,7 +35,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iL
 }
 
 ### POST add comment to a client
-POST http://localhost:8080/api/v1/client/comment
+POST http://localhost:8080/api/v1/auth/client/comment
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iLCJpYXQiOjE3NDExNjc4ODMsImV4cCI6MTc0MTE2ODc4M30.2MFruAx2QTn8SPdmKlFJcFhpxY9jTtYF2t8FjPDLhlg
 

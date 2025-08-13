@@ -1,7 +1,8 @@
 package com.fotova.firstapp.controller.stripe;
 
-import com.fotova.dto.stripe.StripeProductRequest;
 import com.fotova.dto.StripeResponse;
+import com.fotova.dto.stripe.StripeProductRequest;
+import com.fotova.firstapp.security.utils.Response;
 import com.fotova.service.StripeService;
 import com.fotova.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,15 @@ public class StripeController {
         orderService.checkOrderQuantity(productRequest.getName());
 
         StripeResponse stripeResponse = stripeService.checkoutProducts(productRequest);
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(stripeResponse);
+
+        Response<StripeResponse> response = Response.<StripeResponse>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Checkout realized with success")
+                .data(stripeResponse)
+                .success(true)
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("auth/{orderUUID}/success")

@@ -18,7 +18,8 @@ public class ServerConfig implements WebMvcConfigurer {
                 .addResourceLocations(
                         "classpath:/static/images/",
                         "classpath:/static/css/",
-                        "classpath:/static/js/");
+                        "classpath:/static/js/",
+                        "file:///C:/Dev/images/");
     }
 
     @Override

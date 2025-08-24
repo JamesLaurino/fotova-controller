@@ -28,8 +28,14 @@ public class FileController {
     private String pathFile;
 
     @PostMapping("auth/file/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        return ResponseEntity.ok(fileService.uploadFile(file));
+    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+        Response<String> response = Response.<String>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("File upload successfully")
+                .data(fileService.uploadFile(file))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("auth/files")

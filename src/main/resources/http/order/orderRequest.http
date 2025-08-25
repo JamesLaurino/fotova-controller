@@ -20,7 +20,10 @@ GET http://localhost:8080/api/v1/auth/order-products?email=thomas@hotmail.com&or
 
 
 ### GET retrieve orders product by email
-GET http://localhost:8080/api/v1/auth/order-products/james@hotmail.com
+GET http://localhost:8080/api/v1/auth/order-products/thomas@hotmail.com
+
+### GET retrieve orders product with detailed
+GET http://localhost:8080/api/v1/auth/order-products/detailed
 
 
 ### GET creating billing by email

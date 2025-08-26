@@ -50,6 +50,18 @@ public class ImageController {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("auth/image/delete/{imageName}/{productId}")
+    public ResponseEntity<Object> deleteImageFromProduct(@PathVariable("imageName") String imageName,
+                                                         @PathVariable("productId") Integer productId) {
+        Response<String> response = Response.<String>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Images deleted successfully")
+                .data(imageService.deleteImageByImageName(imageName,productId))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("auth/image/add/{id}")
     public ResponseEntity<Object> addImage(@RequestBody ImageDto imageDto, @PathVariable("id") Integer productId) {
         Response<ImageDto> response = Response.<ImageDto>builder()
@@ -62,7 +74,7 @@ public class ImageController {
     }
 
     @PutMapping("auth/image/update")
-    public ResponseEntity<Object> updateComment(@RequestBody ImageDto imageDto) {
+    public ResponseEntity<Object> updateImage(@RequestBody ImageDto imageDto) {
         Response<ImageDto> response = Response.<ImageDto>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Image updated successfully")

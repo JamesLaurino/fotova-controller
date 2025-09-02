@@ -59,9 +59,7 @@ public class AddressController {
                 description = "Address not found for the given id",
                 content = @Content()
         )
-    }
-    )
-
+    })
     @GetMapping("auth/address/{addressId}")
     public ResponseEntity<Object> getAddressById(
             @Parameter(description = "Address identifier", required = true, example = "1")
@@ -75,8 +73,26 @@ public class AddressController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Retrieve the client address with the id of the address",
+    responses = {
+        @ApiResponse(
+                responseCode = "200",
+                description = "Address deleted successfully",
+                content = @Content(
+                        mediaType = "application/json",
+                        schema = @Schema(implementation = String.class)
+                )
+        ),
+        @ApiResponse(
+                responseCode = "404",
+                description = "Address not found for the given id deletion impossible",
+                content = @Content()
+        )
+    })
     @DeleteMapping("auth/address/{addressId}/delete")
-    public ResponseEntity<Object> deleteAddress(@PathVariable Integer addressId) {
+    public ResponseEntity<Object> deleteAddress(
+            @Parameter(description = "Address identifier", required = true, example = "1")
+            @PathVariable Integer addressId) {
         Response<String> response = Response.<String>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Address deleted successfully")

@@ -1,9 +1,9 @@
 package com.fotova.firstapp.controller.advise;
 
 
-import com.fotova.firstapp.security.exception.BadRequestCustomException;
-import com.fotova.firstapp.security.exception.DataExistException;
-import com.fotova.firstapp.security.exception.NotFoundException;
+import com.fotova.exception.BadRequestCustomException;
+import com.fotova.exception.DataExistException;
+import com.fotova.exception.NotFoundException;
 import com.fotova.firstapp.security.utils.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

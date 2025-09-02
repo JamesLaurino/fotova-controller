@@ -44,6 +44,24 @@ public class AddressController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Retrieve the client address with the id of the address",
+    responses = {
+        @ApiResponse(
+                responseCode = "200",
+                description = "Address retrieved successfully",
+                content = @Content(
+                        mediaType = "application/json",
+                        schema = @Schema(implementation = AddressDto.class)
+                )
+        ),
+        @ApiResponse(
+                responseCode = "404",
+                description = "Address not found for the given id",
+                content = @Content()
+        )
+    }
+    )
+
     @GetMapping("auth/address/{addressId}")
     public ResponseEntity<Object> getAddressById(
             @Parameter(description = "Address identifier", required = true, example = "1")

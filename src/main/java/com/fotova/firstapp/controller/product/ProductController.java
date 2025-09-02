@@ -115,9 +115,8 @@ public class ProductController {
 
 
     @GetMapping("auth/drl/products")
-    public String getAllProducts() {
-        productService.testDroolsService();
-        return "Drools Service";
+    public List<ProductDtoBack> getAllProducts() {
+        return productService.setDiscountForProductDrools();
     }
 
 }

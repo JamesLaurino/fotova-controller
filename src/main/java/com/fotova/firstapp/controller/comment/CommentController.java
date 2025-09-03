@@ -1,6 +1,5 @@
 package com.fotova.firstapp.controller.comment;
 
-import com.fotova.dto.client.ClientDto;
 import com.fotova.dto.comment.CommentDto;
 import com.fotova.firstapp.security.utils.Response;
 import com.fotova.service.comment.CommentService;

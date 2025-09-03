@@ -6,6 +6,7 @@ import com.fotova.dto.file.FileResponseDto;
 import com.fotova.firstapp.security.utils.Response;
 import com.fotova.service.file.FileService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -34,7 +35,9 @@ public class FileController {
     @ApiResponse(responseCode = "500", description = "Error uploading file",
             content = @Content)
     @PostMapping("auth/file/upload")
-    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<Object> uploadFile(
+            @Parameter(description = "file to upload", required = true, example = "file.png")
+            @RequestParam("file") MultipartFile file) throws IOException {
         Response<String> response = Response.<String>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("File upload successfully")
@@ -72,7 +75,9 @@ public class FileController {
     @ApiResponse(responseCode = "500", description = "Error retrieving file",
             content = @Content)
     @GetMapping("auth/file/{filename}")
-    public ResponseEntity<Object> getFileByName(@PathVariable String filename) throws IOException {
+    public ResponseEntity<Object> getFileByName(
+            @Parameter(description = "file name", required = true, example = "test.png")
+            @PathVariable String filename) throws IOException {
         // TODO CHECK FOR TEST
         return ResponseEntity.ok(fileService.getFileByName(filename).getBody());
     }

@@ -1,6 +1,7 @@
 package com.fotova.firstapp.controller.i18n;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,7 +27,9 @@ public class I18nController {
                     @Schema(implementation = String.class))
             })
     @GetMapping("auth/i18n/{lang}")
-    public Map<String, String> getTranslations(@PathVariable String lang) {
+    public Map<String, String> getTranslations(
+            @Parameter(description = "language to get the right file", required = true, example = "en")
+            @PathVariable String lang) {
         Locale locale = new Locale(lang);
         ResourceBundle bundle = ResourceBundle.getBundle("i18n/messages", locale);
 

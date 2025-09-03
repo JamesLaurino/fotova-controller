@@ -6,6 +6,7 @@ import com.fotova.dto.request.RegisterRequest;
 import com.fotova.dto.request.ResetPasswordRequest;
 import com.fotova.firstapp.security.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -56,7 +57,9 @@ public class AuthController {
     @ApiResponse(responseCode = "500", description = "Invalid verification code",
             content = @Content)
     @GetMapping("auth/register/check")
-    public ResponseEntity<Object> checkRegisterEmail(@RequestParam String uuid) {
+    public ResponseEntity<Object> checkRegisterEmail(
+            @Parameter(description = "order UUID", required = true)
+            @RequestParam String uuid) {
         return ResponseEntity.ok(authService.registerAfterEmailConfirm(uuid));
     }
 

@@ -31,6 +31,17 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping("auth/order/complete/{orderId}")
+    public ResponseEntity<Object> toggleCompletedOrder(@PathVariable Integer orderId) {
+        Response<OrderDto> response = Response.<OrderDto>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Order completeness updated successfully")
+                .data(orderService.toggleCompleted(orderId))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("auth/order/{orderId}")
     public ResponseEntity<Object> getOrderById(@PathVariable Integer orderId) {
         Response<OrderDto> response = Response.<OrderDto>builder()

@@ -10,6 +10,7 @@ Content-Type: application/json
 
 {
   "createAt": "2025-03-06T17:00:00Z",
+  "isDone": false,
   "client": {
     "email": "thomas@hotmail.com"
   }
@@ -18,6 +19,8 @@ Content-Type: application/json
 ### GET retrieve order product by email and orderId
 GET http://localhost:8080/api/v1/auth/order-products?email=thomas@hotmail.com&orderId=1
 
+### TOGGLE COMPLETED ORDER
+PUT http://localhost:8080/api/v1/auth/order/complete/1
 
 ### GET retrieve orders product by email
 GET http://localhost:8080/api/v1/auth/order-products/thomas@hotmail.com

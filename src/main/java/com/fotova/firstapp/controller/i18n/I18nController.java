@@ -1,7 +1,9 @@
 package com.fotova.firstapp.controller.i18n;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +18,13 @@ import java.util.ResourceBundle;
 @RequestMapping("api/v1")
 public class I18nController {
 
-    @Autowired
-    private MessageSource messageSource;
 
+    @Operation(summary = "Retrieve labels and tooltips")
+    @ApiResponse(responseCode = "200", description = "Retrieve all labels and tooltips from the i18 file",
+            content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = String.class))
+            })
     @GetMapping("auth/i18n/{lang}")
     public Map<String, String> getTranslations(@PathVariable String lang) {
         Locale locale = new Locale(lang);

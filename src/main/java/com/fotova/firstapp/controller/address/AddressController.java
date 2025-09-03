@@ -102,6 +102,14 @@ public class AddressController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Add a new address")
+    @ApiResponse(responseCode = "200", description = "Address added successfully",
+            content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = AddressDto.class))
+            })
+    @ApiResponse(responseCode = "409", description = "Address already exists",
+            content = @Content)
     @PostMapping("auth/address/add")
     public ResponseEntity<Object> addAddress(@RequestBody AddressDto addressDto) {
         Response<AddressDto> response = Response.<AddressDto>builder()
@@ -113,6 +121,14 @@ public class AddressController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Update an address")
+    @ApiResponse(responseCode = "200", description = "Address updated successfully",
+            content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = AddressDto.class))
+            })
+    @ApiResponse(responseCode = "404", description = "Address not found",
+            content = @Content)
     @PutMapping("auth/address/update")
     public ResponseEntity<Object> updateAddress(@RequestBody AddressDto addressDto) {
         Response<AddressDto> response = Response.<AddressDto>builder()

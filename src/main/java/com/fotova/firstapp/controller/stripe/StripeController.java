@@ -6,6 +6,7 @@ import com.fotova.firstapp.security.utils.Response;
 import com.fotova.service.StripeService;
 import com.fotova.service.order.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -63,7 +64,9 @@ public class StripeController {
     @ApiResponse(responseCode = "500", description = "An error occur during the payment",
             content = @Content)
     @GetMapping("auth/{orderUUID}/success")
-    public ResponseEntity<Object> success(@PathVariable String orderUUID){
+    public ResponseEntity<Object> success(
+            @Parameter(description = "order UUID", required = true)
+            @PathVariable String orderUUID){
 
         String orderRes = orderService.createOrderAfterShipment(orderUUID);
 

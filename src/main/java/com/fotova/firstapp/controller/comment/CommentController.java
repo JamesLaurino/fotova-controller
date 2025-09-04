@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,7 +71,7 @@ public class CommentController {
     @ApiResponse(responseCode = "404", description = "Comment not found",
             content = @Content)
     @PutMapping("auth/comment/update")
-    public ResponseEntity<Object> updateComment(@RequestBody CommentDto commentDto) {
+    public ResponseEntity<Object> updateComment(@RequestBody @Valid CommentDto commentDto) {
         Response<CommentDto> response = Response.<CommentDto>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Comment updated successfully")
@@ -89,7 +90,7 @@ public class CommentController {
     @ApiResponse(responseCode = "409", description = "Comment already exists",
             content = @Content)
     @PostMapping("auth/comment/add")
-    public ResponseEntity<Object> addComment(@RequestBody CommentDto commentDto) {
+    public ResponseEntity<Object> addComment(@RequestBody @Valid CommentDto commentDto) {
         Response<CommentDto> response = Response.<CommentDto>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Comment added successfully")

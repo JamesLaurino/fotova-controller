@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -133,7 +134,7 @@ public class ImageController {
             })
     @PostMapping("auth/image/add/{id}")
     public ResponseEntity<Object> addImage(
-            @RequestBody ImageDto imageDto,
+            @RequestBody @Valid ImageDto imageDto,
             @Parameter(description = "image id", required = true, example = "1")
             @PathVariable("id") Integer productId) {
         Response<ImageDto> response = Response.<ImageDto>builder()
@@ -162,7 +163,7 @@ public class ImageController {
                     )
             })
     @PutMapping("auth/image/update")
-    public ResponseEntity<Object> updateImage(@RequestBody ImageDto imageDto) {
+    public ResponseEntity<Object> updateImage(@RequestBody @Valid ImageDto imageDto) {
         Response<ImageDto> response = Response.<ImageDto>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Image updated successfully")

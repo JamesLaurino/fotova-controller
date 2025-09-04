@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,7 +34,7 @@ public class AuthController {
     @ApiResponse(responseCode = "400", description = "Username or email already registered",
             content = @Content)
     @PostMapping(path = "auth/register")
-    public ResponseEntity<Object> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<Object> register(@RequestBody @Valid RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
     }
 
@@ -44,7 +45,7 @@ public class AuthController {
                     @Schema(implementation = ResponseDto.class))
             })
     @PostMapping("auth/password-reset")
-    public ResponseEntity<Object> resetPassword(@RequestBody ResetPasswordRequest request) {
+    public ResponseEntity<Object> resetPassword(@RequestBody @Valid ResetPasswordRequest request) {
         return ResponseEntity.ok(authService.resetPassword(request));
     }
 
@@ -72,7 +73,7 @@ public class AuthController {
     @ApiResponse(responseCode = "404", description = "User not found",
             content = @Content)
     @PostMapping("auth/login")
-    public ResponseEntity<Object> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<Object> login(@RequestBody @Valid LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
 

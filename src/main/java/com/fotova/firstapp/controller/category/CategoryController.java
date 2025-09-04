@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,7 +71,7 @@ public class CategoryController {
     @ApiResponse(responseCode = "409", description = "Category already exists",
             content = @Content)
     @PostMapping("auth/category/add")
-    public ResponseEntity<Object> addCategory(@RequestBody CategoryDto categoryDto) {
+    public ResponseEntity<Object> addCategory(@RequestBody @Valid CategoryDto categoryDto) {
         Response<CategoryDto> response = Response.<CategoryDto>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Category added successfully")
@@ -89,7 +90,7 @@ public class CategoryController {
     @ApiResponse(responseCode = "404", description = "Category not found",
             content = @Content)
     @PutMapping("auth/category/update")
-    public ResponseEntity<Object> updateCategory(@RequestBody CategoryDto categoryDto) {
+    public ResponseEntity<Object> updateCategory(@RequestBody @Valid CategoryDto categoryDto) {
         Response<CategoryDto> response = Response.<CategoryDto>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Category updated successfully")

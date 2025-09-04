@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -111,7 +112,7 @@ public class AddressController {
     @ApiResponse(responseCode = "409", description = "Address already exists",
             content = @Content)
     @PostMapping("auth/address/add")
-    public ResponseEntity<Object> addAddress(@RequestBody AddressDto addressDto) {
+    public ResponseEntity<Object> addAddress(@RequestBody @Valid AddressDto addressDto) {
         Response<AddressDto> response = Response.<AddressDto>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Address added successfully")
@@ -130,7 +131,7 @@ public class AddressController {
     @ApiResponse(responseCode = "404", description = "Address not found",
             content = @Content)
     @PutMapping("auth/address/update")
-    public ResponseEntity<Object> updateAddress(@RequestBody AddressDto addressDto) {
+    public ResponseEntity<Object> updateAddress(@RequestBody @Valid AddressDto addressDto) {
         Response<AddressDto> response = Response.<AddressDto>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Address updated successfully")

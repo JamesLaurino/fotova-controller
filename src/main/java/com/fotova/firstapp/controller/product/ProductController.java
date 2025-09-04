@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -134,7 +135,7 @@ public class ProductController {
     @PostMapping("auth/product/{categoryId}/add")
     public ResponseEntity<Object> addProduct(
             @Parameter(description = "Category identifier - id", required = true, example = "1")
-            @PathVariable int categoryId, @RequestBody ProductDtoBack productDto) {
+            @PathVariable int categoryId, @RequestBody @Valid ProductDtoBack productDto) {
         Response<ProductDtoBack> response = Response.<ProductDtoBack>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Category added to a product successfully")
@@ -190,7 +191,7 @@ public class ProductController {
                     )
             })
     @PutMapping("auth/product/update")
-    public ResponseEntity<Object> updateProduct(@RequestBody ProductDtoBack productDto) {
+    public ResponseEntity<Object> updateProduct(@RequestBody @Valid ProductDtoBack productDto) {
         Response<ProductDtoBack> response = Response.<ProductDtoBack>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Product updated successfully")

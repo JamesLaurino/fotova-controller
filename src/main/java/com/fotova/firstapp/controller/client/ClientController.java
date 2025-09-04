@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,7 +77,7 @@ public class ClientController {
     @ApiResponse(responseCode = "404", description = "Client not found",
             content = @Content)
     @PutMapping("auth/client/update")
-    public ResponseEntity<Object> updateAddressClient(@RequestBody AddressDto addressDto) {
+    public ResponseEntity<Object> updateAddressClient(@RequestBody @Valid AddressDto addressDto) {
         ClientDto clientDto = authService.getPrincipal();
         Response<ClientDto> response = Response.<ClientDto>builder()
                 .responseCode(HttpStatus.OK.value())
@@ -96,7 +97,7 @@ public class ClientController {
     @ApiResponse(responseCode = "404", description = "Client not found",
             content = @Content)
     @PostMapping("auth/client/address")
-    public ResponseEntity<Object> postAddressClient(@RequestBody AddressDto addressDto) {
+    public ResponseEntity<Object> postAddressClient(@RequestBody @Valid AddressDto addressDto) {
         ClientDto clientDto = authService.getPrincipal();
         Response<ClientDto> response = Response.<ClientDto>builder()
                 .responseCode(HttpStatus.OK.value())
@@ -116,7 +117,7 @@ public class ClientController {
     @ApiResponse(responseCode = "404", description = "Client not found",
             content = @Content)
     @PostMapping("auth/client/comment")
-    public ResponseEntity<Object> postCommentClient(@RequestBody CommentDto commentDto) {
+    public ResponseEntity<Object> postCommentClient(@RequestBody @Valid CommentDto commentDto) {
         ClientDto clientDto = authService.getPrincipal();
         Response<String> response = Response.<String>builder()
                 .responseCode(HttpStatus.OK.value())

@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -89,7 +90,7 @@ public class SupplierController {
         )
     })
     @PostMapping("auth/supplier/add")
-    public ResponseEntity<Object> addSupplier(@RequestBody SupplierDto supplierDto){
+    public ResponseEntity<Object> addSupplier(@RequestBody @Valid SupplierDto supplierDto){
         Response<SupplierDto> response = Response.<SupplierDto>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Supplier added successfully")
@@ -116,7 +117,7 @@ public class SupplierController {
                     )
             })
     @PutMapping("auth/supplier/update")
-    public ResponseEntity<Object> updateSupplier(@RequestBody SupplierDto supplierDto){
+    public ResponseEntity<Object> updateSupplier(@RequestBody @Valid SupplierDto supplierDto){
         Response<SupplierDto> response = Response.<SupplierDto>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Supplier updated successfully")
@@ -174,7 +175,7 @@ public class SupplierController {
     @PutMapping("auth/supplier/{supplierId}/address")
     public ResponseEntity<Object> addSupplierAddress(
             @Parameter(description = "Supplier identifier - id", required = true, example = "1")
-            @PathVariable("supplierId") Integer supplierId, @RequestBody AddressDto addressDto)
+            @PathVariable("supplierId") Integer supplierId, @RequestBody @Valid AddressDto addressDto)
     {
         Response<SupplierDto> response = Response.<SupplierDto>builder()
                 .responseCode(HttpStatus.OK.value())
@@ -204,7 +205,7 @@ public class SupplierController {
     @PutMapping("auth/supplier/{supplierId}/product")
     public ResponseEntity<Object> addSupplierProduct(
             @Parameter(description = "Supplier identifier - id", required = true, example = "1")
-            @PathVariable("supplierId") Integer supplierId, @RequestBody ProductDtoBack productDto)
+            @PathVariable("supplierId") Integer supplierId, @RequestBody @Valid ProductDtoBack productDto)
     {
         Response<SupplierDto> response = Response.<SupplierDto>builder()
                 .responseCode(HttpStatus.OK.value())

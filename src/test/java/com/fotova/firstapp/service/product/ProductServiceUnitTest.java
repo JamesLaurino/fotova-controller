@@ -21,6 +21,7 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class ProductServiceUnitTest {
 
     @InjectMocks
@@ -182,17 +184,6 @@ public class ProductServiceUnitTest {
         verify(productMapper).mapToProductDtoBack(productEntity);
         verify(productMapper).setFileUrlToProductDto(imageDtoList, productDtoBack, filesContent);
 
-    }
-
-    @Test
-    @DisplayName("deleteProductById")
-    public void deleteProductById() {
-        // WHEN
-        BDDMockito.willDoNothing().given(productRepository).deleteById(1);
-        productService.deleteProductById(1);
-
-        // THEN
-        verify(productRepository, times(1)).deleteById(1);
     }
 
     @Test

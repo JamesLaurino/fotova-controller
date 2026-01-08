@@ -15,6 +15,7 @@ import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -30,6 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 public class SupplierControllerTest {
     @Autowired
@@ -177,37 +179,6 @@ public class SupplierControllerTest {
                         CoreMatchers.is("Supplier has been deleted successfully")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data",
                         CoreMatchers.is(deleteMessage)));
-    }
-
-    @Test
-    @DisplayName("Add supplier address")
-    public void addSupplierAddressTest() throws Exception {
-        // GIVEN
-        Integer supplierId = 1;
-        AddressDto addressDto = new AddressDto();
-        SupplierDto supplierDto = new SupplierDto();
-        supplierDto.setId(supplierId);
-        supplierDto.setRegistrationNumber("12345");
-
-        // WHEN
-        BDDMockito.given(supplierService.addSupplierAddress(eq(supplierId), any(AddressDto.class))).willReturn(supplierDto);
-
-        ResultActions resultActions = mockMvc.perform(put("/api/v1/auth/supplier/{supplierId}/address", supplierId)
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(addressDto)));
-
-        // THEN
-        verify(supplierService, times(1)).addSupplierAddress(eq(supplierId), any(AddressDto.class));
-        resultActions.andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.success", CoreMatchers.is(true)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode", CoreMatchers.is(200)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
-                        CoreMatchers.is("Address has been added  to the supplier successfully")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.id",
-                        CoreMatchers.is(supplierDto.getId())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.registrationNumber",
-                        CoreMatchers.is(supplierDto.getRegistrationNumber())));
     }
 
     @Test

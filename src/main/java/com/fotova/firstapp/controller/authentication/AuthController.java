@@ -86,7 +86,7 @@ public class AuthController {
     @ApiResponse(responseCode = "404", description = "User not found",
             content = @Content)
     @GetMapping("/user")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> getUser() {
         return ResponseEntity.ok(authService.getUser());
     }

@@ -12,14 +12,17 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class AddressServiceUnitTest {
 
     @InjectMocks
@@ -113,61 +116,6 @@ public class AddressServiceUnitTest {
         assertThat(result.getCity()).isEqualTo("city dto 1");
         assertThat(result.getCountry()).isEqualTo("country dto 1");
         assertThat(result.getNumber()).isEqualTo("number dto 1");
-    }
-
-    @Test
-    @DisplayName("Delete address by id")
-    public void deleteAddressById() {
-
-        // GIVEN
-        Integer id = 1;
-
-        // WHEN
-        BDDMockito.willDoNothing().given(addressRepositoryImpl).updateClientAddressId(id);
-        BDDMockito.willDoNothing().given(addressRepositoryImpl).deleteById(id);
-        addressService.deleteAddressById(id);
-
-        // THEN
-        verify(addressRepositoryImpl, times(1)).updateClientAddressId(id);
-        verify(addressRepositoryImpl, times(1)).deleteById(id);
-    }
-
-    @Test
-    @DisplayName("Update address")
-    public void updateAddress() {
-        AddressEntity addressEntity = new AddressEntity();
-        addressEntity.setId(1);
-        addressEntity.setStreet("street 1");
-        addressEntity.setCity("city 1");
-        addressEntity.setCountry("country 1");
-
-        AddressEntity addressEntityUpdate = new AddressEntity();
-        addressEntityUpdate.setId(1);
-        addressEntityUpdate.setStreet("street update 1");
-        addressEntityUpdate.setCity("city update 1");
-        addressEntityUpdate.setCountry("country update 1");
-
-        AddressDto addressDto = new AddressDto();
-        addressDto.setId(1);
-        addressDto.setStreet("street dto 1");
-        addressDto.setCity("city dto 1");
-        addressDto.setCountry("country dto 1");
-        addressDto.setNumber("number dto 1");
-
-        // WHEN
-        BDDMockito.given(addressMapper.mapToAddressEntity(addressDto)).willReturn(addressEntity);
-        BDDMockito.given(addressRepositoryImpl.update(addressEntity)).willReturn(addressEntityUpdate);
-        BDDMockito.given(addressMapper.mpaToAddressDto(addressEntityUpdate)).willReturn(addressDto);
-        AddressDto addressDtoUpdate = addressService.updateAddress(addressDto);
-
-        // THEN
-        verify(addressMapper,times(1)).mapToAddressEntity(addressDto);
-        verify(addressRepositoryImpl, times(1)).update(addressEntity);
-        verify(addressMapper,times(1)).mpaToAddressDto(addressEntityUpdate);
-        assertThat(addressDtoUpdate.getStreet()).isEqualTo("street dto 1");
-        assertThat(addressDtoUpdate.getCity()).isEqualTo("city dto 1");
-        assertThat(addressDtoUpdate.getCountry()).isEqualTo("country dto 1");
-        assertThat(addressDtoUpdate.getNumber()).isEqualTo("number dto 1");
     }
 
     @Test

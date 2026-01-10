@@ -6,6 +6,7 @@ import com.fotova.dto.request.ResetPasswordRequest;
 import com.fotova.entity.ClientEntity;
 import com.fotova.entity.ERole;
 import com.fotova.entity.RoleEntity;
+import com.fotova.exception.NotFoundException;
 import com.fotova.firstapp.security.config.jwt.JwtUtils;
 import com.fotova.dto.request.LoginRequest;
 import com.fotova.dto.request.RegisterRequest;
@@ -17,6 +18,7 @@ import com.fotova.firstapp.security.utils.Response;
 import com.fotova.repository.client.ClientRepositoryImpl;
 import com.fotova.repository.role.RoleRepositoryImpl;
 import com.fotova.service.client.ClientMapper;
+import com.fotova.service.client.ClientService;
 import com.fotova.service.email.EmailService;
 import com.fotova.service.client.redis.RegisterRequestService;
 import jakarta.transaction.Transactional;
@@ -41,6 +43,9 @@ public class AuthService {
 
     @Autowired
     private ClientRepositoryImpl clientRepository;
+
+    @Autowired
+    private ClientService clientService;
 
     @Autowired
     private RoleRepositoryImpl roleRepository;
@@ -169,7 +174,7 @@ public class AuthService {
     public Response<Object> login(LoginRequest request) {
 
         // Check if User by Email exist. if not throw error
-        clientRepository.findFirstByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("User not found. Please register first"));
+        clientRepository.findFirstByEmail(request.getEmail()).orElseThrow(() -> new NotFoundException("User not found. Please register first"));
 
 
         Authentication authentication = authenticationManager
@@ -209,17 +214,18 @@ public class AuthService {
         Integer userId = userDetails.getId();
 
         ClientEntity user = clientRepository.findById(userId);
-
+        ClientDto userDto = clientService.getClientById(userId);
         if(user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Email not found !");
         }
-
 
         UserResponse userResponse = UserResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .isActive(user.getIsActive())
+                .address(userDto.getAddress())
+                .comments(userDto.getCommentEntities())
                 .roles(user.getRoles().stream().map(RoleEntity::getName).toList())
                 .build();
 

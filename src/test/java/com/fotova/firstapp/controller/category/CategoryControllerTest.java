@@ -10,6 +10,7 @@ import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 public class CategoryControllerTest {
     @Autowired
@@ -169,7 +171,8 @@ public class CategoryControllerTest {
         Integer categoryId = 1;
 
         // WHEN
-        BDDMockito.willDoNothing().given(categoryService).deleteCategoryById(categoryId);
+        BDDMockito.given(categoryService.deleteCategoryById(categoryId))
+                .willReturn("Category deleted successfully for id : " + categoryId);
         ResultActions resultActions = mockMvc.perform(delete("/api/v1/auth/category/{id}/delete",
                 categoryId));
 
@@ -181,6 +184,8 @@ public class CategoryControllerTest {
                         CoreMatchers.is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
                         CoreMatchers.is(200)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data",
+                        CoreMatchers.is("Category deleted successfully for id : " + categoryId)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
                         CoreMatchers.is("Category deleted successfully")));
     }

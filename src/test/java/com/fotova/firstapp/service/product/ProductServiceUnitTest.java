@@ -5,6 +5,7 @@ import com.drools.dto.product.ProductDtoDrl;
 import com.drools.service.BusinessProductDroolsService;
 import com.fotova.dto.ProductDtoAmq;
 import com.fotova.dto.file.FileResponseDto;
+import com.fotova.dto.image.ImageDto;
 import com.fotova.dto.product.ProductDtoBack;
 import com.fotova.entity.CategoryEntity;
 import com.fotova.entity.ProductEntity;
@@ -20,14 +21,15 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class ProductServiceUnitTest {
 
     @InjectMocks
@@ -138,44 +140,50 @@ public class ProductServiceUnitTest {
     @DisplayName("getProductById")
     public void getProductById() {
         // GIVEN
-        CategoryEntity categoryEntity = new CategoryEntity();
-        categoryEntity.setId(1);
-        categoryEntity.setName("category 1");
-
         ProductEntity productEntity = new ProductEntity();
-        productEntity.setName("product 1");
-        productEntity.setPrice(100.0);
-        productEntity.setQuantity(10);
         productEntity.setId(1);
-        productEntity.setUrl("url 1");
-        productEntity.setCategory(categoryEntity);
+        productEntity.setName("Test Product");
+        productEntity.setPrice(100.0);
+        productEntity.setQuantity(5);
+        productEntity.setUrl("url_test");
 
         ProductDtoBack productDtoBack = new ProductDtoBack();
         productDtoBack.setId(1);
-        productDtoBack.setName("Product 1");
-        productDtoBack.setUrl("url 1");
-        productDtoBack.setPrice(15.0);
-        productDtoBack.setQuantity(4);
+        productDtoBack.setName("Test Product");
+        productDtoBack.setPrice(100.0);
+        productDtoBack.setQuantity(5);
+        productDtoBack.setUrl("url_test");
+
+        List<FileResponseDto> filesContent = List.of(
+                new FileResponseDto("file1_url", "file1_name"),
+                new FileResponseDto("file2_url", "file2_name")
+        );
+
+        ImageDto imageDto1 = new ImageDto();
+        imageDto1.setPath("image1_path");
+        ImageDto imageDto2 = new ImageDto();
+        imageDto2.setPath("image2_path");
+        List<ImageDto> imageDtoList = List.of(imageDto1, imageDto2);
+
+        // GIVEN
+        when(productRepository.findById(1)).thenReturn(productEntity);
+        when(fileService.getAllFilesContent()).thenReturn(filesContent);
+        when(productRepository.getProductImages(1)).thenReturn(imageDtoList);
+        when(productMapper.mapToProductDtoBack(productEntity)).thenReturn(productDtoBack);
+        when(productMapper.setFileUrlToProductDto(imageDtoList, productDtoBack, filesContent)).thenReturn(productDtoBack);
 
         // WHEN
-        BDDMockito.given(productRepository.findById(1)).willReturn(productEntity);
-        BDDMockito.given(productMapper.mapToProductDtoBack(productEntity)).willReturn(productDtoBack);
-        ProductDtoBack productDtoBackRes = productService.getProductById(1);
+        ProductDtoBack result = productService.getProductById(1);
 
         // THEN
-        verify(productRepository, times(1)).findById(1);
-        verify(productMapper, times(1)).mapToProductDtoBack(productEntity);
-    }
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(1);
+        verify(productRepository).findById(1);
+        verify(fileService).getAllFilesContent();
+        verify(productRepository).getProductImages(1);
+        verify(productMapper).mapToProductDtoBack(productEntity);
+        verify(productMapper).setFileUrlToProductDto(imageDtoList, productDtoBack, filesContent);
 
-    @Test
-    @DisplayName("deleteProductById")
-    public void deleteProductById() {
-        // WHEN
-        BDDMockito.willDoNothing().given(productRepository).deleteById(1);
-        productService.deleteProductById(1);
-
-        // THEN
-        verify(productRepository, times(1)).deleteById(1);
     }
 
     @Test

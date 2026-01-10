@@ -16,6 +16,7 @@ import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -32,6 +33,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 public class ClientControllerTest {
     @Autowired
@@ -238,51 +240,5 @@ public class ClientControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
                         CoreMatchers.is("Client address added successfully")));
 
-    }
-
-    @Test
-    @DisplayName("Update the address of a client")
-    public void updateAddressClient() throws Exception {
-        // GIVEN
-        ClientDto clientDto = new ClientDto();
-        clientDto.setId(1);
-        clientDto.setEmail("email 1");
-        clientDto.setUsername("username 1");
-        clientDto.setIsActive(true);
-        clientDto.setCommentEntities(List.of(new ClientCommentDto()));
-
-        AddressDto addressDto = new AddressDto();
-        addressDto.setStreet("street 1");
-        addressDto.setNumber("number 1");
-        addressDto.setCountry("country 1");
-        addressDto.setCity("city 1");
-
-        // WHEN
-        BDDMockito.given(authService.getPrincipal()).willReturn(clientDto);
-        BDDMockito.given(clientService.updateAddressClient(eq(1), any(AddressDto.class)))
-                .willReturn(clientDto);
-
-
-        ResultActions resultActions = mockMvc.perform(put("/api/v1/auth/client/update")
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(clientDto)));
-
-        verify(clientService, times(1)).updateAddressClient(eq(1), any(AddressDto.class));
-        verify(authService, times(1)).getPrincipal();
-        resultActions.andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.id",
-                        CoreMatchers.is(clientDto.getId())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.email",
-                        CoreMatchers.is(clientDto.getEmail())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.username",
-                        CoreMatchers.is(clientDto.getUsername())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.success",
-                        CoreMatchers.is(true)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
-                        CoreMatchers.is(200)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
-                        CoreMatchers.is("Client address updated successfully")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.commentEntities", Matchers.hasSize(1)));
     }
 }

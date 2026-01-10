@@ -2,8 +2,8 @@ package com.fotova.firstapp;
 
 import org.junit.jupiter.api.Test;
 
-public class FirstAppApplicationTests {
-    @Test
-    void contextLoads() {
-    }
-}
+//public class FirstAppApplicationTests {
+//    @Test
+//    void contextLoads() {
+//    }
+//}

@@ -13,6 +13,7 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -21,6 +22,7 @@ import java.time.Instant;
 import java.util.List;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class CommentServiceUnitTest {
 
     @InjectMocks

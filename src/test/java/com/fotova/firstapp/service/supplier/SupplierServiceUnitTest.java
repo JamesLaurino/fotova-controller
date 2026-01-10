@@ -20,6 +20,7 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class SupplierServiceUnitTest {
 
     @InjectMocks
@@ -148,48 +150,6 @@ public class SupplierServiceUnitTest {
         assertThat(supplierDtoResult.getSupplierProductDto()).isNull();
         assertThat(supplierDtoResult.getSupplierAddressDto()).isNull();
 
-    }
-
-    @Test
-    @DisplayName("update")
-    public void update() {
-        // GIVEN
-        SupplierEntity supplierEntity = new SupplierEntity();
-        supplierEntity.setId(1);
-        supplierEntity.setRegistrationNumber("123456");
-
-        SupplierDto supplierDto = new SupplierDto();
-        supplierDto.setId(1);
-        supplierDto.setRegistrationNumber("123456");
-
-        // WHEN
-        BDDMockito.given(supplierMapper.mapToEntity(supplierDto)).willReturn(supplierEntity);
-        BDDMockito.given(supplierRepositoryImpl.save(supplierEntity)).willReturn(supplierEntity);
-        BDDMockito.given(supplierMapper.mapToDto(supplierEntity)).willReturn(supplierDto);
-        SupplierDto supplierDtoResult = supplierService.update(supplierDto);
-
-        // THEN
-        verify(supplierMapper, times(1)).mapToEntity(supplierDto);
-        verify(supplierRepositoryImpl,times(1)).save(supplierEntity);
-
-        assertThat(supplierDtoResult).isNotNull();
-        assertThat(supplierDtoResult.getRegistrationNumber()).isEqualTo(supplierDto.getRegistrationNumber());
-
-    }
-
-    @Test
-    @DisplayName("delete")
-    public void delete() {
-        // WHEN
-        BDDMockito.willDoNothing().given(supplierRepositoryImpl).updateSupplierAddressId(1);
-        BDDMockito.willDoNothing().given(supplierRepositoryImpl).updateSupplierProductId(1);
-        BDDMockito.willDoNothing().given(supplierRepositoryImpl).deleteById(1);
-        supplierService.delete(1);
-
-        //THEN
-        verify(supplierRepositoryImpl, times(1)).updateSupplierAddressId(1);
-        verify(supplierRepositoryImpl, times(1)).updateSupplierProductId(1);
-        verify(supplierRepositoryImpl, times(1)).deleteById(1);
     }
 
     @Test

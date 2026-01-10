@@ -10,6 +10,7 @@ import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -25,6 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 public class CommentControllerTest {
 
@@ -166,7 +168,7 @@ public class CommentControllerTest {
         Integer commentId = 1;
 
         // WHEN
-        BDDMockito.willDoNothing().given(commentService).deleteCommentById(commentId);
+        BDDMockito.given(commentService.deleteCommentById(commentId)).willReturn("Comment has been deleted successfully for id : " + commentId);
         ResultActions resultActions = mockMvc.perform(delete("/api/v1/auth/comment/{commentId}/delete",
                 commentId));
 
@@ -178,6 +180,8 @@ public class CommentControllerTest {
                         CoreMatchers.is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
                         CoreMatchers.is(200)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data",
+                        CoreMatchers.is("Comment has been deleted successfully for id : " + commentId)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
                         CoreMatchers.is("Comment deleted successfully")));
 

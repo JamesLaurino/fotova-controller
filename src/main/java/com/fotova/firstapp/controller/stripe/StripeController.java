@@ -73,14 +73,25 @@ public class StripeController {
         if(!orderRes.equals("Order not created")) {
             orderService.sendRabbitMQOrder(orderRes);
             orderService.cleanOrderBasketByUUID(orderUUID);
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(orderRes);
+
+            Response<String> response = Response.<String>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Order realized with success")
+                .data(orderRes)
+                .success(true)
+                .build();
+
+            return ResponseEntity.ok(response);
         }
 
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(orderRes);
+        Response<String> response = Response.<String>builder()
+                .responseCode(HttpStatus.BAD_REQUEST.value())
+                .responseMessage("Order failed")
+                .data(orderRes)
+                .success(true)
+                .build();
+
+        return ResponseEntity.badRequest().body(response);
     }
 
     @Operation(summary = "Order cancel notification")
@@ -90,7 +101,15 @@ public class StripeController {
                     @Schema(implementation = String.class))
             })
     @GetMapping("auth/cancel")
-    public String cancel(){
-        return "Payment not ok";
+    public ResponseEntity<Object> cancel(){
+
+        Response<String> response = Response.<String>builder()
+                .responseCode(HttpStatus.BAD_REQUEST.value())
+                .responseMessage("order cancel")
+                .data("An error occur during the process please try later")
+                .success(true)
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 }

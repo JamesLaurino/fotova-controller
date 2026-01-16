@@ -1,11 +1,11 @@
 ### GET All comments
-GET http://localhost:8080/api/v1/auth/comments
+GET {{host}}:{{port}}/api/v1/auth/comments
 
 ### GET comment by id
-GET http://localhost:8080/api/v1/auth/comment/1
+GET {{host}}:{{port}}/api/v1/auth/comment/1
 
 ### PUT update a comment
-PUT http://localhost:8080/api/v1/auth/comment/update
+PUT {{host}}:{{port}}/api/v1/auth/comment/update
 Content-Type: application/json
 
 {
@@ -17,7 +17,7 @@ Content-Type: application/json
 }
 
 ### POST add comment
-POST http://localhost:8080/api/v1/auth/comment/add
+POST {{host}}:{{port}}/api/v1/auth/comment/add
 Content-Type: application/json
 
 {
@@ -28,4 +28,4 @@ Content-Type: application/json
 }
 
 ### DELETE comment
-DELETE http://localhost:8080/api/v1/auth/comment/2/delete
+DELETE {{host}}:{{port}}/api/v1/auth/comment/2/delete

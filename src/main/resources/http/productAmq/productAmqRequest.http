@@ -1,13 +1,13 @@
 ### POST REQUEST AMQ
 
-POST http://localhost:8080/api/v1/auth/amq/products
+POST {{host}}:{{port}}/api/v1/auth/amq/products
 Content-Type: application/json
 
 { "id":1,"name": "error","quantity": 2,"price": 3.5}
 
 ### SEND MESSAGE FROM USER
 
-POST http://localhost:8080/api/v1/auth/amq/contact
+POST {{host}}:{{port}}/api/v1/auth/amq/contact
 Content-Type: application/json
 
 {

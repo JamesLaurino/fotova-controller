@@ -1,29 +1,29 @@
 ### GET All client
-GET http://localhost:8080/api/v1/auth/clients
+GET {{host}}:{{port}}/api/v1/auth/clients
 
 ### GET client by id
-GET http://localhost:8080/api/v1/auth/client/1
+GET {{host}}:{{port}}/api/v1/auth/client/1
 
 ### LOGIN USER
-POST http://localhost:8080/api/v1/auth/login
+POST {{host}}:{{port}}/api/v1/auth/login
 Content-Type: application/json
 
 {"email": "thomas@hotmail.com","password": "1234"}
 
 ### PUT update a client
-PUT http://localhost:8080/api/v1/auth/client/update
+PUT {{host}}:{{port}}/api/v1/auth/client/update
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iLCJpYXQiOjE3NDExNjM1NDgsImV4cCI6MTc0MTE2NDQ0OH0.A013jL6ZD6Itz-VhtvtoXKu9sNmeztnXuDNiMvuxbAs
+Authorization: Bearer {{token}}
 
 {
   "street": "Rue malherbe Updated",
   "city": "Ville de france Updated",
   "number": "B15 Updated",
-  "country": "HelioPolis Updated"
+  "country": "IN"
 }
 
 ### POST add address to a client
-POST http://localhost:8080/api/v1/client/auth/address
+POST {{host}}:{{port}}/api/v1/client/auth/address
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iLCJpYXQiOjE3NDExNjUxOTMsImV4cCI6MTc0MTE2NjA5M30.Kr_j06bK0IAkBCUNMZyyfNg6K9ZnJxF-UhU3I7Us2VI
 
@@ -31,11 +31,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iL
   "street": "Rue malherbe created",
   "city": "Ville de france created",
   "number": "B15 created",
-  "country": "HelioPolis created"
+  "country": "RU"
 }
 
 ### POST add comment to a client
-POST http://localhost:8080/api/v1/auth/client/comment
+POST {{host}}:{{port}}/api/v1/auth/client/comment
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iLCJpYXQiOjE3NDExNjc4ODMsImV4cCI6MTc0MTE2ODc4M30.2MFruAx2QTn8SPdmKlFJcFhpxY9jTtYF2t8FjPDLhlg
 
@@ -47,4 +47,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iL
 }
 
 ### DELETE delete by id
-DELETE http://localhost:8080/api/v1/auth/client/1/delete
+DELETE {{host}}:{{port}}/api/v1/auth/client/1/delete

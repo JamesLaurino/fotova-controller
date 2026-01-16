@@ -1,11 +1,11 @@
 ### GET All category
-GET http://localhost:8080/api/v1/auth/category
+GET {{host}}:{{port}}/api/v1/auth/category
 
 ### GET category by id
-GET http://localhost:8080/api/v1/auth/category/2
+GET {{host}}:{{port}}/api/v1/auth/category/2
 
 ### POST category
-POST http://localhost:8080/api/v1/auth/category/add
+POST {{host}}:{{port}}/api/v1/auth/category/add
 Content-Type: application/json
 
 {
@@ -13,7 +13,7 @@ Content-Type: application/json
 }
 
 ### PUT Update category
-PUT http://localhost:8080/api/v1/auth/category/update
+PUT {{host}}:{{port}}/api/v1/auth/category/update
 Content-Type: application/json
 
 {
@@ -22,4 +22,4 @@ Content-Type: application/json
 }
 
 ### DELETE category
-DELETE http://localhost:8080/api/v1/auth/category/1/delete
+DELETE {{host}}:{{port}}/api/v1/auth/category/1/delete

@@ -1,14 +1,14 @@
 ### GET all images
-GET http://localhost:8080/api/v1/auth/images
+GET {{host}}:{{port}}/api/v1/auth/images
 
 ### GET image by id
-GET http://localhost:8080/api/v1/auth/image/1
+GET {{host}}:{{port}}/api/v1/auth/image/1
 
 ### DELETE image
-DELETE http://localhost:8080/api/v1/auth/image/1/delete
+DELETE {{host}}:{{port}}/api/v1/auth/image/1/delete
 
 ### POST add image to product id
-POST http://localhost:8080/api/v1/auth/image/add/1
+POST {{host}}:{{port}}/api/v1/auth/image/add/1
 Content-Type: application/json
 
 {
@@ -16,10 +16,10 @@ Content-Type: application/json
 }
 
 ### DELETE BY IMAGE NAME AND PRODUCT ID => image/delete/{imageName}/{productId}
-DELETE http://localhost:8080/api/v1/auth/image/delete/test2.png/1
+DELETE {{host}}:{{port}}/api/v1/auth/image/delete/test2.png/1
 
 ### PUT update a image
-PUT http://localhost:8080/api/v1/auth/image/update
+PUT {{host}}:{{port}}/api/v1/auth/image/update
 Content-Type: application/json
 
 {

@@ -1,11 +1,11 @@
 ### GET all orders
-GET http://localhost:8080/api/v1/auth/orders
+GET {{host}}:{{port}}/api/v1/auth/orders
 
 ### GET order by id
-GET http://localhost:8080/api/v1/auth/order/2
+GET {{host}}:{{port}}/api/v1/auth/order/2
 
 ### POST add an order
-POST http://localhost:8080/api/v1/auth/order/add
+POST {{host}}:{{port}}/api/v1/auth/order/add
 Content-Type: application/json
 
 {
@@ -17,19 +17,19 @@ Content-Type: application/json
 }
 
 ### GET retrieve order product by email and orderId
-GET http://localhost:8080/api/v1/auth/order-products?email=thomas@hotmail.com&orderId=1
+GET {{host}}:{{port}}/api/v1/auth/order-products?email=thomas@hotmail.com&orderId=1
 
 ### TOGGLE COMPLETED ORDER
-PUT http://localhost:8080/api/v1/auth/order/complete/1
+PUT {{host}}:{{port}}/api/v1/auth/order/complete/1
 
 ### GET retrieve orders product by email
-GET http://localhost:8080/api/v1/auth/order-products/thomas@hotmail.com
+GET {{host}}:{{port}}/api/v1/auth/order-products/thomas@hotmail.com
 
 ### GET retrieve orders product with detailed
-GET http://localhost:8080/api/v1/auth/order-products/detailed
+GET {{host}}:{{port}}/api/v1/auth/order-products/detailed
 
 
 ### GET creating billing by email
-GET http://localhost:8080/api/v1/auth/order-products/billing?email=thomas@hotmail.com&orderId=1
+GET {{host}}:{{port}}/api/v1/auth/order-products/billing?email=thomas@hotmail.com&orderId=1
 
 //todo add récupèrer les orders pour une période données.

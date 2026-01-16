@@ -1,22 +1,25 @@
 ### GET All Addresses
-GET http://localhost:8080/api/v1/auth/address
+GET {{host}}:{{port}}/api/v1/auth/address
+
+### GET All Countries
+GET {{host}}:{{port}}/api/v1/auth/address/countries
 
 ### GET address by ID
-GET http://localhost:8080/api/v1/auth/address/1
+GET {{host}}:{{port}}/api/v1/auth/address/1
 
 ### POST add address
-POST http://localhost:8080/api/v1/auth/address/add
+POST {{host}}:{{port}}/api/v1/auth/address/add
 Content-Type: application/json
 
 {
   "street": "Rue malherbe created",
   "city": "Ville de france created",
   "number": "B15",
-  "country": "HelioPolis created"
+  "country": "BE"
 }
 
 ### PUT update address
-PUT http://localhost:8080/api/v1/auth/address/update
+PUT {{host}}:{{port}}/api/v1/auth/address/update
 Content-Type: application/json
 
 {
@@ -24,8 +27,8 @@ Content-Type: application/json
   "street": "Rue malherbe Updated",
   "city": "Ville de france Updated",
   "number": "B15 Updated",
-  "country": "HelioPolis Updated"
+  "country": "FR"
 }
 
 ### DELETE address by id
-DELETE http://localhost:8080/api/v1/auth/address/1/delete
+DELETE {{host}}:{{port}}/api/v1/auth/address/1/delete

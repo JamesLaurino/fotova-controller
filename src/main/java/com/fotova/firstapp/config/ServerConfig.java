@@ -10,23 +10,14 @@ public class ServerConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler(
-//                        "/webjars/**",
-//                        "/images/**",
-//                        "/css/**",
-//                        "/js/**")
-//                .addResourceLocations(
-//                        "classpath:/static/images/",
-//                        "classpath:/static/css/",
-//                        "classpath:/static/js/",
-//                        "file:///C:/dev/images/");
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
 
         registry.addResourceHandler("/images/**")
                 .addResourceLocations(
                         "classpath:/static/images/",
-                        "file:/C:/dev/images/" // répertoire externe
+                        "file:/C:/dev/images/" /* répertoire externe */
+                        //todo => replace this with env variable
                 );
 
         registry.addResourceHandler("/css/**")
@@ -39,7 +30,7 @@ public class ServerConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOrigins("*") //todo => replace this with env variable
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*");
     }

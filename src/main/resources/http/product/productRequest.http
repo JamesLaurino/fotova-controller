@@ -21,6 +21,7 @@ Content-Type: application/json
   "name": "Apple TV",
   "quantity": 5,
   "price": 120,
+  "description": "Une TV Appel de magnifique qualité",
   "url": "test1.png"
 }
 
@@ -35,6 +36,7 @@ Content-Type: application/json
 {
   "id":1,
   "name": "Dell i9 updated",
+  "description": "Dell i9 description update",
   "price": 25.5,
   "url": "photo Dell i9",
   "quantity": 3,

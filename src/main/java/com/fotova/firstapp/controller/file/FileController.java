@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,6 +36,7 @@ public class FileController {
     @ApiResponse(responseCode = "500", description = "Error uploading file",
             content = @Content)
     @PostMapping("auth/file/upload")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> uploadFile(
             @Parameter(description = "file to upload", required = true, example = "file.png")
             @RequestParam("file") MultipartFile file) throws IOException {
@@ -78,7 +80,6 @@ public class FileController {
     public ResponseEntity<Object> getFileByName(
             @Parameter(description = "file name", required = true, example = "test.png")
             @PathVariable String filename) throws IOException {
-        // TODO CHECK FOR TEST
         return ResponseEntity.ok(fileService.getFileByName(filename).getBody());
     }
 

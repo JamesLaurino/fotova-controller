@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class AddressController {
         schema = @Schema(implementation = AddressDto.class))
     })
     @GetMapping("auth/address")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> getAllAddresses() {
         Response<List<AddressDto>> response = Response.<List<AddressDto>>builder()
                 .responseCode(HttpStatus.OK.value())

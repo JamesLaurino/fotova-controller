@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -133,6 +134,7 @@ public class ProductController {
                     )
             })
     @PostMapping("auth/product/{categoryId}/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> addProduct(
             @Parameter(description = "Category identifier - id", required = true, example = "1")
             @PathVariable int categoryId, @RequestBody @Valid ProductDtoBack productDto) {
@@ -162,6 +164,7 @@ public class ProductController {
                     )
             })
     @DeleteMapping("auth/product/{id}/delete")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> deleteProductById(
             @Parameter(description = "Product identifier - id", required = true, example = "1")
             @PathVariable int id) {
@@ -191,6 +194,7 @@ public class ProductController {
                     )
             })
     @PutMapping("auth/product/update")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> updateProduct(@RequestBody @Valid ProductDtoBack productDto) {
         Response<ProductDtoBack> response = Response.<ProductDtoBack>builder()
                 .responseCode(HttpStatus.OK.value())

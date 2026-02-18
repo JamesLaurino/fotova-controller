@@ -1,5 +1,6 @@
 ### GET All client
 GET {{host}}:{{port}}/api/v1/auth/clients
+Authorization: Bearer {{token}}}
 
 ### GET client by id
 GET {{host}}:{{port}}/api/v1/auth/client/1

@@ -163,8 +163,8 @@ public class AuthService {
         }
 
         return Response.builder()
-                .responseCode(200)
-                .responseMessage("SUCCESS")
+                .responseCode(400)
+                .responseMessage("Error occur during the process")
                 .data("Password cannot be reset a error occured")
                 .build();
     }

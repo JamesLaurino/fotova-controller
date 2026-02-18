@@ -100,8 +100,13 @@ public class StripeController {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = String.class))
             })
-    @GetMapping("auth/cancel")
-    public ResponseEntity<Object> cancel(){
+    @GetMapping("auth/{orderUUID}/cancel")
+    public ResponseEntity<Object> cancel(
+            @Parameter(description = "order UUID", required = true)
+            @PathVariable String orderUUID
+    ){
+
+        orderService.cleanOrderBasketByUUID(orderUUID);
 
         Response<String> response = Response.<String>builder()
                 .responseCode(HttpStatus.BAD_REQUEST.value())

@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -84,6 +85,7 @@ public class ImageController {
         )
     })
     @DeleteMapping("auth/image/{id}/delete")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> deleteImage(
             @Parameter(description = "image id", required = true, example = "1")
             @PathVariable("id") Integer imageId) {
@@ -107,6 +109,7 @@ public class ImageController {
         )
     })
     @DeleteMapping("auth/image/delete/{imageName}/{productId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> deleteImageFromProduct(
             @Parameter(description = "image name", required = true, example = "test.jpg")
             @PathVariable("imageName") String imageName,
@@ -133,6 +136,7 @@ public class ImageController {
                     )
             })
     @PostMapping("auth/image/add/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> addImage(
             @RequestBody @Valid ImageDto imageDto,
             @Parameter(description = "image id", required = true, example = "1")
@@ -163,6 +167,7 @@ public class ImageController {
                     )
             })
     @PutMapping("auth/image/update")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> updateImage(@RequestBody @Valid ImageDto imageDto) {
         Response<ImageDto> response = Response.<ImageDto>builder()
                 .responseCode(HttpStatus.OK.value())

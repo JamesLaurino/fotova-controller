@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -71,6 +72,7 @@ public class CategoryController {
     @ApiResponse(responseCode = "409", description = "Category already exists",
             content = @Content)
     @PostMapping("auth/category/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> addCategory(@RequestBody @Valid CategoryDto categoryDto) {
         Response<CategoryDto> response = Response.<CategoryDto>builder()
                 .responseCode(HttpStatus.OK.value())
@@ -90,6 +92,7 @@ public class CategoryController {
     @ApiResponse(responseCode = "404", description = "Category not found",
             content = @Content)
     @PutMapping("auth/category/update")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> updateCategory(@RequestBody @Valid CategoryDto categoryDto) {
         Response<CategoryDto> response = Response.<CategoryDto>builder()
                 .responseCode(HttpStatus.OK.value())
@@ -109,6 +112,7 @@ public class CategoryController {
     @ApiResponse(responseCode = "404", description = "Category not found",
             content = @Content)
     @DeleteMapping("auth/category/{id}/delete")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> deleteCategoryById(
             @Parameter(description = "Category identifier - id", required = true, example = "1")
             @PathVariable int id) {

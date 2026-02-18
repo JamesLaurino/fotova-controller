@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class ClientController {
                     @Schema(implementation = ClientDto.class))
             })
     @GetMapping("auth/clients")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> getAllClient() {
         Response<List<ClientDto>> response = Response.<List<ClientDto>>builder()
                 .responseCode(HttpStatus.OK.value())

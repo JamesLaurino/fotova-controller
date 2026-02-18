@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class OrderController {
                     @Schema(implementation = OrderDto.class))
             })
     @GetMapping("auth/orders")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> getAllOrders() {
         Response<List<OrderDto>> response = Response.<List<OrderDto>>builder()
                 .responseCode(HttpStatus.OK.value())
@@ -149,6 +151,7 @@ public class OrderController {
                     @Schema(implementation = OrderProductDto.class))
             })
     @GetMapping("auth/order-products/detailed")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> getOrdersDetailed() {
         Response<List<OrderProductDto>> response = Response.<List<OrderProductDto>>builder()
                 .responseCode(HttpStatus.OK.value())

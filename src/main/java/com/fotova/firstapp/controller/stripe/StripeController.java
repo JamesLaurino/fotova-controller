@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,32 +67,21 @@ public class StripeController {
     @GetMapping("auth/{orderUUID}/success")
     public ResponseEntity<Object> success(
             @Parameter(description = "order UUID", required = true)
-            @PathVariable String orderUUID){
+            @PathVariable String orderUUID) throws MessagingException {
 
         String orderRes = orderService.createOrderAfterShipment(orderUUID);
 
         if(!orderRes.equals("Order not created")) {
             orderService.sendRabbitMQOrder(orderRes);
+            orderService.sendBillingEmail(orderUUID);
             orderService.cleanOrderBasketByUUID(orderUUID);
 
-            Response<String> response = Response.<String>builder()
-                .responseCode(HttpStatus.OK.value())
-                .responseMessage("Order realized with success")
-                .data(orderRes)
-                .success(true)
-                .build();
-
-            return ResponseEntity.ok(response);
+            String html = stripeService.buildSuccessHtml();
+            return ResponseEntity.ok(html);
         }
 
-        Response<String> response = Response.<String>builder()
-                .responseCode(HttpStatus.BAD_REQUEST.value())
-                .responseMessage("Order failed")
-                .data(orderRes)
-                .success(true)
-                .build();
-
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(stripeService.buildFailureHtml());
     }
 
     @Operation(summary = "Order cancel notification")
@@ -107,14 +97,6 @@ public class StripeController {
     ){
 
         orderService.cleanOrderBasketByUUID(orderUUID);
-
-        Response<String> response = Response.<String>builder()
-                .responseCode(HttpStatus.BAD_REQUEST.value())
-                .responseMessage("order cancel")
-                .data("An error occur during the process please try later")
-                .success(true)
-                .build();
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(stripeService.buildCancelHtml());
     }
 }

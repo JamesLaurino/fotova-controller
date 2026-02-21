@@ -83,7 +83,7 @@ public class AuthService {
 
         try
         {
-            emailService.sendRegisterEmail(registerRequestDto.getRegisterId());
+            emailService.sendRegisterEmail(registerRequestDto.getRegisterId(),request.getEmail());
             return Response.builder()
                     .responseCode(200)
                     .responseMessage("SUCCESS")
@@ -107,29 +107,23 @@ public class AuthService {
         for (RegisterRequestDto request : registerRequestDtoList) {
             if (request.getRegisterId().equals(uuid)) {
 
-                // generate bcrypt password
                 String hashedPassword = encoder.encode(request.getPassword());
 
-                // Define User instance, then set new value
                 ClientEntity user = new ClientEntity();
                 user.setUsername(request.getUsername());
                 user.setEmail(request.getEmail());
                 user.setPassword(hashedPassword);
                 user.setIsActive(true);
 
-                // Set default role to ROLE_ADMIN
-                RoleEntity adminRole = new RoleEntity(ERole.ROLE_ADMIN); // Create the Role instance
-                roleRepository.save(adminRole); // Save it to the database
+                RoleEntity userRole = new RoleEntity(ERole.ROLE_USER);
+                roleRepository.save(userRole);
 
                 Set<RoleEntity> roles = new HashSet<>();
-                roles.add(adminRole); // Add the persisted Role
+                roles.add(userRole);
 
                 user.setRoles(roles);
-
-                // save user
                 clientRepository.save(user);
 
-                // return response DTO
                 RegisterUserResponse registerUserResponse = RegisterUserResponse.builder()
                         .name(user.getUsername())
                         .email(user.getEmail())

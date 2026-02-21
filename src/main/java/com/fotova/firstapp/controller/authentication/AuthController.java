@@ -74,7 +74,14 @@ public class AuthController {
     public ResponseEntity<Object> checkRegisterEmail(
             @Parameter(description = "order UUID", required = true)
             @RequestParam String uuid) {
-        return ResponseEntity.ok(authService.registerAfterEmailConfirm(uuid));
+
+        try {
+            authService.registerAfterEmailConfirm(uuid);
+            return ResponseEntity.ok(authService.buildSuccessMessage());
+        }
+        catch (Exception e) {
+            return ResponseEntity.ok(authService.buildErrorMessage());
+        }
     }
 
     @Operation(summary = "User login")

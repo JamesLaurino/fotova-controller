@@ -3,17 +3,16 @@ package com.fotova.firstapp.security.service;
 import com.fotova.dto.authentification.redis.RegisterRequestDto;
 import com.fotova.dto.authentification.redis.ResetPasswordDto;
 import com.fotova.dto.client.ClientDto;
+import com.fotova.dto.request.LoginRequest;
+import com.fotova.dto.request.RegisterRequest;
 import com.fotova.dto.request.ResetPasswordRequest;
+import com.fotova.dto.response.LoginResponse;
+import com.fotova.dto.response.UserResponse;
 import com.fotova.entity.ClientEntity;
 import com.fotova.entity.ERole;
 import com.fotova.entity.RoleEntity;
 import com.fotova.exception.NotFoundException;
 import com.fotova.firstapp.security.config.jwt.JwtUtils;
-import com.fotova.dto.request.LoginRequest;
-import com.fotova.dto.request.RegisterRequest;
-import com.fotova.dto.response.LoginResponse;
-import com.fotova.dto.response.RegisterUserResponse;
-import com.fotova.dto.response.UserResponse;
 import com.fotova.firstapp.security.service.user.UserDetailsImpl;
 import com.fotova.firstapp.security.utils.Response;
 import com.fotova.repository.client.ClientRepositoryImpl;
@@ -21,8 +20,9 @@ import com.fotova.repository.redis.resetPassword.ResetPasswordRepositoryImpl;
 import com.fotova.repository.role.RoleRepositoryImpl;
 import com.fotova.service.client.ClientMapper;
 import com.fotova.service.client.ClientService;
-import com.fotova.service.email.EmailService;
 import com.fotova.service.client.redis.RegisterRequestService;
+import com.fotova.service.email.EmailService;
+import com.fotova.service.html.register.AuthHtmlService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,6 +70,9 @@ public class AuthService {
     @Autowired
     private ResetPasswordRepositoryImpl resetPasswordRepository;
 
+    @Autowired
+    private AuthHtmlService authHtmlService;
+
     @Transactional
     public Response<Object> register(RegisterRequest request) {
 
@@ -102,8 +105,16 @@ public class AuthService {
         }
     }
 
+    public String buildSuccessMessage() {
+        return authHtmlService.buildSuccessRegisterHtml();
+    }
+
+    public String buildErrorMessage() {
+        return authHtmlService.buildFailureRegisterHtml();
+    }
+
     @Transactional
-    public Response<Object> registerAfterEmailConfirm(String uuid) {
+    public void registerAfterEmailConfirm(String uuid) {
 
         List<RegisterRequestDto> registerRequestDtoList = registerRequestService.findAll();
         for (RegisterRequestDto request : registerRequestDtoList) {
@@ -125,17 +136,7 @@ public class AuthService {
 
                 user.setRoles(roles);
                 clientRepository.save(user);
-
-                RegisterUserResponse registerUserResponse = RegisterUserResponse.builder()
-                        .name(user.getUsername())
-                        .email(user.getEmail())
-                        .build();
-
-                return Response.builder()
-                        .responseCode(200)
-                        .responseMessage("SUCCESS")
-                        .data(registerUserResponse)
-                        .build();
+                return;
             }
         }
         throw new RuntimeException("A error occured with the verification code");

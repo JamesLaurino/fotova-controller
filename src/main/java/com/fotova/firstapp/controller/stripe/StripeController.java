@@ -43,6 +43,7 @@ public class StripeController {
         orderService.fillOrderBasketWithStripeRequest(productRequest);
 
         orderService.checkOrderQuantity(productRequest.getName());
+        orderService.checkOrderPrice(productRequest);
 
         StripeResponse stripeResponse = stripeService.checkoutProducts(productRequest);
 

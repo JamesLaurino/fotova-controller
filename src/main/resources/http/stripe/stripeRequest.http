@@ -3,7 +3,7 @@ POST {{host}}:{{port}}/api/v1/auth/checkout
 Content-Type: application/json
 
 {
-  "amount": 1100,
+  "amount": 158,
   "quantity": 1,
   "currency": "USD",
   "name": "specialUUID",

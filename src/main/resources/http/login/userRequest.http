@@ -17,8 +17,8 @@ Content-Type: application/json
 GET {{host}}:{{port}}/api/v1/user
 Authorization: Bearer {{token}}}
 
-### POST RESET PASSWORD
-POST  {{host}}:{{port}}/api/v1/auth/password-reset
+### POST RESET PASSWORD WITH EMAIL
+POST  {{host}}:{{port}}/api/v1/auth/password-reset/email
 Content-Type: application/json
 
 {

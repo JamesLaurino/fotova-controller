@@ -44,9 +44,22 @@ public class AuthController {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ResponseDto.class))
             })
-    @PostMapping("auth/password-reset")
-    public ResponseEntity<Object> resetPassword(@RequestBody @Valid ResetPasswordRequest request) {
-        return ResponseEntity.ok(authService.resetPassword(request));
+    @GetMapping("auth/password-reset/check")
+    public ResponseEntity<Object> resetPassword(
+            @Parameter(description = "password reset UUID", required = true)
+            @RequestParam String uuid) {
+        return ResponseEntity.ok(authService.resetPassword(uuid));
+    }
+
+    @Operation(summary = "Reset user password email send")
+    @ApiResponse(responseCode = "200", description = "Password reset verification email",
+            content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ResponseDto.class))
+            })
+    @PostMapping("auth/password-reset/email")
+    public ResponseEntity<Object> resetPasswordEmail(@RequestBody @Valid ResetPasswordRequest request) {
+        return ResponseEntity.ok(authService.resetPasswordEmail(request));
     }
 
     @Operation(summary = "Check register email")

@@ -1,6 +1,7 @@
 package com.fotova.firstapp.security.service;
 
 import com.fotova.dto.authentification.redis.RegisterRequestDto;
+import com.fotova.dto.authentification.redis.ResetPasswordDto;
 import com.fotova.dto.client.ClientDto;
 import com.fotova.dto.request.ResetPasswordRequest;
 import com.fotova.entity.ClientEntity;
@@ -16,6 +17,7 @@ import com.fotova.dto.response.UserResponse;
 import com.fotova.firstapp.security.service.user.UserDetailsImpl;
 import com.fotova.firstapp.security.utils.Response;
 import com.fotova.repository.client.ClientRepositoryImpl;
+import com.fotova.repository.redis.resetPassword.ResetPasswordRepositoryImpl;
 import com.fotova.repository.role.RoleRepositoryImpl;
 import com.fotova.service.client.ClientMapper;
 import com.fotova.service.client.ClientService;
@@ -33,10 +35,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class AuthService {
@@ -67,6 +66,9 @@ public class AuthService {
 
     @Autowired
     private RegisterRequestService registerRequestService;
+
+    @Autowired
+    private ResetPasswordRepositoryImpl resetPasswordRepository;
 
     @Transactional
     public Response<Object> register(RegisterRequest request) {
@@ -140,15 +142,44 @@ public class AuthService {
     }
 
     @Transactional
-    public Response<Object> resetPassword(ResetPasswordRequest resetPasswordRequest) {
+    public Response<Object> resetPasswordEmail(ResetPasswordRequest resetPasswordRequest) {
 
         String hashedPassword = encoder.encode(resetPasswordRequest.getNewPassword());
         Optional<ClientEntity> clientEntity = clientRepository.findFirstByEmail(resetPasswordRequest.getEmail());
 
-        //TODO MAKE A EMAIL CHECK
         if (clientEntity.isPresent()) {
-            clientEntity.get().setPassword(hashedPassword);
+
+            ResetPasswordDto resetPasswordDto = new ResetPasswordDto();
+            resetPasswordDto.setEmail(resetPasswordRequest.getEmail());
+            resetPasswordDto.setPassword(hashedPassword);
+            resetPasswordDto.setToken(UUID.randomUUID().toString());
+
+            ResetPasswordDto resetPasswordDtoSave= resetPasswordRepository.save(resetPasswordDto);
+            emailService.sendResetPassword(resetPasswordRequest.getEmail(),resetPasswordDtoSave.getToken());
+            return Response.builder()
+                    .responseCode(200)
+                    .responseMessage("SUCCESS")
+                    .data("Email send successfully")
+                    .build();
+        }
+
+        return Response.builder()
+                .responseCode(400)
+                .responseMessage("Error occur during the process")
+                .data("Email cannot be send a error occured")
+                .build();
+    }
+
+    @Transactional
+    public Response<Object> resetPassword(String UUID) {
+
+        ResetPasswordDto resetPasswordDto = resetPasswordRepository.findByToken(UUID);
+        Optional<ClientEntity> clientEntity = clientRepository.findFirstByEmail(resetPasswordDto.getEmail());
+
+        if (clientEntity.isPresent() && resetPasswordDto.getToken().equals(UUID)) {
+            clientEntity.get().setPassword(resetPasswordDto.getPassword());
             clientRepository.save(clientEntity.get());
+            resetPasswordRepository.deleteById(resetPasswordDto.getId());
             return Response.builder()
                     .responseCode(200)
                     .responseMessage("SUCCESS")

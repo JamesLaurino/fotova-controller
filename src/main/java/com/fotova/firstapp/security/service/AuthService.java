@@ -22,7 +22,7 @@ import com.fotova.service.client.ClientMapper;
 import com.fotova.service.client.ClientService;
 import com.fotova.service.client.redis.RegisterRequestService;
 import com.fotova.service.email.EmailService;
-import com.fotova.service.html.register.AuthHtmlService;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -113,6 +113,14 @@ public class AuthService {
         return authHtmlService.buildFailureRegisterHtml();
     }
 
+    public String buildSuccessResetMessage() {
+        return authHtmlService.buildSuccessResetPassword();
+    }
+
+    public String buildErrorResetMessage() {
+        return authHtmlService.buildErrorResetPassword();
+    }
+
     @Transactional
     public void registerAfterEmailConfirm(String uuid) {
 
@@ -172,7 +180,7 @@ public class AuthService {
     }
 
     @Transactional
-    public Response<Object> resetPassword(String UUID) {
+    public void resetPassword(String UUID) {
 
         ResetPasswordDto resetPasswordDto = resetPasswordRepository.findByToken(UUID);
         Optional<ClientEntity> clientEntity = clientRepository.findFirstByEmail(resetPasswordDto.getEmail());
@@ -181,18 +189,7 @@ public class AuthService {
             clientEntity.get().setPassword(resetPasswordDto.getPassword());
             clientRepository.save(clientEntity.get());
             resetPasswordRepository.deleteById(resetPasswordDto.getId());
-            return Response.builder()
-                    .responseCode(200)
-                    .responseMessage("SUCCESS")
-                    .data("Password reset successfully")
-                    .build();
         }
-
-        return Response.builder()
-                .responseCode(400)
-                .responseMessage("Error occur during the process")
-                .data("Password cannot be reset a error occured")
-                .build();
     }
 
     // Login Function

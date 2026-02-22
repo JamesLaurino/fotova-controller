@@ -48,7 +48,13 @@ public class AuthController {
     public ResponseEntity<Object> resetPassword(
             @Parameter(description = "password reset UUID", required = true)
             @RequestParam String uuid) {
-        return ResponseEntity.ok(authService.resetPassword(uuid));
+        try {
+            authService.resetPassword(uuid);
+            return ResponseEntity.ok(authService.buildSuccessResetMessage());
+        }
+        catch (Exception e) {
+            return ResponseEntity.ok(authService.buildErrorResetMessage());
+        }
     }
 
     @Operation(summary = "Reset user password email send")

@@ -1,2 +1,21 @@
 ### GET All labels
 GET {{host}}:{{port}}/api/v1/auth/label
+
+### GET LABEL BY PRODUCT ID
+GET {{host}}:{{port}}/api/v1/auth/label/productId/4
+
+### PUT Update category
+PUT {{host}}:{{port}}/api/v1/auth/add/label
+Content-Type: application/json
+
+{
+    "id": 1,
+    "descriptionEn": "desc EN",
+    "descriptionRu": "desc RU",
+    "descriptionFr": "desc FR",
+
+    "titleEn": "Titre EN",
+    "titleRu": "Titre RU",
+    "titleFr": "Titre FR",
+    "productId":1
+}

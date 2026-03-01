@@ -6,9 +6,7 @@ import com.fotova.service.label.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,4 +26,28 @@ public class LabelController {
                 .build();
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("auth/label/productId/{productId}")
+    public ResponseEntity<Object> findLabelByProductId(@PathVariable("productId") Integer productId) {
+        Response<LabelDto> response = Response.<LabelDto>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Label has been retreived successfully.")
+                .data(labelService.findLabelByProductId(productId))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("auth/add/label")
+    public ResponseEntity<Object> updateLabel(@RequestBody LabelDto labelDto) {
+        Response<LabelDto> response = Response.<LabelDto>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Label has been updated successfully.")
+                .data(labelService.updateLabel(labelDto))
+                .success(true)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
+
 }

@@ -1,0 +1,12 @@
+### POST Traduction Label
+POST {{host}}:{{port}}/api/v1/auth/ai/label
+Content-Type: application/json
+
+{
+  "name": "Bonnet rouge",
+  "price": 25,
+  "quantity": 8,
+  "category_id": 1,
+  "url": "bonnet_rouge_1.jpg",
+  "description": "Un beau bonnet rouge"
+}

@@ -45,12 +45,12 @@ public class StripeController {
         orderService.checkOrderQuantity(productRequest.getName());
         orderService.checkOrderPrice(productRequest);
 
-        //StripeResponse stripeResponse = stripeService.checkoutProducts(productRequest);
+        StripeResponse stripeResponse = stripeService.checkoutProducts(productRequest);
 
         Response<StripeResponse> response = Response.<StripeResponse>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Checkout realized with success")
-                .data(null)
+                .data(stripeResponse)
                 .success(true)
                 .build();
 

@@ -1,5 +1,6 @@
 package com.fotova.firstapp.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -7,6 +8,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class ServerConfig implements WebMvcConfigurer {
+
+    @Value("${SERVER_HOST}")
+    private String SERVER_HOST;
+
+    @Value("${SERVER_PROTOCOL}")
+    private String SERVER_PROTOCOL;
+
+    @Value("${UPLOAD_FILE}")
+    private String UPLOAD_FILE;
+
+    @Value("${FRONT_PORT}")
+    private String FRONT_PORT;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -16,8 +29,7 @@ public class ServerConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/images/**")
                 .addResourceLocations(
                         "classpath:/static/images/",
-                        "file:/C:/dev/images/" /* répertoire externe */
-                        //todo => replace this with env variable
+                        "file:/" + UPLOAD_FILE /* répertoire externe */
                 );
 
         registry.addResourceHandler("/css/**")
@@ -30,7 +42,7 @@ public class ServerConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:4200")
+                .allowedOrigins(SERVER_PROTOCOL + "://" + SERVER_HOST + ":" + FRONT_PORT)
                 .allowedMethods("GET", "POST", "PUT", "DELETE","OPTIONS")
                 .allowedHeaders("*");
     }

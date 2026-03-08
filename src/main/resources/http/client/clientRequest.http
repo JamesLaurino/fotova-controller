@@ -9,7 +9,10 @@ GET {{host}}:{{port}}/api/v1/auth/client/1
 POST {{host}}:{{port}}/api/v1/auth/login
 Content-Type: application/json
 
-{"email": "thomas@hotmail.com","password": "1234"}
+{
+  "email": "thomas@hotmail.com",
+  "password": "1234"
+}
 
 ### PUT update a client
 PUT {{host}}:{{port}}/api/v1/auth/client/update
@@ -20,25 +23,25 @@ Authorization: Bearer {{token}}
   "street": "Rue malherbe Updated",
   "city": "Ville de france Updated",
   "number": "B15 Updated",
-  "country": "IN"
+  "country": "RUSSIA"
 }
 
 ### POST add address to a client
 POST {{host}}:{{port}}/api/v1/client/auth/address
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iLCJpYXQiOjE3NDExNjUxOTMsImV4cCI6MTc0MTE2NjA5M30.Kr_j06bK0IAkBCUNMZyyfNg6K9ZnJxF-UhU3I7Us2VI
+Authorization: Bearer {{token}}}
 
 {
   "street": "Rue malherbe created",
   "city": "Ville de france created",
   "number": "B15 created",
-  "country": "RU"
+  "country": "RUSSIA"
 }
 
 ### POST add comment to a client
 POST {{host}}:{{port}}/api/v1/auth/client/comment
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aG9tYXNAaG90bWFpbC5jb20iLCJpYXQiOjE3NDExNjc4ODMsImV4cCI6MTc0MTE2ODc4M30.2MFruAx2QTn8SPdmKlFJcFhpxY9jTtYF2t8FjPDLhlg
+Authorization: Bearer {{token}}}
 
 {
   "header": "Header created 1",

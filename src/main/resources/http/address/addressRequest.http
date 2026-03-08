@@ -15,7 +15,7 @@ Content-Type: application/json
   "street": "Rue malherbe created",
   "city": "Ville de france created",
   "number": "B15",
-  "country": "BE"
+  "country": "BELGIUM"
 }
 
 ### PUT update address
@@ -27,7 +27,7 @@ Content-Type: application/json
   "street": "Rue malherbe Updated",
   "city": "Ville de france Updated",
   "number": "B15 Updated",
-  "country": "FR"
+  "country": "FRANCE"
 }
 
 ### DELETE address by id

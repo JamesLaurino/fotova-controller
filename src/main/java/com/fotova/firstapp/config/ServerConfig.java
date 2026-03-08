@@ -9,17 +9,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class ServerConfig implements WebMvcConfigurer {
 
-    @Value("${SERVER_HOST}")
+    @Value("${app.env.host}")
     private String SERVER_HOST;
 
-    @Value("${SERVER_PROTOCOL}")
+    @Value("${app.env.protocol}")
     private String SERVER_PROTOCOL;
 
-    @Value("${UPLOAD_FILE}")
+    @Value("${file.upload.path}")
     private String UPLOAD_FILE;
-
-    @Value("${FRONT_PORT}")
-    private String FRONT_PORT;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -29,7 +26,9 @@ public class ServerConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/images/**")
                 .addResourceLocations(
                         "classpath:/static/images/",
-                        "file:/" + UPLOAD_FILE /* répertoire externe */
+                        "file:/var/app/images/",
+                        "file:/C:/dev/images/",
+                        UPLOAD_FILE
                 );
 
         registry.addResourceHandler("/css/**")
@@ -42,7 +41,26 @@ public class ServerConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(SERVER_PROTOCOL + "://" + SERVER_HOST + ":" + FRONT_PORT)
+                .allowedOrigins(
+                        SERVER_PROTOCOL + "://" + SERVER_HOST,
+                        SERVER_PROTOCOL + "://" + SERVER_HOST + ":80",
+                        SERVER_PROTOCOL + "://" + SERVER_HOST + ":443",
+                        "http://localhost",
+                        "http://localhost:80",
+                        "http://localhost:443",
+                        "http://82.29.172.74",
+                        "http://82.29.172.74:80",
+                        "http://82.29.172.74:443",
+                        "https://82.29.172.74",
+                        "https://82.29.172.74:80",
+                        "https://82.29.172.74:443",
+                        "http://srv827971.hstgr.cloud",
+                        "http://srv827971.hstgr.cloud:80",
+                        "http://srv827971.hstgr.cloud:443",
+                        "https://srv827971.hstgr.cloud",
+                        "https://srv827971.hstgr.cloud:80",
+                        "https://srv827971.hstgr.cloud:443"
+                )
                 .allowedMethods("GET", "POST", "PUT", "DELETE","OPTIONS")
                 .allowedHeaders("*");
     }

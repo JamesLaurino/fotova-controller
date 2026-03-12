@@ -60,6 +60,7 @@ pipeline {
                 ]) {
 
                     sh '''
+                    printenv | sort
                     java -jar target/*.jar
                     '''
 

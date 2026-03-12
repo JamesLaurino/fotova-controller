@@ -48,6 +48,12 @@ pipeline {
             }
         }
 
+        stage('Debug Env') {
+            steps {
+                sh 'printenv | sort'
+            }
+        }
+
         stage('Run Application') {
             steps {
                 sh '''

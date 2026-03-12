@@ -6,34 +6,6 @@ pipeline {
         maven 'Maven-3.9'
     }
 
-    environment {
-
-        SERVER_HOST = "${SERVER_HOST}"
-        SERVER_PROTOCOL = "${SERVER_PROTOCOL}"
-
-        DB_NAME = "${DB_NAME}"
-        DB_USERNAME = "${DB_USERNAME}"
-        DB_PASSWORD = "${DB_PASSWORD}"
-
-        JWT_TOKEN = "${JWT_TOKEN}"
-        JWT_EXP = "${JWT_EXP}"
-
-        UPLOAD_FILE = "${UPLOAD_FILE}"
-        SERVE_PATH = "${SERVE_PATH}"
-
-        SENDER_EMAIL = "${SENDER_EMAIL}"
-
-        MAIL_HOG_HOST = "${MAIL_HOG_HOST}"
-        MAIL_HOG_USERNAME = "${MAIL_HOG_USERNAME}"
-        MAIL_HOG_PASSWORD = "${MAIL_HOG_PASSWORD}"
-
-        RABBIT_HOST = "${RABBIT_HOST}"
-        RABBIT_USERNAME = "${RABBIT_USERNAME}"
-        RABBIT_PASSWORD = "${RABBIT_PASSWORD}"
-
-        STRIPE_KEY = "${STRIPE_KEY}"
-    }
-
     stages {
 
         stage('Checkout') {
@@ -55,11 +27,46 @@ pipeline {
         }
 
         stage('Run Application') {
+
             steps {
-                sh '''
-                java -jar target/*.jar
-                '''
+
+                withCredentials([
+
+                    string(credentialsId: 'SERVER_HOST', variable: 'SERVER_HOST'),
+                    string(credentialsId: 'SERVER_PROTOCOL', variable: 'SERVER_PROTOCOL'),
+
+                    string(credentialsId: 'DB_NAME', variable: 'DB_NAME'),
+                    string(credentialsId: 'DB_USERNAME', variable: 'DB_USERNAME'),
+                    string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
+
+                    string(credentialsId: 'JWT_TOKEN', variable: 'JWT_TOKEN'),
+                    string(credentialsId: 'JWT_EXP', variable: 'JWT_EXP'),
+
+                    string(credentialsId: 'UPLOAD_FILE', variable: 'UPLOAD_FILE'),
+                    string(credentialsId: 'SERVE_PATH', variable: 'SERVE_PATH'),
+
+                    string(credentialsId: 'SENDER_EMAIL', variable: 'SENDER_EMAIL'),
+
+                    string(credentialsId: 'MAIL_HOG_HOST', variable: 'MAIL_HOG_HOST'),
+                    string(credentialsId: 'MAIL_HOG_USERNAME', variable: 'MAIL_HOG_USERNAME'),
+                    string(credentialsId: 'MAIL_HOG_PASSWORD', variable: 'MAIL_HOG_PASSWORD'),
+
+                    string(credentialsId: 'RABBIT_HOST', variable: 'RABBIT_HOST'),
+                    string(credentialsId: 'RABBIT_USERNAME', variable: 'RABBIT_USERNAME'),
+                    string(credentialsId: 'RABBIT_PASSWORD', variable: 'RABBIT_PASSWORD'),
+
+                    string(credentialsId: 'STRIPE_KEY', variable: 'STRIPE_KEY')
+
+                ]) {
+
+                    sh '''
+                    java -jar target/*.jar
+                    '''
+
+                }
+
             }
+
         }
 
     }

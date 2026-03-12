@@ -54,6 +54,7 @@ pipeline {
 
                     sh '''
                            java -jar target/*.jar --spring.profiles.active=acc
+
                     '''
 
                 }

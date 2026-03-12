@@ -53,8 +53,8 @@ pipeline {
                 ]) {
 
                     sh '''
-                            echo "Copie du jar vers /opt/fotova-app/"
-                            cp target/*.jar /opt/fotova-app/
+                            echo "Copie du jar vers /home/"
+                            cp target/*.jar /home/
                             echo "Jar copié !"
                     '''
 

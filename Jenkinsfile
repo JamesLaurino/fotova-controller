@@ -61,7 +61,7 @@ pipeline {
 
                     sh '''
                     printenv | sort
-                    java -jar target/*.jar
+                    java -jar target/*.jar --spring.profiles.active=dev
                     '''
 
                 }

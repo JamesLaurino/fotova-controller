@@ -53,7 +53,9 @@ pipeline {
                 ]) {
 
                     sh '''
-                        nohup java -jar target/*.jar --spring.profiles.active=acc > app.log 2>&1 &
+                        java -jar target/*.jar --spring.profiles.active=acc > app.log 2>&1 &
+                        sleep 10
+                        tail -n 50 app.log
                     '''
 
                 }

@@ -53,9 +53,7 @@ pipeline {
                 ]) {
 
                     sh '''
-                            echo "Copie du jar vers /home/"
-                            cp target/*.jar /home/
-                            echo "Jar copié !"
+                           java -jar target/*.jar --spring.profiles.active=acc
                     '''
 
                 }

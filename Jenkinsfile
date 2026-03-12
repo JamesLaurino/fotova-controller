@@ -53,8 +53,8 @@ pipeline {
                 ]) {
 
                     sh '''
-                    printenv | sort
-                    java -jar target/*.jar --spring.profiles.active=acc
+                        nohup java -jar target/*.jar --spring.profiles.active=acc > app.log 2>&1 &
+                        sleep 10
                     '''
 
                 }

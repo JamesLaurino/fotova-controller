@@ -19,13 +19,6 @@ pipeline {
                 sh 'mvn clean package -DskipTests'
             }
         }
-
-        stage('Debug Env') {
-            steps {
-                sh 'printenv | sort'
-            }
-        }
-
         stage('Run Application') {
 
             steps {

@@ -23,8 +23,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@Profile("prod")
-public class WebSecurityConfig {
+@Profile("acc")
+public class WebSecurityConfigAcc {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
@@ -58,38 +58,16 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling(exception ->
-                        exception.authenticationEntryPoint(unauthorizedHandler)
-                )
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .authorizeHttpRequests(auth -> auth
-
-                        .requestMatchers(
-                                "/api/v1/auth/login",
-                                "/api/v1/auth/register",
-                                "/api/v1/auth/category",
-                                "/api/v1/auth/products",
-                                "/api/v1/auth/product/*",
-                                "/api/v1/auth/images/*",
-                                "/api/v1/auth/products/category/*",
-                                "/api/v1/auth/comments",
-                                "/api/v1/auth/i18n/*",
-                                "/api/v1/auth/label",
-                                "/api/v1/auth/password-reset/email",
-                                "/images/**"
-                        ).permitAll()
-                        .anyRequest().authenticated()
+        http.csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth ->
+                        auth.anyRequest().permitAll()
                 );
 
         http.authenticationProvider(authenticationProvider());
-        http.addFilterBefore(
-                authenticationJwtTokenFilter(),
-                UsernamePasswordAuthenticationFilter.class
-        );
+
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

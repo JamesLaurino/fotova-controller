@@ -4,6 +4,7 @@ import com.fotova.dto.StripeResponse;
 import com.fotova.dto.stripe.StripeProductRequest;
 import com.fotova.firstapp.security.utils.Response;
 import com.fotova.service.StripeService;
+import com.fotova.service.html.StripeHtmlService;
 import com.fotova.service.order.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,12 +13,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/v1")
+@Profile("prod")
 @CrossOrigin(origins = "*",methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class StripeController {
 
@@ -26,6 +30,9 @@ public class StripeController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private StripeHtmlService stripeHtmlService;
 
     @Operation(summary = "Checkout the product basket")
     @ApiResponse(responseCode = "200", description = "Checkout if the basket is sync with the database product",
@@ -36,6 +43,7 @@ public class StripeController {
     @ApiResponse(responseCode = "500", description = "An error occur during the payment",
             content = @Content)
     @PostMapping("auth/checkout")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<Object> checkoutProducts(@RequestBody StripeProductRequest productRequest) {
 
         productRequest = orderService.setStripeProductRequestName(productRequest);
@@ -77,12 +85,12 @@ public class StripeController {
             orderService.sendBillingEmail(orderUUID);
             orderService.cleanOrderBasketByUUID(orderUUID);
 
-            String html = stripeService.buildSuccessHtml();
+            String html = stripeHtmlService.buildSuccessHtml();
             return ResponseEntity.ok(html);
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(stripeService.buildFailureHtml());
+                .body(stripeHtmlService.buildFailureHtml());
     }
 
     @Operation(summary = "Order cancel notification")
@@ -98,6 +106,6 @@ public class StripeController {
     ){
 
         orderService.cleanOrderBasketByUUID(orderUUID);
-        return ResponseEntity.ok(stripeService.buildCancelHtml());
+        return ResponseEntity.ok(stripeHtmlService.buildCancelHtml());
     }
 }

@@ -53,7 +53,9 @@ pipeline {
                 ]) {
 
                     sh '''
-                        java -jar target/*.jar --spring.profiles.active=acc
+                            echo "Copie du jar vers /opt/fotova-app/"
+                            cp target/*.jar /opt/fotova-app/
+                            echo "Jar copié !"
                     '''
 
                 }

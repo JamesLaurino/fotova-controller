@@ -51,17 +51,17 @@ pipeline {
                     string(credentialsId: 'STRIPE_KEY', variable: 'STRIPE_KEY')
 
                 ]) {
-
-                    sh '''
-                           java -jar target/*.jar --spring.profiles.active=acc
-
-                    '''
-
+                    script{
+                        withEnv(['JENKINS_NODE_COOKIE=dontkill']) {
+                            sh '''
+                            nohup java -jar target/*.jar --spring.profiles.active=acc > app.log 2>&1 &
+                            sleep 20
+                            tail -n 200 app.log
+                            '''
+                        }
+                    }
                 }
-
             }
-
         }
-
     }
 }

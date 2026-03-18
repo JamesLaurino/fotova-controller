@@ -4,6 +4,7 @@ import com.fotova.entity.AddressEntity;
 import com.fotova.entity.ClientEntity;
 import com.fotova.repository.address.AddressRepositoryImpl;
 import com.fotova.repository.address.AddressRepositoryJpa;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -16,6 +17,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +36,9 @@ public class AddressServiceUnitTest {
 
     @InjectMocks
     private AddressRepositoryImpl addressRepositoryImpl;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     private AddressEntity addressEntityOne = new AddressEntity();
     private AddressEntity addressEntityTwo = new AddressEntity();

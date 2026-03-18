@@ -11,6 +11,7 @@ import com.fotova.repository.address.AddressRepositoryImpl;
 import com.fotova.repository.product.ProductRepositoryImpl;
 import com.fotova.repository.supplier.SupplierRepositoryImpl;
 import com.fotova.service.address.AddressMapper;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import com.fotova.service.product.ProductMapper;
 import com.fotova.service.supplier.SupplierMapper;
 import com.fotova.service.supplier.SupplierService;
@@ -21,6 +22,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 
@@ -34,6 +36,9 @@ public class SupplierServiceUnitTest {
 
     @InjectMocks
     private SupplierService supplierService;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     @Mock
     private SupplierRepositoryImpl supplierRepositoryImpl;

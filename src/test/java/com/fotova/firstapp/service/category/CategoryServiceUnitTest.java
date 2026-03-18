@@ -6,6 +6,7 @@ import com.fotova.entity.ProductEntity;
 import com.fotova.repository.category.CategoryRepositoryImpl;
 import com.fotova.service.category.CategoryMapper;
 import com.fotova.service.category.CategoryService;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -13,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -32,6 +34,9 @@ public class CategoryServiceUnitTest {
 
     @Mock
     private CategoryMapper categoryMapper;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     @Test
     @DisplayName("Get category by id")

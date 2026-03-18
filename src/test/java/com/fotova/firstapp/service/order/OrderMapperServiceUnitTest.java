@@ -9,6 +9,7 @@ import com.fotova.dto.stripe.StripOrderBasket;
 import com.fotova.dto.stripe.StripeProductRequest;
 import com.fotova.entity.ClientEntity;
 import com.fotova.entity.OrderEntity;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import com.fotova.service.order.OrderMapper;
 import com.fotova.service.order.helper.OrderHelper;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.time.Instant;
 import java.util.List;
@@ -33,6 +35,9 @@ public class OrderMapperServiceUnitTest {
 
     @InjectMocks
     private OrderMapper orderMapper;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     @Test
     @DisplayName("mapToOrderDtoList")

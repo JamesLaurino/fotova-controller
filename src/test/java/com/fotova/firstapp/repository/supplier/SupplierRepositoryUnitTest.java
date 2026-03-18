@@ -6,6 +6,7 @@ import com.fotova.entity.SupplierEntity;
 import com.fotova.repository.address.AddressRepositoryJpa;
 import com.fotova.repository.product.ProductRepositoryJpa;
 import com.fotova.repository.supplier.SupplierRepositoryJpa;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 
@@ -28,6 +30,8 @@ public class SupplierRepositoryUnitTest {
     private ProductRepositoryJpa productRepositoryJpa;
     @Autowired
     private AddressRepositoryJpa addressRepositoryJpa;
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     private SupplierEntity supplierEntityTwo;
 

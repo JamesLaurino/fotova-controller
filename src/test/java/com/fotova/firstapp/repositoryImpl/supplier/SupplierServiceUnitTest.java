@@ -3,6 +3,7 @@ package com.fotova.firstapp.repositoryImpl.supplier;
 import com.fotova.entity.SupplierEntity;
 import com.fotova.repository.supplier.SupplierRepositoryImpl;
 import com.fotova.repository.supplier.SupplierRepositoryJpa;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -15,6 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +35,9 @@ public class SupplierServiceUnitTest {
 
     @InjectMocks
     private SupplierRepositoryImpl supplierRepositoryImpl;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     private SupplierEntity supplierEntityOne = new SupplierEntity();
     private SupplierEntity supplierEntityTwo = new SupplierEntity();

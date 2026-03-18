@@ -4,6 +4,7 @@ import com.fotova.entity.CategoryEntity;
 import com.fotova.entity.ProductEntity;
 import com.fotova.repository.category.CategoryRepositoryJpa;
 import com.fotova.repository.product.ProductRepositoryJpa;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 
@@ -23,6 +25,9 @@ public class CategoryRepositoryUnitTest {
     private ProductRepositoryJpa productRepositoryJpa;;
     @Autowired
     private CategoryRepositoryJpa categoryRepositoryJpa;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     private CategoryEntity categoryEntityOne;
 

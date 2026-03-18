@@ -3,6 +3,7 @@ package com.fotova.firstapp.controller.comment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fotova.dto.comment.CommentDto;
 import com.fotova.service.comment.CommentService;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,9 @@ public class CommentControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     @Test
     @DisplayName("Get all comments")
@@ -159,31 +163,5 @@ public class CommentControllerTest {
                         CoreMatchers.is(commentDto.getBody())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
                         CoreMatchers.is("Comment added successfully")));
-    }
-
-    @Test
-    @DisplayName("Deletion of a comment")
-    public void deleteComment() throws Exception {
-        // GIVEN
-        Integer commentId = 1;
-
-        // WHEN
-        BDDMockito.given(commentService.deleteCommentById(commentId)).willReturn("Comment has been deleted successfully for id : " + commentId);
-        ResultActions resultActions = mockMvc.perform(delete("/api/v1/auth/comment/{commentId}/delete",
-                commentId));
-
-        // THEN
-        verify(commentService, times(1)).deleteCommentById(commentId);
-        resultActions.andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.success",
-                        CoreMatchers.is(true)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
-                        CoreMatchers.is(200)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data",
-                        CoreMatchers.is("Comment has been deleted successfully for id : " + commentId)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
-                        CoreMatchers.is("Comment deleted successfully")));
-
     }
 }

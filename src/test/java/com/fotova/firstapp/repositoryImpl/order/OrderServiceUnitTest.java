@@ -4,6 +4,7 @@ import com.fotova.entity.ClientEntity;
 import com.fotova.entity.OrderEntity;
 import com.fotova.repository.order.OrderRepositoryImpl;
 import com.fotova.repository.order.OrderRepositoryJpa;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -15,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.time.Instant;
 import java.util.List;
@@ -31,6 +33,9 @@ public class OrderServiceUnitTest {
 
     @InjectMocks
     private OrderRepositoryImpl orderRepositoryImpl;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     private OrderEntity orderEntityOne = new OrderEntity();
     private OrderEntity orderEntityTwo = new OrderEntity();

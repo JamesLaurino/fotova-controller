@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fotova.dto.file.FileDto;
 import com.fotova.dto.file.FileResponseDto;
 import com.fotova.service.file.FileService;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,9 @@ public class FileControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     @Test
     @DisplayName("Get all files")

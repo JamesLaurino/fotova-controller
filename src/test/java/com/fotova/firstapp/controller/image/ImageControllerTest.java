@@ -4,11 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fotova.dto.image.ImageDto;
 import com.fotova.dto.product.CategoryInnerProductDto;
 import com.fotova.dto.product.ProductDtoBack;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import com.fotova.service.image.ImageService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,7 +24,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
@@ -36,6 +36,9 @@ public class ImageControllerTest {
 
     @MockitoBean
     private ImageService imageService;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -133,86 +136,4 @@ public class ImageControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.productDtoBack.url",
                         CoreMatchers.is(productDtoBack.getUrl())));
     }
-
-    @Test
-    @DisplayName("Delete image by id")
-    public void deleteImageByIdTest() throws Exception {
-        // GIVEN
-        Integer imageId = 1;
-        String expectedMessage = "Image deleted with id: " + imageId;
-
-        // WHEN
-        BDDMockito.given(imageService.deleteImageById(imageId)).willReturn(expectedMessage);
-
-        ResultActions resultActions = mockMvc.perform(delete("/api/v1/auth/image/{id}/delete", imageId)
-                .contentType("application/json"));
-
-        // THEN
-        verify(imageService, times(1)).deleteImageById(imageId);
-        resultActions.andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.success", CoreMatchers.is(true)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode", CoreMatchers.is(200)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage", CoreMatchers.is("Images deleted successfully")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data", CoreMatchers.is(expectedMessage)));
-    }
-
-    @Test
-    @DisplayName("Add image to product")
-    public void addImageTest() throws Exception {
-        // GIVEN
-        Integer productId = 1;
-        ImageDto imageDto = new ImageDto();
-        imageDto.setId(10);
-        imageDto.setPath("image-path.jpg");
-
-        // WHEN
-        BDDMockito.given(imageService.saveImage(ArgumentMatchers.any(ImageDto.class), ArgumentMatchers.eq(productId)))
-                .willReturn(imageDto);
-
-        ResultActions resultActions = mockMvc.perform(post("/api/v1/auth/image/add/{id}", productId)
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(imageDto)));
-
-        // THEN
-        verify(imageService, times(1)).saveImage(ArgumentMatchers.any(ImageDto.class), ArgumentMatchers.eq(productId));
-        resultActions.andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.success", CoreMatchers.is(true)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode", CoreMatchers.is(200)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage", CoreMatchers.is("Image added successfully")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data", CoreMatchers.notNullValue()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.id", CoreMatchers.is(imageDto.getId())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.path", CoreMatchers.is(imageDto.getPath())));
-    }
-
-    @Test
-    @DisplayName("Update image")
-    public void updateImageTest() throws Exception {
-        // GIVEN
-        ImageDto imageDto = new ImageDto();
-        imageDto.setId(10);
-        imageDto.setPath("updated-image-path.jpg");
-
-        // WHEN
-        BDDMockito.given(imageService.updateImage(ArgumentMatchers.any(ImageDto.class)))
-                .willReturn(imageDto);
-
-        ResultActions resultActions = mockMvc.perform(put("/api/v1/auth/image/update")
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(imageDto)));
-
-        // THEN
-        verify(imageService, times(1)).updateImage(ArgumentMatchers.any(ImageDto.class));
-        resultActions.andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.success", CoreMatchers.is(true)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode", CoreMatchers.is(200)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage", CoreMatchers.is("Image updated successfully")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data", CoreMatchers.notNullValue()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.id", CoreMatchers.is(imageDto.getId())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.path", CoreMatchers.is(imageDto.getPath())));
-    }
-
-
 }

@@ -1,23 +1,18 @@
 package com.fotova.firstapp.repository.product;
 
-import com.fotova.dto.image.ImageDto;
-import com.fotova.entity.ClientEntity;
-import com.fotova.entity.CommentEntity;
 import com.fotova.entity.ImageEntity;
 import com.fotova.entity.ProductEntity;
-import com.fotova.repository.client.ClientRepositoryJpa;
-import com.fotova.repository.comment.CommentRepositoryJpa;
 import com.fotova.repository.image.ImageRepositoryJpa;
 import com.fotova.repository.product.ProductRepositoryJpa;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,6 +26,9 @@ public class ProductRepositoryTest {
 
     @Autowired
     private ImageRepositoryJpa imageRepositoryJpa;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     ProductEntity productEntity = new ProductEntity();
 

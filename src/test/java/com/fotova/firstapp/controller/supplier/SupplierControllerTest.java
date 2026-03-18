@@ -1,12 +1,12 @@
 package com.fotova.firstapp.controller.supplier;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fotova.dto.address.AddressDto;
 import com.fotova.dto.product.CategoryInnerProductDto;
 import com.fotova.dto.product.ProductDtoBack;
 import com.fotova.dto.supplier.SupplierAddressDto;
 import com.fotova.dto.supplier.SupplierDto;
 import com.fotova.dto.supplier.SupplierProductDto;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import com.fotova.service.supplier.SupplierService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.DisplayName;
@@ -39,6 +39,9 @@ public class SupplierControllerTest {
 
     @MockitoBean
     private SupplierService supplierService;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     @Autowired
     private ObjectMapper objectMapper;

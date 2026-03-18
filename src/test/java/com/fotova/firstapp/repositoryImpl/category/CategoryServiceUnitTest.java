@@ -3,6 +3,7 @@ package com.fotova.firstapp.repositoryImpl.category;
 import com.fotova.entity.CategoryEntity;
 import com.fotova.repository.category.CategoryRepositoryImpl;
 import com.fotova.repository.category.CategoryRepositoryJpa;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -15,6 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +35,9 @@ public class CategoryServiceUnitTest {
 
     @InjectMocks
     private CategoryRepositoryImpl categoryRepositoryImpl;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     private CategoryEntity categoryEntityOne = new CategoryEntity();
     private CategoryEntity categoryEntityTwo = new CategoryEntity();

@@ -14,6 +14,7 @@ import com.fotova.service.address.AddressMapper;
 import com.fotova.service.client.ClientMapper;
 import com.fotova.service.client.ClientService;
 import com.fotova.service.comment.CommentMapper;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -21,6 +22,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -35,6 +37,9 @@ import static org.mockito.Mockito.verify;
 public class ClientServiceUnitTest {
     @InjectMocks
     private ClientService clientService;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     @Mock
     private ClientRepositoryImpl clientRepositoryImpl;

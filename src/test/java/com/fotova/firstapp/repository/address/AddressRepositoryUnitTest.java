@@ -4,6 +4,7 @@ import com.fotova.entity.AddressEntity;
 import com.fotova.entity.ClientEntity;
 import com.fotova.repository.address.AddressRepositoryJpa;
 import com.fotova.repository.client.ClientRepositoryJpa;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -25,6 +27,9 @@ public class AddressRepositoryUnitTest {
 
     @Autowired
     private ClientRepositoryJpa clientRepositoryJpa;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     private AddressEntity addressEntityOne;
 

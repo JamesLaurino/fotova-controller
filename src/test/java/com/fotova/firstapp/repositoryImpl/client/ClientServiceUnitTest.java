@@ -3,6 +3,7 @@ package com.fotova.firstapp.repositoryImpl.client;
 import com.fotova.entity.ClientEntity;
 import com.fotova.repository.client.ClientRepositoryImpl;
 import com.fotova.repository.client.ClientRepositoryJpa;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -15,6 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +34,9 @@ public class ClientServiceUnitTest {
 
     @InjectMocks
     private ClientRepositoryImpl clientRepositoryImpl;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     private ClientEntity clientEntityOne = new ClientEntity();
     private ClientEntity clientEntityTwo = new ClientEntity();

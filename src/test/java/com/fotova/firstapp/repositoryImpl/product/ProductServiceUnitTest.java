@@ -3,6 +3,7 @@ package com.fotova.firstapp.repositoryImpl.product;
 import com.fotova.entity.ProductEntity;
 import com.fotova.repository.product.ProductRepositoryImpl;
 import com.fotova.repository.product.ProductRepositoryJpa;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -15,6 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +34,9 @@ public class ProductServiceUnitTest {
 
     @InjectMocks
     private ProductRepositoryImpl productRepositoryImpl;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     private ProductEntity productEntityOne = new ProductEntity();
     private ProductEntity productEntityTwo = new ProductEntity();

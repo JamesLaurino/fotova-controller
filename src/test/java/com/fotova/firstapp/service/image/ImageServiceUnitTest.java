@@ -5,6 +5,7 @@ import com.fotova.dto.product.ProductDtoBack;
 import com.fotova.entity.ImageEntity;
 import com.fotova.entity.ProductEntity;
 import com.fotova.repository.image.ImageRepositoryImpl;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import com.fotova.service.image.ImageMapper;
 import com.fotova.service.image.ImageService;
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 
@@ -26,6 +28,9 @@ import static org.mockito.Mockito.verify;
 public class ImageServiceUnitTest {
     @InjectMocks
     private ImageService imageService;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     @Mock
     private ImageRepositoryImpl imageRepositoryImpl;

@@ -3,6 +3,7 @@ package com.fotova.firstapp.repositoryImpl.image;
 import com.fotova.entity.ImageEntity;
 import com.fotova.repository.image.ImageRepositoryImpl;
 import com.fotova.repository.image.ImageRepositoryJpa;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -14,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +32,9 @@ public class ImageRepositoryImplTest {
 
     @InjectMocks
     private ImageRepositoryImpl imageRepositoryImpl;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
 
     private ImageEntity imageEntityOne;

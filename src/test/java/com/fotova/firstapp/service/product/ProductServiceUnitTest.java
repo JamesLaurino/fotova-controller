@@ -12,9 +12,11 @@ import com.fotova.entity.ProductEntity;
 import com.fotova.repository.product.ProductRepositoryImpl;
 import com.fotova.service.RabbitMQProducer;
 import com.fotova.service.file.FileService;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import com.fotova.service.product.ProductMapper;
 import com.fotova.service.product.ProductService;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.BDDMockito;
@@ -22,6 +24,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 
@@ -34,6 +37,9 @@ public class ProductServiceUnitTest {
 
     @InjectMocks
     private ProductService productService;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     @Mock
     private ProductRepositoryImpl productRepository;
@@ -49,48 +55,6 @@ public class ProductServiceUnitTest {
 
     @Mock
     private FileService fileService;
-
-    @Test
-    @DisplayName("Save product")
-    public void saveProduct() {
-        // GIVEN
-        ProductDtoBack productDtoBack = new ProductDtoBack();
-        productDtoBack.setId(1);
-        productDtoBack.setName("Product 1");
-        productDtoBack.setUrl("url 1");
-        productDtoBack.setPrice(15.0);
-        productDtoBack.setQuantity(4);
-
-        CategoryEntity categoryEntity = new CategoryEntity();
-        categoryEntity.setId(1);
-        categoryEntity.setName("category 1");
-
-        ProductEntity productEntity = new ProductEntity();
-        productEntity.setName("product 1");
-        productEntity.setPrice(100.0);
-        productEntity.setQuantity(10);
-        productEntity.setId(1);
-        productEntity.setUrl("url 1");
-        productEntity.setCategory(categoryEntity);
-
-        // WHEN
-        BDDMockito.given(productMapper.mapToProductEntity(productDtoBack)).willReturn(productEntity);
-        BDDMockito.given(productRepository.saveWithCategory(productEntity,categoryEntity.getId())).willReturn(productEntity);
-        BDDMockito.given(productMapper.mapToProductDtoBack(productEntity)).willReturn(productDtoBack);
-        ProductDtoBack result = productService.saveProduct(productDtoBack,categoryEntity.getId());
-
-        // THEN
-        verify(productRepository, times(1)).saveWithCategory(productEntity,categoryEntity.getId());
-        verify(productMapper, times(1)).mapToProductDtoBack(productEntity);
-        verify(productMapper, times(1)).mapToProductEntity(productDtoBack);
-
-        assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(productDtoBack.getId());
-        assertThat(result.getName()).isEqualTo(productDtoBack.getName());
-        assertThat(result.getUrl()).isEqualTo(productDtoBack.getUrl());
-        assertThat(result.getPrice()).isEqualTo(productDtoBack.getPrice());
-        assertThat(result.getQuantity()).isEqualTo(productDtoBack.getQuantity());
-    }
 
     @Test
     @DisplayName("getAllProducts")

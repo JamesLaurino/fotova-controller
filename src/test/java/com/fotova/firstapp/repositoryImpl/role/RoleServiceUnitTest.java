@@ -4,6 +4,7 @@ import com.fotova.entity.ERole;
 import com.fotova.entity.RoleEntity;
 import com.fotova.repository.role.RoleRepositoryImpl;
 import com.fotova.repository.role.RoleRepositoryJpa;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -15,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +32,9 @@ public class RoleServiceUnitTest {
 
     @InjectMocks
     private RoleRepositoryImpl roleRepositoryImpl;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     private RoleEntity roleEntityOne = new RoleEntity();
     private RoleEntity roleEntityTwo = new RoleEntity();

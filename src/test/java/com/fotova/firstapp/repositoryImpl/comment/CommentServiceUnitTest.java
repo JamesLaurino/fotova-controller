@@ -6,6 +6,7 @@ import com.fotova.entity.ERole;
 import com.fotova.entity.RoleEntity;
 import com.fotova.repository.comment.CommentRepositoryImpl;
 import com.fotova.repository.comment.CommentRepositoryJpa;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -18,6 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -38,6 +40,9 @@ public class CommentServiceUnitTest {
 
     @InjectMocks
     private CommentRepositoryImpl commentRepositoryImpl;
+
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
 
     private CommentEntity commentEntityOne = new CommentEntity();
     private CommentEntity commentEntityTwo = new CommentEntity();

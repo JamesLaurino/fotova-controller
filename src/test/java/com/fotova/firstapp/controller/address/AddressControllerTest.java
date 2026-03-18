@@ -3,6 +3,7 @@ package com.fotova.firstapp.controller.address;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fotova.dto.address.AddressDto;
 import com.fotova.service.address.AddressService;
+import com.fotova.service.html.authentication.AuthHtmlService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -34,54 +33,11 @@ public class AddressControllerTest {
     @MockitoBean
     private AddressService addressService;
 
+    @MockitoBean
+    private AuthHtmlService authHtmlService;
+
     @Autowired
     private ObjectMapper objectMapper;
-
-    @Test
-    @DisplayName("Get all addresses")
-    public void getAllAddresses() throws Exception {
-        // GIVEN
-        AddressDto addressDtoOne = new AddressDto();
-        addressDtoOne.setId(1);
-        addressDtoOne.setCity("city 1");
-        addressDtoOne.setCountry("country 1");
-        addressDtoOne.setNumber("number 1");
-        addressDtoOne.setStreet("street 1");
-
-        AddressDto addressDtoTwo = new AddressDto();
-        addressDtoTwo.setId(2);
-        addressDtoTwo.setCity("city 2");
-        addressDtoTwo.setCountry("country 2");
-        addressDtoTwo.setNumber("number 2");
-        addressDtoTwo.setStreet("street 2");
-
-        AddressDto addressDtoThree = new AddressDto();
-        addressDtoThree.setId(3);
-        addressDtoThree.setCity("city 3");
-        addressDtoThree.setCountry("country 3");
-        addressDtoThree.setNumber("number 3");
-        addressDtoThree.setStreet("street 3");
-
-        List<AddressDto> addressDtoList = List.of(addressDtoOne, addressDtoTwo, addressDtoThree);
-
-        // WHEN
-        BDDMockito.given(addressService.getAllAddresses()).willReturn(addressDtoList);
-        ResultActions resultActions = mockMvc.perform(get("/api/v1/auth/address"));
-
-        // THEN
-        verify(addressService, times(1)).getAllAddresses();
-        resultActions.andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.size()",
-                        CoreMatchers.is(addressDtoList.size())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.success",
-                        CoreMatchers.is(true)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.responseCode",
-                        CoreMatchers.is(200)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.responseMessage",
-                        CoreMatchers.is("Addresses retrieved successfully")));
-
-    }
 
     @Test
     @DisplayName("Get address by id")

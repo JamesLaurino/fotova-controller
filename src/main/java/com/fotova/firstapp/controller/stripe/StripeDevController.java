@@ -3,9 +3,12 @@ package com.fotova.firstapp.controller.stripe;
 
 import com.fotova.dto.StripeResponse;
 import com.fotova.dto.stripe.StripeProductRequest;
+import com.fotova.firstapp.security.utils.Response;
+import com.fotova.service.StripeService;
 import com.fotova.service.html.StripeHtmlService;
 import com.fotova.service.order.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -23,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*",methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class StripeDevController {
 
+    @Autowired
+    private StripeService stripeService;
 
     @Autowired
     private OrderService orderService;
@@ -40,7 +45,7 @@ public class StripeDevController {
             content = @Content)
     @PostMapping("auth/checkout")
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    public ResponseEntity<Object> checkoutProducts(@RequestBody StripeProductRequest productRequest) throws MessagingException {
+    public ResponseEntity<Object> checkoutProducts(@RequestBody StripeProductRequest productRequest) {
 
         productRequest = orderService.setStripeProductRequestName(productRequest);
 
@@ -49,17 +54,59 @@ public class StripeDevController {
         orderService.checkOrderQuantity(productRequest.getName());
         orderService.checkOrderPrice(productRequest);
 
-        String orderRes = orderService.createOrderAfterShipment(productRequest.getName());
+        StripeResponse stripeResponse = stripeService.checkoutProducts(productRequest);
+
+        Response<StripeResponse> response = Response.<StripeResponse>builder()
+                .responseCode(HttpStatus.OK.value())
+                .responseMessage("Checkout realized with success")
+                .data(stripeResponse)
+                .success(true)
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Order after payment stripe")
+    @ApiResponse(responseCode = "200", description = "Order made with success",
+            content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = StripeResponse.class))
+            })
+    @ApiResponse(responseCode = "500", description = "An error occur during the payment",
+            content = @Content)
+    @GetMapping("auth/{orderUUID}/success")
+    public ResponseEntity<Object> success(
+            @Parameter(description = "order UUID", required = true)
+            @PathVariable String orderUUID) throws MessagingException {
+
+        String orderRes = orderService.createOrderAfterShipment(orderUUID);
 
         if(!orderRes.equals("Order not created")) {
             orderService.sendRabbitMQOrder(orderRes);
-            orderService.sendBillingEmail(productRequest.getName());
-            orderService.cleanOrderBasketByUUID(productRequest.getName());
-            return ResponseEntity.ok(stripeHtmlService.buildSuccessHtml());
+            orderService.sendBillingEmail(orderUUID);
+            orderService.cleanOrderBasketByUUID(orderUUID);
+
+            String html = stripeHtmlService.buildSuccessHtml();
+            return ResponseEntity.ok(html);
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(stripeHtmlService.buildFailureHtml());
+    }
 
+    @Operation(summary = "Order cancel notification")
+    @ApiResponse(responseCode = "200", description = "Payment not ok",
+            content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = String.class))
+            })
+    @GetMapping("auth/{orderUUID}/cancel")
+    public ResponseEntity<Object> cancel(
+            @Parameter(description = "order UUID", required = true)
+            @PathVariable String orderUUID
+    ){
+
+        orderService.cleanOrderBasketByUUID(orderUUID);
+        return ResponseEntity.ok(stripeHtmlService.buildCancelHtml());
     }
 }

@@ -55,7 +55,7 @@ public class StripeAccController {
             orderService.sendRabbitMQOrder(orderRes);
             orderService.sendBillingEmail(productRequest.getName());
             orderService.cleanOrderBasketByUUID(productRequest.getName());
-            return ResponseEntity.ok(stripeHtmlService.buildSuccessHtml());
+            return ResponseEntity.ok("Paiement réalisé avec success");
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)

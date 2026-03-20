@@ -19,6 +19,16 @@ pipeline {
                 sh 'mvn clean package -DskipTests'
             }
         }
+
+        stage('Stop & Cleanup') {
+            steps {
+                script {
+                    echo "Arrêt de l'ancienne instance..."
+                    sh "pkill -f 'target/.*.jar' || echo 'Aucun processus en cours.'"
+                }
+            }
+        }
+
         stage('Run Application') {
 
             steps {

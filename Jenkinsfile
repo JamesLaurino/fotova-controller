@@ -14,9 +14,9 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build & Publish') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh 'mvn clean deploy -DskipTests'
             }
         }
 
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     echo "Arrêt de l'ancienne instance..."
-                    sh "pkill -f 'target/.*.jar' || echo 'Aucun processus en cours.'"
+                    sh "pkill -f 'java -jar target/spring-1.0.0-snapshot.jar' || echo 'Aucun processus en cours.'"
                 }
             }
         }
@@ -64,7 +64,7 @@ pipeline {
                     script{
                         withEnv(['JENKINS_NODE_COOKIE=dontkill']) {
                             sh '''
-                            nohup java -jar target/*.jar --spring.profiles.active=acc > app.log 2>&1 &
+                            nohup java -jar target/spring-1.0.0-snapshot.jar --spring.profiles.active=acc > app.log 2>&1 &
                             sleep 20
                             tail -n 200 app.log
                             '''

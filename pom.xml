@@ -105,7 +105,7 @@
     </dependencies>
 
     <build>
-        <finalName>spring-1.0.0-snapshot.jar</finalName>
+        <finalName>spring-1.0.0-snapshot</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

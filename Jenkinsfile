@@ -58,8 +58,9 @@ pipeline {
                     string(credentialsId: 'RABBIT_USERNAME', variable: 'RABBIT_USERNAME'),
                     string(credentialsId: 'RABBIT_PASSWORD', variable: 'RABBIT_PASSWORD'),
 
-                    string(credentialsId: 'STRIPE_KEY', variable: 'STRIPE_KEY')
-
+                    string(credentialsId: 'STRIPE_KEY', variable: 'STRIPE_KEY'),
+                    string(credentialsId: 'OPENAI_API_KEY', variable: 'OPENAI_API_KEY'),
+                    string(credentialsId: 'LOGGING_PATH_FILE', variable: 'LOGGING_PATH_FILE')
                 ]) {
                     script{
                         withEnv(['JENKINS_NODE_COOKIE=dontkill']) {

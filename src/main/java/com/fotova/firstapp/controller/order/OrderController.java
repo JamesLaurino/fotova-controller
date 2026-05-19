@@ -52,6 +52,7 @@ public class OrderController {
     @ApiResponse(responseCode = "404", description = "Order not found",
             content = @Content)
     @PutMapping("auth/order/complete/{orderId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> toggleCompletedOrder(
             @Parameter(description = "Order identifier - id", required = true, example = "1")
             @PathVariable Integer orderId) {
@@ -111,6 +112,7 @@ public class OrderController {
                     @Schema(implementation = OrderProductDto.class))
             })
     @GetMapping("auth/order-products")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> getOrderProductByEmail(
             @Parameter(description = "Client email", required = true, example = "exemple@gmail.com")
             @RequestParam String email,
@@ -132,6 +134,7 @@ public class OrderController {
                     @Schema(implementation = OrderProductDto.class))
             })
     @GetMapping("auth/order-products/{email}")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<Object> getOrdersByEmail(
             @Parameter(description = "Client email", required = true, example = "exemple@gmail.com")
             @PathVariable String email) {

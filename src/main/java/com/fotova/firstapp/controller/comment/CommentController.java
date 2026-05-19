@@ -1,6 +1,8 @@
 package com.fotova.firstapp.controller.comment;
 
+import com.fotova.dto.client.ClientDto;
 import com.fotova.dto.comment.CommentDto;
+import com.fotova.firstapp.security.service.AuthService;
 import com.fotova.firstapp.security.utils.Response;
 import com.fotova.service.comment.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,6 +25,9 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private AuthService authService;
 
     @Operation(summary = "Retrieve all comments")
     @ApiResponse(responseCode = "200", description = "Comments retrieved successfully",
@@ -112,10 +117,11 @@ public class CommentController {
     public ResponseEntity<Object> deleteComment(
             @Parameter(description = "Comment identifier - id", required = true, example = "1")
             @PathVariable("commentId") Integer commentId) {
+        ClientDto clientDto = authService.getPrincipal();
         Response<String> response = Response.<String>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Comment deleted successfully")
-                .data(commentService.deleteCommentById(commentId))
+                .data(commentService.deleteCommentByIdWithClientId(commentId,clientDto.getId()))
                 .success(true)
                 .build();
         return ResponseEntity.ok(response);

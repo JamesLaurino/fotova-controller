@@ -58,6 +58,7 @@ public class ClientController {
     @ApiResponse(responseCode = "404", description = "Client not found",
             content = @Content)
     @GetMapping("auth/client/{clientId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> getClientById(
             @Parameter(description = "Client identifier - id", required = true, example = "1")
             @PathVariable Integer clientId) {
@@ -79,6 +80,7 @@ public class ClientController {
     @ApiResponse(responseCode = "404", description = "Client not found",
             content = @Content)
     @PutMapping("auth/client/update")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<Object> updateAddressClient(@RequestBody @Valid AddressDto addressDto) {
         ClientDto clientDto = authService.getPrincipal();
         Response<ClientDto> response = Response.<ClientDto>builder()
@@ -99,6 +101,7 @@ public class ClientController {
     @ApiResponse(responseCode = "404", description = "Client not found",
             content = @Content)
     @PostMapping("auth/client/address")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<Object> postAddressClient(@RequestBody @Valid AddressDto addressDto) {
         ClientDto clientDto = authService.getPrincipal();
         Response<ClientDto> response = Response.<ClientDto>builder()
@@ -119,6 +122,7 @@ public class ClientController {
     @ApiResponse(responseCode = "404", description = "Client not found",
             content = @Content)
     @PostMapping("auth/client/comment")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<Object> postCommentClient(@RequestBody @Valid CommentDto commentDto) {
         ClientDto clientDto = authService.getPrincipal();
         Response<String> response = Response.<String>builder()
@@ -139,6 +143,7 @@ public class ClientController {
     @ApiResponse(responseCode = "404", description = "Client not found",
             content = @Content)
     @DeleteMapping("auth/client/{clientId}/delete")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> deleteClientById(
             @Parameter(description = "Client identifier - id", required = true, example = "1")
             @PathVariable Integer clientId) {

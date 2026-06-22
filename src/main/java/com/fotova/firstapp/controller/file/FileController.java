@@ -56,6 +56,7 @@ public class FileController {
                     @Schema(implementation = FileDto.class))
             })
     @GetMapping("auth/files")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> getAllFiles() throws IOException {
         Response<FileDto> response = Response.<FileDto>builder()
                 .responseCode(HttpStatus.OK.value())
@@ -77,6 +78,7 @@ public class FileController {
     @ApiResponse(responseCode = "500", description = "Error retrieving file",
             content = @Content)
     @GetMapping("auth/file/{filename}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> getFileByName(
             @Parameter(description = "file name", required = true, example = "test.png")
             @PathVariable String filename) throws IOException {
@@ -92,6 +94,7 @@ public class FileController {
     @ApiResponse(responseCode = "500", description = "Error retrieving file content",
             content = @Content)
     @GetMapping("auth/files/content")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> getAllFilesContent() {
         Response<List<FileResponseDto>> response = Response.<List<FileResponseDto>>builder()
                 .responseCode(HttpStatus.OK.value())

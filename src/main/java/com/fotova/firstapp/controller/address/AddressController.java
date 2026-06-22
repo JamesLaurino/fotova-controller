@@ -64,6 +64,7 @@ public class AddressController {
         )
     })
     @GetMapping("auth/address/{addressId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> getAddressById(
             @Parameter(description = "Address identifier", required = true, example = "1")
             @PathVariable Integer addressId) {
@@ -93,6 +94,7 @@ public class AddressController {
         )
     })
     @DeleteMapping("auth/address/{addressId}/delete")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> deleteAddress(
             @Parameter(description = "Address identifier", required = true, example = "1")
             @PathVariable Integer addressId) {
@@ -114,6 +116,7 @@ public class AddressController {
     @ApiResponse(responseCode = "409", description = "Address already exists",
             content = @Content)
     @PostMapping("auth/address/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> addAddress(@RequestBody @Valid AddressDto addressDto) {
         Response<AddressDto> response = Response.<AddressDto>builder()
                 .responseCode(HttpStatus.OK.value())
@@ -133,6 +136,7 @@ public class AddressController {
     @ApiResponse(responseCode = "404", description = "Address not found",
             content = @Content)
     @PutMapping("auth/address/update")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> updateAddress(@RequestBody @Valid AddressDto addressDto) {
         Response<AddressDto> response = Response.<AddressDto>builder()
                 .responseCode(HttpStatus.OK.value())

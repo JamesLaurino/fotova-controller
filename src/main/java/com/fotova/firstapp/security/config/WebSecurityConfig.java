@@ -74,7 +74,6 @@ public class WebSecurityConfig {
                                 "/api/v1/auth/category",
                                 "/api/v1/auth/products",
                                 "/api/v1/auth/product/*",
-                                "/api/v1/auth/images/*",
                                 "/api/v1/auth/products/category/*",
                                 "/api/v1/auth/comments",
                                 "/api/v1/auth/i18n/*",

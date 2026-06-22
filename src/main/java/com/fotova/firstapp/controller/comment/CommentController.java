@@ -2,6 +2,7 @@ package com.fotova.firstapp.controller.comment;
 
 import com.fotova.dto.client.ClientDto;
 import com.fotova.dto.comment.CommentDto;
+import com.fotova.exception.NotFoundException;
 import com.fotova.firstapp.security.service.AuthService;
 import com.fotova.firstapp.security.utils.Response;
 import com.fotova.service.comment.CommentService;
@@ -77,29 +78,18 @@ public class CommentController {
             content = @Content)
     @PutMapping("auth/comment/update")
     public ResponseEntity<Object> updateComment(@RequestBody @Valid CommentDto commentDto) {
+        if (!authService.isAdmin()) {
+            ClientDto principal = authService.getPrincipal();
+            CommentDto existing = commentDto.getId() == null ? null : commentService.getCommentById(commentDto.getId());
+            if (existing == null || existing.getClientCommentDto() == null
+                    || !principal.getId().equals(existing.getClientCommentDto().getClientId())) {
+                throw new NotFoundException("Comment not found");
+            }
+        }
         Response<CommentDto> response = Response.<CommentDto>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Comment updated successfully")
                 .data(commentService.updateComment(commentDto))
-                .success(true)
-                .build();
-        return ResponseEntity.ok(response);
-    }
-
-    @Operation(summary = "Add a new comment")
-    @ApiResponse(responseCode = "200", description = "Comment added successfully",
-            content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = CommentDto.class))
-            })
-    @ApiResponse(responseCode = "409", description = "Comment already exists",
-            content = @Content)
-    @PostMapping("auth/comment/add")
-    public ResponseEntity<Object> addComment(@RequestBody @Valid CommentDto commentDto) {
-        Response<CommentDto> response = Response.<CommentDto>builder()
-                .responseCode(HttpStatus.OK.value())
-                .responseMessage("Comment added successfully")
-                .data(commentService.saveComment(commentDto))
                 .success(true)
                 .build();
         return ResponseEntity.ok(response);
@@ -117,11 +107,17 @@ public class CommentController {
     public ResponseEntity<Object> deleteComment(
             @Parameter(description = "Comment identifier - id", required = true, example = "1")
             @PathVariable("commentId") Integer commentId) {
-        ClientDto clientDto = authService.getPrincipal();
+        String result;
+        if (authService.isAdmin()) {
+            result = commentService.deleteCommentById(commentId);
+        } else {
+            ClientDto clientDto = authService.getPrincipal();
+            result = commentService.deleteCommentByIdWithClientId(commentId, clientDto.getId());
+        }
         Response<String> response = Response.<String>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Comment deleted successfully")
-                .data(commentService.deleteCommentByIdWithClientId(commentId,clientDto.getId()))
+                .data(result)
                 .success(true)
                 .build();
         return ResponseEntity.ok(response);

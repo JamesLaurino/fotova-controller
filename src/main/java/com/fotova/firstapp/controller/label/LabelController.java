@@ -6,6 +6,7 @@ import com.fotova.service.label.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class LabelController {
     }
 
     @PutMapping("auth/add/label")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> updateLabel(@RequestBody LabelDto labelDto) {
         Response<LabelDto> response = Response.<LabelDto>builder()
                 .responseCode(HttpStatus.OK.value())

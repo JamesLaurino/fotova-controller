@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class SupplierController {
             @Schema(implementation = SupplierDto.class))
     })
     @GetMapping("auth/suppliers")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> getAllSuppliers(){
         Response<List<SupplierDto>> response = Response.<List<SupplierDto>>builder()
                 .responseCode(HttpStatus.OK.value())
@@ -60,6 +62,7 @@ public class SupplierController {
         )
     })
     @GetMapping("auth/supplier/{supplierId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> getSupplierById(
             @Parameter(description = "Supplier identifier - id", required = true, example = "1")
             @PathVariable("supplierId") Integer supplierId){
@@ -90,6 +93,7 @@ public class SupplierController {
         )
     })
     @PostMapping("auth/supplier/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> addSupplier(@RequestBody @Valid SupplierDto supplierDto){
         Response<SupplierDto> response = Response.<SupplierDto>builder()
                 .responseCode(HttpStatus.OK.value())
@@ -117,6 +121,7 @@ public class SupplierController {
                     )
             })
     @PutMapping("auth/supplier/update")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> updateSupplier(@RequestBody @Valid SupplierDto supplierDto){
         Response<SupplierDto> response = Response.<SupplierDto>builder()
                 .responseCode(HttpStatus.OK.value())
@@ -144,6 +149,7 @@ public class SupplierController {
                     )
             })
     @DeleteMapping("auth/supplier/{supplierId}/delete")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> deleteSupplier(
             @Parameter(description = "Supplier identifier - id", required = true, example = "1")
             @PathVariable("supplierId") Integer supplierId){
@@ -173,6 +179,7 @@ public class SupplierController {
                     )
             })
     @PutMapping("auth/supplier/{supplierId}/address")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> addSupplierAddress(
             @Parameter(description = "Supplier identifier - id", required = true, example = "1")
             @PathVariable("supplierId") Integer supplierId, @RequestBody @Valid AddressDto addressDto)
@@ -203,6 +210,7 @@ public class SupplierController {
                     )
             })
     @PutMapping("auth/supplier/{supplierId}/product")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> addSupplierProduct(
             @Parameter(description = "Supplier identifier - id", required = true, example = "1")
             @PathVariable("supplierId") Integer supplierId, @RequestBody @Valid ProductDtoBack productDto)

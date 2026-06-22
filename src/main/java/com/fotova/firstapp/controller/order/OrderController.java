@@ -1,8 +1,12 @@
 package com.fotova.firstapp.controller.order;
 
+import com.fotova.dto.client.ClientDto;
+import com.fotova.dto.order.OrderClientDto;
 import com.fotova.dto.order.OrderDto;
 import com.fotova.dto.orderProduct.OrderProductBillingDto;
 import com.fotova.dto.orderProduct.OrderProductDto;
+import com.fotova.exception.NotFoundException;
+import com.fotova.firstapp.security.service.AuthService;
 import com.fotova.firstapp.security.utils.Response;
 import com.fotova.service.order.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,6 +28,9 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private AuthService authService;
 
     @Operation(summary = "Retrieve all the orders")
     @ApiResponse(responseCode = "200", description = "Orders retrieved successfully",
@@ -77,10 +84,17 @@ public class OrderController {
     public ResponseEntity<Object> getOrderById(
             @Parameter(description = "Order identifier - id", required = true, example = "1")
             @PathVariable Integer orderId) {
+        OrderDto orderDto = orderService.getOrderById(orderId);
+        if (!authService.isAdmin()) {
+            ClientDto principal = authService.getPrincipal();
+            if (orderDto.getClient() == null || !principal.getId().equals(orderDto.getClient().getId())) {
+                throw new NotFoundException("Order not found");
+            }
+        }
         Response<OrderDto> response = Response.<OrderDto>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Order retrieved successfully")
-                .data(orderService.getOrderById(orderId))
+                .data(orderDto)
                 .success(true)
                 .build();
         return ResponseEntity.ok(response);
@@ -96,6 +110,8 @@ public class OrderController {
             content = @Content)
     @PostMapping("auth/order/add")
     public ResponseEntity<Object> addOrder(@RequestBody OrderDto orderDto) {
+        ClientDto principal = authService.getPrincipal();
+        orderDto.setClient(new OrderClientDto(principal.getId(), principal.getEmail()));
         Response<OrderDto> response = Response.<OrderDto>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Order added successfully")
@@ -138,6 +154,9 @@ public class OrderController {
     public ResponseEntity<Object> getOrdersByEmail(
             @Parameter(description = "Client email", required = true, example = "exemple@gmail.com")
             @PathVariable String email) {
+        if (!authService.isAdmin()) {
+            email = authService.getPrincipal().getEmail();
+        }
         Response<List<OrderProductDto>> response = Response.<List<OrderProductDto>>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Orders retrieve successfully")
@@ -178,6 +197,9 @@ public class OrderController {
             @RequestParam String email,
             @Parameter(description = "Order identifier - id", required = true, example = "1")
             @RequestParam Integer orderId) {
+        if (!authService.isAdmin()) {
+            email = authService.getPrincipal().getEmail();
+        }
         Response<OrderProductBillingDto> response = Response.<OrderProductBillingDto>builder()
                 .responseCode(HttpStatus.OK.value())
                 .responseMessage("Order product retrieve successfully")
